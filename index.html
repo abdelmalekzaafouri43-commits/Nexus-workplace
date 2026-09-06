@@ -284,6 +284,13 @@
       box-shadow: var(--card-shadow);
     }
 
+    .card-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
     .form-group {
       margin-bottom: 20px;
     }
@@ -346,6 +353,38 @@
 
     .btn-primary:active {
       transform: translateY(0);
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      background: rgba(79, 70, 229, 0.25);
+      border-color: var(--primary);
+      color: #A5B4FC;
+      transform: translateY(-1px);
+    }
+
+    [data-theme="light"] .btn-action {
+      background: #F1F5F9;
+      border-color: #CBD5E1;
+    }
+
+    [data-theme="light"] .btn-action:hover {
+      background: rgba(67, 56, 202, 0.12);
+      color: var(--primary);
     }
 
     /* Template Cards Grid */
@@ -582,8 +621,16 @@
         </div>
 
         <div id="ws-result" class="card hidden">
-          <h3>Generated Worksheet</h3>
-          <div id="ws-output" class="preview-box" style="margin-top: 14px;"></div>
+          <div class="card-header-row">
+            <h3>Generated Worksheet</h3>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-action" onclick="printGenerated('ws')">
+                <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
+                Print / Save PDF
+              </button>
+            </div>
+          </div>
+          <div id="ws-output" class="preview-box"></div>
         </div>
       </section>
 
@@ -628,8 +675,16 @@
         </div>
 
         <div id="ppt-result" class="card hidden">
-          <h3>Generated Slide Deck</h3>
-          <div id="ppt-output" class="preview-box" style="margin-top: 14px;"></div>
+          <div class="card-header-row">
+            <h3>Generated Slide Deck</h3>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-action" onclick="printGenerated('ppt')">
+                <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
+                Print Slides / PDF
+              </button>
+            </div>
+          </div>
+          <div id="ppt-output" class="preview-box"></div>
         </div>
       </section>
 
@@ -684,6 +739,12 @@
 
     // Apply initial theme on load
     applyTheme(currentTheme);
+
+    // Active generation tracking for print
+    let lastGenerated = {
+      ws: { title: '', type: 'A4 Worksheet', details: '', content: '' },
+      ppt: { title: '', type: 'Presentation Deck', details: '', content: '' }
+    };
 
     const templates = [
       {
@@ -789,6 +850,8 @@
 
       const content = `🎨 [AI Generated Illustration: "${art}"]\n\nEnglish A4 Worksheet: ${topic}\nProficiency Level: ${grade}\nFocus Area: ${type} (${count})\n\n1. Warm-up Discussion Questions:\n   - How often do you encounter this structure?\n\n2. Exercises:\n   - Fill in the blanks with appropriate grammar structures.\n   - Rewrite sentences to correct errors.\n\n3. Vocabulary & Collocations:\n   - Match vocabulary with definitions.\n\n[Teacher Answer Key Provided on Page 2]`;
 
+      lastGenerated.ws = { title: topic, type: "A4 Worksheet", details: `${grade} • ${count}`, content: content };
+
       document.getElementById('ws-result').classList.remove('hidden');
       document.getElementById('ws-output').textContent = content;
       saveToLibrary(topic, "A4 Worksheet", `${grade} • ${count}`, content);
@@ -803,10 +866,160 @@
 
       const content = `🎨 [AI Generated Slide Art: "${art}"]\n\nEnglish Presentation: ${topic}\nStyle: ${style} | Deck Size: ${slides}\n\nSlide 1: Topic Overview & Learning Objectives\nSlide 2: Core Concepts & Vocabulary\nSlide 3: Group Activity & Roleplay\nSlide 4: Debate & Class Discussion\n\n[Speaker Notes Included for Instructor]`;
 
+      lastGenerated.ppt = { title: topic, type: "Presentation Deck", details: `${slides} • ${style}`, content: content };
+
       document.getElementById('ppt-result').classList.remove('hidden');
       document.getElementById('ppt-output').textContent = content;
       saveToLibrary(topic, "Presentation", `${slides} • ${style}`, content);
       showToast(`Presentation "${topic}" created!`);
+    }
+
+    function printGenerated(typeKey) {
+      const item = lastGenerated[typeKey];
+      if (!item || !item.content) {
+        showToast("Please generate content first before printing.");
+        return;
+      }
+      printContent(item.title, item.type, item.details, item.content);
+    }
+
+    function printLibraryItem(idx) {
+      const item = library[idx];
+      if (!item) return;
+      printContent(item.title, item.type, item.details, item.content);
+    }
+
+    function printContent(title, type, details, rawText) {
+      const printWindow = window.open('', '_blank');
+      if (!printWindow) {
+        showToast('Please allow pop-ups to open the print dialog.');
+        return;
+      }
+
+      const dateStr = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>${title} - ${type}</title>
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+          <style>
+            @page {
+              size: A4;
+              margin: 15mm 15mm 15mm 15mm;
+            }
+            * {
+              box-sizing: border-box;
+              margin: 0;
+              padding: 0;
+              font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+            }
+            body {
+              background: #ffffff;
+              color: #0f172a;
+              padding: 24px;
+              line-height: 1.6;
+            }
+            .header {
+              display: flex;
+              justify-content: space-between;
+              align-items: flex-start;
+              border-bottom: 2px solid #0f172a;
+              padding-bottom: 14px;
+              margin-bottom: 20px;
+            }
+            .title {
+              font-size: 22px;
+              font-weight: 800;
+              color: #0f172a;
+            }
+            .subtitle {
+              font-size: 13px;
+              color: #475569;
+              font-weight: 600;
+              margin-top: 4px;
+            }
+            .student-fields {
+              display: grid;
+              grid-template-columns: 2fr 1fr 1fr;
+              gap: 16px;
+              background: #f8fafc;
+              border: 1px solid #cbd5e1;
+              border-radius: 8px;
+              padding: 12px 16px;
+              margin-bottom: 24px;
+              font-size: 13px;
+              font-weight: 600;
+              color: #334155;
+            }
+            .student-field-line {
+              border-bottom: 1px dotted #64748b;
+              display: inline-block;
+              min-width: 100px;
+              margin-left: 6px;
+            }
+            .content {
+              white-space: pre-wrap;
+              font-size: 14px;
+              line-height: 1.8;
+              color: #0f172a;
+              background: #ffffff;
+            }
+            .footer {
+              margin-top: 40px;
+              padding-top: 12px;
+              border-top: 1px solid #e2e8f0;
+              display: flex;
+              justify-content: space-between;
+              font-size: 11px;
+              color: #64748b;
+            }
+            @media print {
+              body {
+                padding: 0;
+              }
+              .no-print {
+                display: none !important;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <div>
+              <div class="title">${title || 'EduGen Worksheet'}</div>
+              <div class="subtitle">${type} • ${details || 'Educational Teaching Material'}</div>
+            </div>
+            <div style="text-align: right; font-size: 12px; color: #475569; font-weight: 600;">
+              Date: ${dateStr}
+            </div>
+          </div>
+
+          <div class="student-fields">
+            <div>Student Name: <span class="student-field-line" style="width: 140px;"></span></div>
+            <div>Class: <span class="student-field-line" style="width: 60px;"></span></div>
+            <div>Score: <span class="student-field-line" style="width: 50px;"> / 100</span></div>
+          </div>
+
+          <div class="content">${rawText}</div>
+
+          <div class="footer">
+            <span>EduGen AI Studio — Teaching Materials</span>
+            <span>Printed on ${dateStr}</span>
+          </div>
+
+          <script>
+            window.onload = function() {
+              window.print();
+            };
+          <\/script>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
     }
 
     function renderTemplates() {
@@ -821,12 +1034,22 @@
             <h3 style="margin-top: 14px;">${t.title}</h3>
             <p style="color: var(--text-muted); font-size: 13px; margin-top: 8px; line-height: 1.5;">${t.desc}</p>
           </div>
-          <button class="btn-primary" onclick="useTemplate(${index})">
-            <span class="material-symbols-outlined" style="font-size:18px;">auto_awesome</span>
-            Use Template
-          </button>
+          <div style="display:flex; gap:8px;">
+            <button class="btn-primary" style="flex:1;" onclick="useTemplate(${index})">
+              <span class="material-symbols-outlined" style="font-size:18px;">auto_awesome</span>
+              Use Template
+            </button>
+            <button class="btn-action" onclick="printTemplate(${index})" title="Print Preview">
+              <span class="material-symbols-outlined" style="font-size:18px;">print</span>
+            </button>
+          </div>
         </div>
       `).join('');
+    }
+
+    function printTemplate(idx) {
+      const t = templates[idx];
+      printContent(t.title, t.type === 'worksheet' ? 'A4 Worksheet' : 'Presentation', t.level, t.content);
     }
 
     function useTemplate(idx) {
@@ -854,9 +1077,15 @@
               <strong style="font-size:16px;">${item.title}</strong>
               <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">${item.type} • ${item.details} • ${item.date}</div>
             </div>
-            <button onclick="deleteFromLibrary(${index})" style="background:transparent; border:none; color:var(--accent); cursor:pointer;">
-              <span class="material-symbols-outlined">delete</span>
-            </button>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <button class="btn-action" onclick="printLibraryItem(${index})" title="Print Material">
+                <span class="material-symbols-outlined" style="font-size:18px;">print</span>
+                Print
+              </button>
+              <button onclick="deleteFromLibrary(${index})" style="background:transparent; border:none; color:var(--accent); cursor:pointer; padding:6px;">
+                <span class="material-symbols-outlined">delete</span>
+              </button>
+            </div>
           </div>
           <div class="preview-box" style="margin-top: 12px; max-height: 140px; font-size: 13px;">${item.content}</div>
         </div>
