@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>EduGen AI Studio</title>
+  <!-- Google Fonts & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-dark: #3730A3;
+      --secondary: #06B6D4;
+      --accent: #F43F5E;
+      --bg: #0F172A;
+      --surface: #1E293B;
+      --surface-card: rgba(30, 41, 59, 0.7);
+      --border: rgba(255, 255, 255, 0.12);
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --input-bg: rgba(15, 23, 42, 0.65);
+      --input-focus-bg: rgba(15, 23, 42, 0.85);
+      --preview-bg: rgba(10, 15, 30, 0.92);
+      --preview-text: #E2E8F0;
+      --header-bg: rgba(15, 23, 42, 0.75);
+      --aside-bg: rgba(15, 23, 42, 0.95);
+      --radial-1: rgba(79, 70, 229, 0.12);
+      --radial-2: rgba(6, 182, 212, 0.1);
+      --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      --btn-shadow: 0 4px 16px rgba(79, 70, 229, 0.35);
+      --badge-ws-bg: rgba(6, 182, 212, 0.2);
+      --badge-ws-color: #67E8F9;
+      --badge-ppt-bg: rgba(79, 70, 229, 0.2);
+      --badge-ppt-color: #A5B4FC;
+      --nav-hover: rgba(255, 255, 255, 0.05);
+      --nav-active-bg: linear-gradient(90deg, rgba(79, 70, 229, 0.25), rgba(79, 70, 229, 0.05));
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    [data-theme="light"] {
+      --primary: #4338CA;
+      --primary-dark: #312E81;
+      --secondary: #0891B2;
+      --accent: #E11D48;
+      --bg: #F8FAFC;
+      --surface: #FFFFFF;
+      --surface-card: rgba(255, 255, 255, 0.82);
+      --border: rgba(15, 23, 42, 0.12);
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --input-bg: rgba(255, 255, 255, 0.95);
+      --input-focus-bg: #FFFFFF;
+      --preview-bg: #0F172A;
+      --preview-text: #F8FAFC;
+      --header-bg: rgba(255, 255, 255, 0.85);
+      --aside-bg: rgba(255, 255, 255, 0.95);
+      --radial-1: rgba(79, 70, 229, 0.06);
+      --radial-2: rgba(6, 182, 212, 0.05);
+      --card-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+      --btn-shadow: 0 4px 14px rgba(67, 56, 202, 0.25);
+      --badge-ws-bg: rgba(8, 145, 178, 0.15);
+      --badge-ws-color: #0E7490;
+      --badge-ppt-bg: rgba(67, 56, 202, 0.15);
+      --badge-ppt-color: #3730A3;
+      --nav-hover: rgba(15, 23, 42, 0.05);
+      --nav-active-bg: linear-gradient(90deg, rgba(67, 56, 202, 0.12), rgba(67, 56, 202, 0.02));
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.25s ease;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar Navigation */
+    aside {
+      width: 280px;
+      background: var(--aside-bg);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 24px 16px;
+      gap: 8px;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px 24px 12px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+
+    .brand-title {
+      font-weight: 800;
+      font-size: 19px;
+      letter-spacing: -0.5px;
+      color: var(--text-main);
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+    }
+
+    .nav-btn:hover {
+      background: var(--nav-hover);
+      color: var(--text-main);
+    }
+
+    .nav-btn.active {
+      background: var(--nav-active-bg);
+      border-left: 3px solid var(--primary);
+      color: var(--text-main);
+    }
+
+    .nav-btn .material-symbols-outlined {
+      font-size: 20px;
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      background: radial-gradient(circle at 90% 10%, var(--radial-1), transparent 45%),
+                  radial-gradient(circle at 10% 90%, var(--radial-2), transparent 45%);
+    }
+
+    header {
+      padding: 20px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      background: var(--header-bg);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text-main);
+    }
+
+    .page-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Theme Toggle Switch */
+    .theme-switch-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .theme-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 9999px;
+      cursor: pointer;
+      color: var(--text-main);
+      box-shadow: var(--card-shadow);
+      font-size: 13px;
+      font-weight: 700;
+      user-select: none;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--primary);
+    }
+
+    .switch-pill {
+      width: 44px;
+      height: 24px;
+      background: rgba(15, 23, 42, 0.5);
+      border-radius: 9999px;
+      position: relative;
+      border: 1px solid var(--border);
+      transition: background 0.3s ease;
+    }
+
+    [data-theme="light"] .switch-pill {
+      background: #E2E8F0;
+    }
+
+    .switch-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      position: absolute;
+      top: 2px;
+      left: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    [data-theme="light"] .switch-thumb {
+      transform: translateX(19px);
+      background: linear-gradient(135deg, #F59E0B, #EA580C);
+    }
+
+    .switch-thumb .material-symbols-outlined {
+      font-size: 12px;
+    }
+
+    .content-area {
+      padding: 32px 36px;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Glass Cards */
+    .card {
+      background: var(--surface-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+      margin-bottom: 24px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--input-bg);
+      color: var(--text-main);
+      font-size: 14px;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2);
+      background: var(--input-focus-bg);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      padding: 15px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      box-shadow: var(--btn-shadow);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 6px 22px rgba(79, 70, 229, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    /* Template Cards Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .template-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .template-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: var(--badge-ppt-bg);
+      color: var(--badge-ppt-color);
+      letter-spacing: 0.5px;
+    }
+
+    .badge-worksheet {
+      background: var(--badge-ws-bg);
+      color: var(--badge-ws-color);
+    }
+
+    /* Preview Output */
+    .preview-box {
+      background: var(--preview-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      white-space: pre-wrap;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--preview-text);
+      max-height: 500px;
+      overflow-y: auto;
+      font-family: 'Plus Jakarta Sans', monospace;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 14px 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 999;
+    }
+
+    #toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside>
+    <div class="brand">
+      <div class="brand-icon">
+        <span class="material-symbols-outlined">school</span>
+      </div>
+      <div>
+        <div class="brand-title">EduGen AI</div>
+        <div class="brand-sub">Teaching Studio</div>
+      </div>
+    </div>
+
+    <button class="nav-btn active" onclick="switchTab('dashboard', this)">
+      <span class="material-symbols-outlined">dashboard</span>
+      Dashboard
+    </button>
+    <button class="nav-btn" onclick="switchTab('worksheet', this)">
+      <span class="material-symbols-outlined">description</span>
+      Worksheet Generator
+    </button>
+    <button class="nav-btn" onclick="switchTab('presentation', this)">
+      <span class="material-symbols-outlined">slideshow</span>
+      PowerPoint Generator
+    </button>
+    <button class="nav-btn" onclick="switchTab('templates', this)">
+      <span class="material-symbols-outlined">grid_view</span>
+      Templates Gallery
+    </button>
+    <button class="nav-btn" onclick="switchTab('library', this)">
+      <span class="material-symbols-outlined">folder</span>
+      My Library
+    </button>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main>
+    <header>
+      <div>
+        <h1 class="page-title" id="tab-title">Dashboard</h1>
+        <p class="page-subtitle" id="tab-subtitle">Overview & prompt-driven educational generator</p>
+      </div>
+
+      <!-- Theme Toggle Switch -->
+      <div class="theme-switch-container">
+        <button class="theme-toggle-btn" onclick="toggleTheme()" id="theme-btn" aria-label="Toggle Light/Dark Theme">
+          <span class="material-symbols-outlined" id="theme-btn-icon" style="font-size: 18px; color: var(--secondary);">dark_mode</span>
+          <span id="theme-btn-text">Dark Mode</span>
+          <div class="switch-pill">
+            <div class="switch-thumb">
+              <span class="material-symbols-outlined" id="thumb-icon">dark_mode</span>
+            </div>
+          </div>
+        </button>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <!-- DASHBOARD TAB -->
+      <section id="view-dashboard">
+        <div class="card">
+          <label>Quick AI Generation Prompt</label>
+          <div style="position: relative; margin-top: 8px;">
+            <textarea id="dash-prompt" rows="3" placeholder="e.g. Create a B1 level presentation about climate change with interactive debate slides and vocabulary list..."></textarea>
+          </div>
+          <button class="btn-primary" style="margin-top: 14px;" onclick="generateFromDashboard()">
+            <span class="material-symbols-outlined">auto_awesome</span>
+            Instant AI Generate
+          </button>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3>📝 A4 Worksheet Generator</h3>
+            <p style="color: var(--text-muted); font-size: 14px; margin: 8px 0 16px;">Generate printable English grammar, reading, and vocabulary exercises.</p>
+            <button class="btn-primary" onclick="switchTabById('worksheet')">Launch Worksheet Maker</button>
+          </div>
+          <div class="card">
+            <h3>📽️ PowerPoint Generator</h3>
+            <p style="color: var(--text-muted); font-size: 14px; margin: 8px 0 16px;">Create classroom presentations with speaker notes and custom AI illustrations.</p>
+            <button class="btn-primary" onclick="switchTabById('presentation')">Launch Slide Maker</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- WORKSHEET TAB -->
+      <section id="view-worksheet" class="hidden">
+        <div class="card">
+          <div class="form-group">
+            <label>Worksheet Topic or Focus</label>
+            <input type="text" id="ws-topic" placeholder="e.g. Present Perfect vs Past Simple, Business Phrasal Verbs..." />
+          </div>
+
+          <div class="form-group">
+            <label>Custom AI Illustration Theme (Optional)</label>
+            <input type="text" id="ws-art" placeholder="e.g. Colorful vector illustration of students talking in a café..." />
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label>CEFR Grade Level</label>
+              <select id="ws-grade">
+                <option>A1 Beginner</option>
+                <option>A2 Elementary</option>
+                <option selected>B1 Intermediate</option>
+                <option>B2 Upper-Intermediate</option>
+                <option>C1 Advanced</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Activity Focus</label>
+              <select id="ws-type">
+                <option>Grammar & Tenses</option>
+                <option>Vocabulary & Phrasal Verbs</option>
+                <option>Reading Comprehension</option>
+                <option>Dialogue Roleplay</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label>Number of Exercises</label>
+              <select id="ws-count">
+                <option>5 Exercises</option>
+                <option selected>10 Exercises</option>
+                <option>15 Exercises</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Export Format</label>
+              <select id="ws-format">
+                <option>PDF (.pdf)</option>
+                <option>Word (.docx)</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="btn-primary" onclick="generateWorksheet()">
+            <span class="material-symbols-outlined">auto_awesome</span>
+            Generate Printable Worksheet
+          </button>
+        </div>
+
+        <div id="ws-result" class="card hidden">
+          <h3>Generated Worksheet</h3>
+          <div id="ws-output" class="preview-box" style="margin-top: 14px;"></div>
+        </div>
+      </section>
+
+      <!-- PRESENTATION TAB -->
+      <section id="view-presentation" class="hidden">
+        <div class="card">
+          <div class="form-group">
+            <label>Slide Deck Topic</label>
+            <input type="text" id="ppt-topic" placeholder="e.g. Artificial Intelligence & Future of Work..." />
+          </div>
+
+          <div class="form-group">
+            <label>Custom AI Illustration Theme (Optional)</label>
+            <input type="text" id="ppt-art" placeholder="e.g. Modern minimalist tech slides with vibrant abstract art..." />
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label>Slide Count</label>
+              <select id="ppt-slides">
+                <option>5 Slides</option>
+                <option selected>8 Slides</option>
+                <option>10 Slides</option>
+                <option>12 Slides</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Visual Style</label>
+              <select id="ppt-style">
+                <option>Modern Minimalist</option>
+                <option>Creative & Colorful</option>
+                <option>Professional Corporate</option>
+                <option>Playful & Gamified</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="btn-primary" onclick="generatePresentation()">
+            <span class="material-symbols-outlined">auto_awesome</span>
+            Generate PowerPoint Deck
+          </button>
+        </div>
+
+        <div id="ppt-result" class="card hidden">
+          <h3>Generated Slide Deck</h3>
+          <div id="ppt-output" class="preview-box" style="margin-top: 14px;"></div>
+        </div>
+      </section>
+
+      <!-- TEMPLATES GALLERY TAB -->
+      <section id="view-templates" class="hidden">
+        <div class="grid" id="templates-grid"></div>
+      </section>
+
+      <!-- LIBRARY TAB -->
+      <section id="view-library" class="hidden">
+        <div class="card">
+          <h3>Saved Teaching Materials</h3>
+          <div id="library-list" style="margin-top: 16px;"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="toast"></div>
+
+  <script>
+    // Theme Management
+    let currentTheme = localStorage.getItem('edugen_theme') || 'dark';
+
+    function applyTheme(theme) {
+      currentTheme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('edugen_theme', theme);
+
+      const btnIcon = document.getElementById('theme-btn-icon');
+      const btnText = document.getElementById('theme-btn-text');
+      const thumbIcon = document.getElementById('thumb-icon');
+
+      if (theme === 'light') {
+        btnIcon.textContent = 'light_mode';
+        btnIcon.style.color = '#EA580C';
+        btnText.textContent = 'Light Mode';
+        thumbIcon.textContent = 'light_mode';
+      } else {
+        btnIcon.textContent = 'dark_mode';
+        btnIcon.style.color = 'var(--secondary)';
+        btnText.textContent = 'Dark Mode';
+        thumbIcon.textContent = 'dark_mode';
+      }
+    }
+
+    function toggleTheme() {
+      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme);
+      showToast(`Switched to ${nextTheme === 'light' ? 'High-Contrast Light' : 'Dark'} Mode`);
+    }
+
+    // Apply initial theme on load
+    applyTheme(currentTheme);
+
+    const templates = [
+      {
+        title: "Present Perfect vs Past Simple Masterclass",
+        type: "worksheet",
+        level: "B1 Intermediate",
+        desc: "Comprehensive gap-fill exercises, timeline charts, and error-correction tasks.",
+        art: "Grammar timeline chart with dialogue bubbles",
+        content: `🎨 [AI Generated Illustration: Grammar timeline chart]\n\nEnglish A4 Worksheet: Present Perfect vs Past Simple\nLevel: B1 Intermediate\n\n1. I (visit) London three times last year.\n2. She (already / finish) her homework.\n3. Teacher Answer Key Provided.`
+      },
+      {
+        title: "Business English Email Etiquette & Tone",
+        type: "worksheet",
+        level: "B2 Upper-Intermediate",
+        desc: "Formal sign-offs, polite requests, and professional vocabulary matching exercises.",
+        art: "Professional workplace correspondence",
+        content: `🎨 [AI Generated Illustration: Professional workplace correspondence]\n\nEnglish A4 Worksheet: Business Email Etiquette\nLevel: B2 Upper-Intermediate\n\n1. Match formal email sign-offs with their context.\n2. Rewrite informal sentences into professional corporate tone.`
+      },
+      {
+        title: "Exam Speaking Part 2: Travel & Culture",
+        type: "presentation",
+        level: "C1 Advanced",
+        desc: "8-slide interactive deck with cue cards, advanced vocabulary, and band score rubric.",
+        art: "Global travel imagery and speaking cue card graphic",
+        content: `🎨 [AI Generated Illustration: Global travel imagery]\n\nEnglish Presentation: Exam Speaking Part 2\nTotal Slides: 8\n\nSlide 1: Overview & Timing\nSlide 2: Cue Card (Describe an unforgettable journey)\nSlide 3: High-Scoring Vocabulary`
+      },
+      {
+        title: "Phonics & Pronunciation: Silent Letters",
+        type: "worksheet",
+        level: "A2 Elementary",
+        desc: "Engaging phonics exercises highlighting silent consonants in common English words.",
+        art: "Playful phonetic alphabet symbols and speaking mouths",
+        content: `🎨 [AI Generated Illustration: Playful phonetic alphabet symbols]\n\nEnglish A4 Worksheet: Silent Letters Phonics\nLevel: A2 Elementary\n\n1. Circle the silent letter: Knife, Write, Debt.\n2. Pronunciation pairing practice.`
+      },
+      {
+        title: "Tech Innovation & AI Pitch Deck",
+        type: "presentation",
+        level: "B2/C1",
+        desc: "Interactive presentation slides exploring artificial intelligence vocabulary and debates.",
+        art: "Futuristic AI neural network and glowing data streams",
+        content: `🎨 [AI Generated Illustration: Futuristic AI neural network]\n\nEnglish Presentation: Tech Innovation & AI\nTotal Slides: 10\n\nSlide 1: Introduction to AI\nSlide 2: Debate Topics\nSlide 3: Vocabulary Glossary`
+      },
+      {
+        title: "Travel Phrasal Verbs & Airport Situations",
+        type: "worksheet",
+        level: "B1 Intermediate",
+        desc: "Roleplay dialogues and matching tasks for check-in, security, and boarding.",
+        art: "Airport terminal boarding gate and travel luggage vector",
+        content: `🎨 [AI Generated Illustration: Airport terminal boarding gate]\n\nEnglish A4 Worksheet: Travel Phrasal Verbs\nLevel: B1 Intermediate\n\n1. Match phrasal verbs: check in, take off, touch down\n2. Complete airport dialogue roleplay.`
+      }
+    ];
+
+    let library = JSON.parse(localStorage.getItem('edugen_lib') || '[]');
+
+    function switchTab(tabId, el) {
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      if (el) el.classList.add('active');
+
+      const views = ['dashboard', 'worksheet', 'presentation', 'templates', 'library'];
+      views.forEach(v => document.getElementById(`view-${v}`).classList.add('hidden'));
+      document.getElementById(`view-${tabId}`).classList.remove('hidden');
+
+      const titles = {
+        dashboard: ["Dashboard", "Overview & prompt-driven educational generator"],
+        worksheet: ["Worksheet Generator", "Create customized A4 printable English worksheets"],
+        presentation: ["PowerPoint Generator", "Design interactive slide decks for classroom projection"],
+        templates: ["Templates Gallery", "Browse ready-to-use lesson templates and worksheets"],
+        library: ["My Library", "View and access your generated materials"]
+      };
+
+      document.getElementById('tab-title').textContent = titles[tabId][0];
+      document.getElementById('tab-subtitle').textContent = titles[tabId][1];
+
+      if (tabId === 'templates') renderTemplates();
+      if (tabId === 'library') renderLibrary();
+    }
+
+    function switchTabById(tabId) {
+      const btn = Array.from(document.querySelectorAll('.nav-btn')).find(b => b.textContent.toLowerCase().includes(tabId));
+      switchTab(tabId, btn);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerHTML = `<span class="material-symbols-outlined" style="color:var(--secondary)">check_circle</span> ${msg}`;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    function generateFromDashboard() {
+      const prompt = document.getElementById('dash-prompt').value.trim() || 'General English Lesson';
+      const content = `🎨 [AI Generated Illustration: "${prompt} visual graphic"]\n\nGenerated Resource: ${prompt}\n\n1. Objectives & Key Competencies\n2. Teacher Delivery Plan & Discussion Prompts\n3. Core Activities & Exercises\n4. Assessment Rubric & Answer Key`;
+      saveToLibrary(prompt, "Quick Resource", "Generated from Dashboard", content);
+      showToast(`Generated "${prompt}" and added to Library!`);
+    }
+
+    function generateWorksheet() {
+      const topic = document.getElementById('ws-topic').value || 'Grammar Review';
+      const grade = document.getElementById('ws-grade').value;
+      const type = document.getElementById('ws-type').value;
+      const count = document.getElementById('ws-count').value;
+      const art = document.getElementById('ws-art').value || `${topic} educational graphic`;
+
+      const content = `🎨 [AI Generated Illustration: "${art}"]\n\nEnglish A4 Worksheet: ${topic}\nProficiency Level: ${grade}\nFocus Area: ${type} (${count})\n\n1. Warm-up Discussion Questions:\n   - How often do you encounter this structure?\n\n2. Exercises:\n   - Fill in the blanks with appropriate grammar structures.\n   - Rewrite sentences to correct errors.\n\n3. Vocabulary & Collocations:\n   - Match vocabulary with definitions.\n\n[Teacher Answer Key Provided on Page 2]`;
+
+      document.getElementById('ws-result').classList.remove('hidden');
+      document.getElementById('ws-output').textContent = content;
+      saveToLibrary(topic, "A4 Worksheet", `${grade} • ${count}`, content);
+      showToast(`Worksheet on "${topic}" created!`);
+    }
+
+    function generatePresentation() {
+      const topic = document.getElementById('ppt-topic').value || 'Classroom Lesson';
+      const slides = document.getElementById('ppt-slides').value;
+      const style = document.getElementById('ppt-style').value;
+      const art = document.getElementById('ppt-art').value || `${topic} slide theme`;
+
+      const content = `🎨 [AI Generated Slide Art: "${art}"]\n\nEnglish Presentation: ${topic}\nStyle: ${style} | Deck Size: ${slides}\n\nSlide 1: Topic Overview & Learning Objectives\nSlide 2: Core Concepts & Vocabulary\nSlide 3: Group Activity & Roleplay\nSlide 4: Debate & Class Discussion\n\n[Speaker Notes Included for Instructor]`;
+
+      document.getElementById('ppt-result').classList.remove('hidden');
+      document.getElementById('ppt-output').textContent = content;
+      saveToLibrary(topic, "Presentation", `${slides} • ${style}`, content);
+      showToast(`Presentation "${topic}" created!`);
+    }
+
+    function renderTemplates() {
+      const grid = document.getElementById('templates-grid');
+      grid.innerHTML = templates.map((t, index) => `
+        <div class="template-card">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="badge ${t.type === 'worksheet' ? 'badge-worksheet' : ''}">${t.type}</span>
+              <span style="font-size: 12px; color: var(--text-muted);">${t.level}</span>
+            </div>
+            <h3 style="margin-top: 14px;">${t.title}</h3>
+            <p style="color: var(--text-muted); font-size: 13px; margin-top: 8px; line-height: 1.5;">${t.desc}</p>
+          </div>
+          <button class="btn-primary" onclick="useTemplate(${index})">
+            <span class="material-symbols-outlined" style="font-size:18px;">auto_awesome</span>
+            Use Template
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function useTemplate(idx) {
+      const t = templates[idx];
+      saveToLibrary(t.title, t.type === 'worksheet' ? 'A4 Worksheet' : 'Presentation', t.level, t.content);
+      showToast(`Template "${t.title}" added to Library!`);
+    }
+
+    function saveToLibrary(title, type, details, content) {
+      library.unshift({ id: Date.now(), title, type, details, content, date: new Date().toLocaleDateString() });
+      localStorage.setItem('edugen_lib', JSON.stringify(library));
+    }
+
+    function renderLibrary() {
+      const container = document.getElementById('library-list');
+      if (library.length === 0) {
+        container.innerHTML = `<p style="color: var(--text-muted); padding: 12px 0;">No saved materials yet. Generate a worksheet or presentation to view it here.</p>`;
+        return;
+      }
+
+      container.innerHTML = library.map((item, index) => `
+        <div style="background: var(--surface-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 14px; box-shadow: var(--card-shadow);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <strong style="font-size:16px;">${item.title}</strong>
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">${item.type} • ${item.details} • ${item.date}</div>
+            </div>
+            <button onclick="deleteFromLibrary(${index})" style="background:transparent; border:none; color:var(--accent); cursor:pointer;">
+              <span class="material-symbols-outlined">delete</span>
+            </button>
+          </div>
+          <div class="preview-box" style="margin-top: 12px; max-height: 140px; font-size: 13px;">${item.content}</div>
+        </div>
+      `).join('');
+    }
+
+    function deleteFromLibrary(idx) {
+      library.splice(idx, 1);
+      localStorage.setItem('edugen_lib', JSON.stringify(library));
+      renderLibrary();
+      showToast("Item deleted from library.");
+    }
+
+    // Initial load
+    renderTemplates();
+  </script>
+</body>
+</html>
