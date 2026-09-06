@@ -331,6 +331,7 @@
     }
 
     .nav-btn {
+      position: relative;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -344,21 +345,35 @@
       background: transparent;
       width: 100%;
       text-align: left;
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .nav-btn:hover {
       background: var(--nav-hover);
       color: var(--text-main);
+      transform: translateX(4px);
+    }
+
+    .nav-btn:active {
+      transform: translateX(2px) scale(0.98);
     }
 
     .nav-btn.active {
       background: var(--nav-active-bg);
-      border-left: 3px solid var(--primary);
+      border-left: 3.5px solid var(--primary);
       color: var(--text-main);
+      box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.08);
     }
 
     .nav-btn .material-symbols-outlined {
       font-size: 20px;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .nav-btn:hover .material-symbols-outlined {
+      transform: scale(1.18);
+      color: var(--primary);
     }
 
     /* Main Container */
@@ -620,63 +635,179 @@
       gap: 16px;
     }
 
-    /* Buttons */
+    /* Premium Action Buttons & Micro-Animations */
     .btn-primary {
+      position: relative;
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
       border: none;
-      padding: 13px 20px;
-      border-radius: 12px;
+      padding: 13px 22px;
+      border-radius: 14px;
       font-weight: 700;
       font-size: 14.5px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
       width: 100%;
       box-shadow: var(--btn-shadow);
+      overflow: hidden;
+      transform: translateZ(0);
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      letter-spacing: 0.2px;
+    }
+
+    /* Radiant Shimmer Sweep */
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.35) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: rotate(25deg);
+      pointer-events: none;
+      transition: transform 0.6s ease;
+      opacity: 0;
     }
 
     .btn-primary:hover {
-      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
-      transform: translateY(-1px);
+      transform: translateY(-2.5px) scale(1.015);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35), 0 0 20px var(--radial-1);
+    }
+
+    .btn-primary:hover::after {
+      opacity: 1;
+      animation: sweepLight 1s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .btn-primary:active {
-      transform: translateY(0);
+      transform: translateY(1px) scale(0.975);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+      transition-duration: 0.1s;
+    }
+
+    .btn-primary .material-symbols-outlined {
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .btn-primary:hover .material-symbols-outlined {
+      transform: scale(1.2) rotate(-8deg);
+    }
+
+    @keyframes sweepLight {
+      0% { transform: translateX(-100%) rotate(25deg); }
+      100% { transform: translateX(450%) rotate(25deg); }
     }
 
     .btn-action {
+      position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 7px 14px;
-      border-radius: 10px;
-      font-size: 12.5px;
+      gap: 7px;
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 13px;
       font-weight: 700;
       border: 1px solid var(--border);
       background: rgba(255, 255, 255, 0.08);
       color: var(--text-main);
       cursor: pointer;
-      transition: all 0.2s ease;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      transform: translateZ(0);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .btn-action::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--radial-1), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
     }
 
     .btn-action:hover {
-      background: rgba(79, 70, 229, 0.25);
+      background: rgba(255, 255, 255, 0.14);
       border-color: var(--primary);
-      color: #A5B4FC;
-      transform: translateY(-1px);
+      color: #FFFFFF;
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25), 0 0 14px var(--radial-1);
+    }
+
+    .btn-action:hover::before {
+      opacity: 1;
+    }
+
+    .btn-action:active {
+      transform: translateY(1px) scale(0.97);
+      transition-duration: 0.1s;
+    }
+
+    .btn-action .material-symbols-outlined {
+      font-size: 18px;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .btn-action:hover .material-symbols-outlined {
+      transform: scale(1.15) rotate(-6deg);
     }
 
     [data-theme="light"] .btn-action {
-      background: #F1F5F9;
+      background: #FFFFFF;
       border-color: #CBD5E1;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
     [data-theme="light"] .btn-action:hover {
-      background: rgba(67, 56, 202, 0.12);
+      background: #FFFFFF;
+      border-color: var(--primary);
       color: var(--primary);
+      box-shadow: 0 8px 20px rgba(67, 56, 202, 0.15);
+    }
+
+    [data-theme="pearl"] .btn-action {
+      background: #FFFFFF;
+      border-color: rgba(148, 163, 184, 0.3);
+    }
+
+    [data-theme="pearl"] .btn-action:hover {
+      background: #FFFFFF;
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.15);
+    }
+
+    /* Ripple Wave Effect */
+    .ripple-wave {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.45);
+      transform: scale(0);
+      animation: rippleAnim 0.55s cubic-bezier(0.2, 0, 0.2, 1);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    [data-theme="light"] .ripple-wave, [data-theme="pearl"] .ripple-wave {
+      background: rgba(99, 102, 241, 0.3);
+    }
+
+    @keyframes rippleAnim {
+      to {
+        transform: scale(3.5);
+        opacity: 0;
+      }
     }
 
     /* Template Cards Grid */
@@ -1812,6 +1943,42 @@
       renderLibrary();
       showToast("Item deleted from library.");
     }
+
+    // Global Ripple Effect for Premium Action Buttons
+    function createRipple(event) {
+      const button = event.currentTarget;
+      const circle = document.createElement('span');
+      const diameter = Math.max(button.clientWidth, button.clientHeight);
+      const radius = diameter / 2;
+      const rect = button.getBoundingClientRect();
+
+      circle.style.width = circle.style.height = `${diameter}px`;
+      circle.style.left = `${event.clientX - rect.left - radius}px`;
+      circle.style.top = `${event.clientY - rect.top - radius}px`;
+      circle.classList.add('ripple-wave');
+
+      const existingRipple = button.querySelector('.ripple-wave');
+      if (existingRipple) {
+        existingRipple.remove();
+      }
+
+      button.appendChild(circle);
+      setTimeout(() => {
+        circle.remove();
+      }, 600);
+    }
+
+    // Attach ripple listeners dynamically
+    document.addEventListener('pointerdown', (e) => {
+      const btn = e.target.closest('.btn-primary, .btn-action, .theme-selector-btn, .nav-btn, .menu-toggle-btn');
+      if (btn) {
+        createRipple({
+          currentTarget: btn,
+          clientX: e.clientX,
+          clientY: e.clientY
+        });
+      }
+    });
 
     // Initial load
     renderTemplates();
