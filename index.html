@@ -851,7 +851,7 @@
       color: var(--badge-ws-color);
     }
 
-    /* Preview Output */
+    /* Preview Output & Formatted A4 Sheet */
     .preview-box {
       background: var(--preview-bg);
       border: 1px solid var(--border);
@@ -864,6 +864,227 @@
       max-height: 480px;
       overflow-y: auto;
       font-family: 'Plus Jakarta Sans', monospace;
+    }
+
+    .preview-tabs-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    .preview-tab-btn {
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .preview-tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .a4-preview-card {
+      background: #FFFFFF;
+      color: #0F172A;
+      border-radius: 14px;
+      padding: 28px 24px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+      border: 1px solid #CBD5E1;
+      max-height: 540px;
+      overflow-y: auto;
+      font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    .a4-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid #0F172A;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+
+    .a4-school-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 800;
+      color: #475569;
+    }
+
+    .a4-sheet-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0F172A;
+      margin-top: 2px;
+    }
+
+    .a4-meta-pills {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    .a4-pill {
+      font-size: 11px;
+      font-weight: 700;
+      background: #EEF2F6;
+      color: #334155;
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid #CBD5E1;
+    }
+
+    .a4-student-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 10px;
+      background: #F8FAFC;
+      border: 1.5px solid #CBD5E1;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 18px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .a4-dotted-blank {
+      border-bottom: 1.5px dotted #64748B;
+      display: inline-block;
+      min-width: 90px;
+      margin-left: 4px;
+    }
+
+    .a4-section {
+      margin-bottom: 22px;
+      page-break-inside: avoid;
+    }
+
+    .a4-section-header {
+      background: #0F172A;
+      color: #FFFFFF;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .a4-instructions {
+      font-size: 12.5px;
+      font-style: italic;
+      color: #475569;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .a4-wordbank {
+      background: #F1F5F9;
+      border: 1px dashed #94A3B8;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #1E293B;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    .a4-task-item {
+      margin-bottom: 10px;
+      font-size: 13.5px;
+      color: #1E293B;
+      line-height: 1.7;
+    }
+
+    .a4-task-num {
+      font-weight: 800;
+      color: #0F172A;
+      margin-right: 4px;
+    }
+
+    .a4-mcq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 14px;
+      margin: 6px 0 10px 18px;
+      font-size: 12.5px;
+      color: #334155;
+    }
+
+    .a4-passage-box {
+      background: #F8FAFC;
+      border-left: 4px solid #4338CA;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+      color: #1E293B;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .a4-answer-line {
+      border-bottom: 1.5px dotted #94A3B8;
+      height: 22px;
+      margin-top: 6px;
+      margin-bottom: 6px;
+      width: 100%;
+    }
+
+    .a4-key-box {
+      background: #FEF3C7;
+      border: 1.5px solid #F59E0B;
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 24px;
+      color: #92400E;
+      font-size: 13px;
+    }
+
+    .prompt-pills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .prompt-pill {
+      font-size: 11.5px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .prompt-pill:hover {
+      background: var(--nav-hover);
+      color: var(--text-main);
+      border-color: var(--primary);
     }
 
     .hidden {
@@ -1143,13 +1364,35 @@
       <section id="view-worksheet" class="hidden">
         <div class="card">
           <div class="form-group">
-            <label>Worksheet Topic or Focus</label>
-            <input type="text" id="ws-topic" placeholder="e.g. Present Perfect vs Past Simple, Business Phrasal Verbs..." />
+            <label>Worksheet Topic or Core Concept</label>
+            <input type="text" id="ws-topic" placeholder="e.g. Present Perfect vs Past Simple, Business Phrasal Verbs, Climate & Ecology..." />
           </div>
 
           <div class="form-group">
-            <label>Custom AI Illustration Theme (Optional)</label>
-            <input type="text" id="ws-art" placeholder="e.g. Colorful vector illustration of students talking in a café..." />
+            <label>Custom Task Instructions & Prompt Directives (Forces AI to generate exact real tasks)</label>
+            <textarea id="ws-prompt" rows="3" placeholder="e.g. Generate 5 fill-in-the-blank sentences using 'already/just/yet', 4 multiple choice questions with 4 options, a short 140-word reading passage about renewable energy with 3 comprehension questions, 3 error-correction sentences, and full teacher answer key."></textarea>
+            <div class="prompt-pills-row">
+              <span style="font-size: 11px; color: var(--text-muted); align-self: center; margin-right: 4px;">Quick Themes:</span>
+              <button type="button" class="prompt-pill" onclick="setWsPreset('Present Perfect vs Past Simple', 'B1 Intermediate', '5 gap-fill sentences with past participles, 4 multiple choice questions, 3 error-correction sentences, and a short reading dialogue with answer key.')">Present Perfect vs Past Simple</button>
+              <button type="button" class="prompt-pill" onclick="setWsPreset('First & Second Conditionals', 'B2 Upper-Intermediate', '4 realistic scenario sentences, 4 multiple choice questions on hypothetical vs real outcomes, rewrite tasks, and answer key.')">1st & 2nd Conditionals</button>
+              <button type="button" class="prompt-pill" onclick="setWsPreset('Business Email Phrasal Verbs', 'B2 Upper-Intermediate', 'Match 6 formal phrasal verbs, rewrite 4 informal email sentences into professional corporate tone, and reading passage.')">Business Phrasal Verbs</button>
+              <button type="button" class="prompt-pill" onclick="setWsPreset('Passive Voice in Science & News', 'B1 Intermediate', 'Convert 5 active sentences into passive voice, fill in blanks with passive forms, and headline analysis.')">Passive Voice</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label>Institution / School Name</label>
+              <input type="text" id="ws-school" value="Global Academy of English" placeholder="e.g. Cambridge Language Institute" />
+            </div>
+            <div class="form-group">
+              <label>Time Allowed</label>
+              <input type="text" id="ws-time" value="45 Minutes" placeholder="e.g. 45 Minutes" />
+            </div>
+            <div class="form-group">
+              <label>Total Marks / Points</label>
+              <input type="text" id="ws-marks" value="50 Marks" placeholder="e.g. 50 Marks" />
+            </div>
           </div>
 
           <div class="row">
@@ -1166,53 +1409,72 @@
             <div class="form-group">
               <label>Activity Focus</label>
               <select id="ws-type">
-                <option>Grammar & Tenses</option>
-                <option>Vocabulary & Phrasal Verbs</option>
-                <option>Reading Comprehension</option>
-                <option>Dialogue Roleplay</option>
+                <option selected>Comprehensive Multi-Section Mastery</option>
+                <option>Grammar & Tenses Drilling</option>
+                <option>Vocabulary & Phrasal Collocations</option>
+                <option>Reading Comprehension & Analysis</option>
+                <option>Error Correction & Proofreading</option>
+                <option>Dialogue Completion & Roleplay</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Task Count / Density</label>
+              <select id="ws-count">
+                <option>5 Real Exercises (Quick Quiz)</option>
+                <option selected>10 Real Exercises (Standard A4)</option>
+                <option>15 Real Exercises (Comprehensive 2-Page A4)</option>
               </select>
             </div>
           </div>
 
-          <div class="row">
-            <div class="form-group">
-              <label>Number of Exercises</label>
-              <select id="ws-count">
-                <option>5 Exercises</option>
-                <option selected>10 Exercises</option>
-                <option>15 Exercises</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Export Format</label>
-              <select id="ws-format">
-                <option>PDF (.pdf)</option>
-                <option>Word (.docx)</option>
-              </select>
-            </div>
+          <div style="display: flex; gap: 16px; margin: 8px 0 16px; flex-wrap: wrap;">
+            <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; color: var(--text-main);">
+              <input type="checkbox" id="ws-include-key" checked style="accent-color: var(--primary); width: 16px; height: 16px;" />
+              Include Teacher Answer Key & Explanations
+            </label>
+            <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; color: var(--text-main);">
+              <input type="checkbox" id="ws-include-bank" checked style="accent-color: var(--primary); width: 16px; height: 16px;" />
+              Include Reference Word Bank Box
+            </label>
           </div>
 
           <button class="btn-primary" onclick="generateWorksheet()">
             <span class="material-symbols-outlined">auto_awesome</span>
-            Generate Printable Worksheet
+            Generate Real A4 Printable Worksheet
           </button>
         </div>
 
         <div id="ws-result" class="card hidden">
-          <div class="card-header-row">
-            <h3 style="font-size: 17px;">Generated Worksheet</h3>
+          <div class="card-header-row" style="margin-bottom: 12px;">
+            <div>
+              <h3 style="font-size: 17px;" id="ws-result-title">Generated A4 Worksheet</h3>
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;" id="ws-result-subtitle">Print-ready educational tasks & real exercises</div>
+            </div>
             <div style="display: flex; gap: 8px;">
               <button class="btn-action" onclick="openQrForContent('ws')" title="Get QR link for this worksheet">
                 <span class="material-symbols-outlined" style="font-size: 18px; color: var(--secondary);">qr_code_2</span>
                 QR Link
               </button>
-              <button class="btn-action" onclick="printGenerated('ws')">
+              <button class="btn-action" onclick="printGenerated('ws')" title="Print or Save as PDF">
                 <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
-                Print / Save PDF
+                Print A4 / PDF
               </button>
             </div>
           </div>
-          <div id="ws-output" class="preview-box"></div>
+
+          <div class="preview-tabs-bar">
+            <button class="preview-tab-btn active" id="ws-tab-formatted" onclick="switchWsPreviewTab('formatted')">
+              <span class="material-symbols-outlined" style="font-size: 16px;">description</span>
+              Formatted A4 Sheet
+            </button>
+            <button class="preview-tab-btn" id="ws-tab-raw" onclick="switchWsPreviewTab('raw')">
+              <span class="material-symbols-outlined" style="font-size: 16px;">code</span>
+              Raw Text / Markdown
+            </button>
+          </div>
+
+          <div id="ws-formatted-preview" class="a4-preview-card"></div>
+          <div id="ws-output" class="preview-box hidden"></div>
         </div>
       </section>
 
@@ -1440,8 +1702,8 @@
 
     // Active generation tracking for print and QR
     let lastGenerated = {
-      ws: { title: '', type: 'A4 Worksheet', details: '', content: '' },
-      ppt: { title: '', type: 'Presentation Deck', details: '', content: '' }
+      ws: { title: '', type: 'A4 Worksheet', details: '', content: '', htmlSheet: '' },
+      ppt: { title: '', type: 'Presentation Deck', details: '', content: '', htmlSheet: '' }
     };
 
     // QR Code System
@@ -1562,22 +1824,411 @@
       printWindow.document.close();
     }
 
+    // Set Preset Helper for Quick Topic Pills
+    function setWsPreset(topic, grade, promptText) {
+      document.getElementById('ws-topic').value = topic;
+      document.getElementById('ws-grade').value = grade;
+      document.getElementById('ws-prompt').value = promptText;
+      showToast(`Loaded preset: ${topic}`);
+    }
+
+    function switchWsPreviewTab(tab) {
+      const btnFormatted = document.getElementById('ws-tab-formatted');
+      const btnRaw = document.getElementById('ws-tab-raw');
+      const viewFormatted = document.getElementById('ws-formatted-preview');
+      const viewRaw = document.getElementById('ws-output');
+
+      if (tab === 'formatted') {
+        btnFormatted.classList.add('active');
+        btnRaw.classList.remove('active');
+        viewFormatted.classList.remove('hidden');
+        viewRaw.classList.add('hidden');
+      } else {
+        btnFormatted.classList.remove('active');
+        btnRaw.classList.add('active');
+        viewFormatted.classList.add('hidden');
+        viewRaw.classList.remove('hidden');
+      }
+    }
+
+    // Real Educational Task Synthesizer
+    function buildRealA4Worksheet(config) {
+      const {
+        topic = 'Present Perfect vs Past Simple',
+        prompt = '',
+        school = 'St. Jude International Academy',
+        timeAllowed = '45 Minutes',
+        marks = '50 Marks',
+        grade = 'B1 Intermediate',
+        type = 'Comprehensive Multi-Section Mastery',
+        count = '10 Real Exercises (Standard A4)',
+        includeKey = true,
+        includeBank = true
+      } = config;
+
+      const lowerTopic = topic.toLowerCase();
+      const lowerPrompt = prompt.toLowerCase();
+
+      // Dynamic Topic Context Detection
+      const isPastVsPresent = lowerTopic.includes('present perfect') || lowerTopic.includes('past simple') || lowerPrompt.includes('present perfect') || lowerPrompt.includes('past simple');
+      const isConditionals = lowerTopic.includes('conditional') || lowerPrompt.includes('conditional') || lowerPrompt.includes('if ');
+      const isPassive = lowerTopic.includes('passive') || lowerPrompt.includes('passive') || lowerPrompt.includes('active to passive');
+      const isBusiness = lowerTopic.includes('business') || lowerTopic.includes('email') || lowerPrompt.includes('business') || lowerPrompt.includes('corporate');
+      const isPhrasal = lowerTopic.includes('phrasal') || lowerPrompt.includes('phrasal') || lowerTopic.includes('verb');
+      const isReadingComp = lowerTopic.includes('reading') || lowerTopic.includes('climate') || lowerPrompt.includes('reading') || lowerTopic.includes('environment');
+
+      let wordBank = [];
+      let secA = { title: "Section A: Concept Diagnostic & Grammar Rules", marks: "10 Marks", instructions: "Read each question carefully and write your answers on the provided lines.", items: [] };
+      let secB = { title: "Section B: Core Targeted Practice", marks: "20 Marks", instructions: "Complete each sentence using the correct form of the verbs or vocabulary indicated.", items: [] };
+      let secC = { title: "Section C: Contextual Mastery & Applied Tasks", marks: "15 Marks", instructions: "", passage: "", items: [] };
+      let secD = { title: "Section D: Real-World Communication Challenge", marks: "5 Marks", promptText: "" };
+      let answerKey = [];
+
+      if (isPastVsPresent) {
+        wordBank = ["since", "for", "already", "yet", "just", "ever", "last night", "in 2019", "never", "ago"];
+        
+        secA.items = [
+          { q: "Explain the fundamental difference in usage between the Present Perfect ('I have lived') and Past Simple ('I lived').", lineCount: 2 },
+          { q: "State the rule for choosing between the time markers 'FOR' and 'SINCE' with Present Perfect verbs.", lineCount: 2 }
+        ];
+
+        secB.items = [
+          { type: 'blank', num: 1, text: "Sarah ____________________ (not finish) her quarterly project report yet, but she promises to send it before 5 PM." },
+          { type: 'blank', num: 2, text: "We ____________________ (travel) to Kyoto three years ago during the spring cherry blossom festival." },
+          { type: 'blank', num: 3, text: "How long ____________________ (you / know) Professor Henderson? — Since I started university." },
+          { type: 'blank', num: 4, text: "Marcus ____________________ (already / visit) five different countries since he began his gap year." },
+          { type: 'blank', num: 5, text: "They ____________________ (arrive) at the airport at 8:30 AM yesterday and checked in immediately." },
+          { type: 'mcq', num: 6, text: "I haven't seen David __________ last Monday's department meeting.", options: ["(A) for", "(B) since", "(C) ago", "(D) in"] },
+          { type: 'mcq', num: 7, text: "When __________ your new electric vehicle? — Last October.", options: ["(A) have you bought", "(B) did you buy", "(C) had you bought", "(D) you bought"] }
+        ];
+
+        secC.instructions = "Read the short travel profile below, then complete the comprehension & error-detection questions.";
+        secC.passage = "Elena is a documentary photographer from Barcelona. Over the last decade, she has traveled to over 40 countries to capture wildlife conservation efforts. In 2021, she spent four months living in Costa Rica researching sea turtles. She has won three international photography awards so far, and she has just published her first hard-cover book.";
+        secC.items = [
+          { num: 1, text: "Why is the Present Perfect used in 'she has traveled to over 40 countries'?" },
+          { num: 2, text: "Why is the Past Simple used in 'In 2021, she spent four months living in Costa Rica'?" },
+          { num: 3, text: "Identify and correct the grammatical error in this sentence: 'Elena has published a new photo series yesterday morning.'" }
+        ];
+
+        secD.promptText = "Write 4 original sentences describing your personal experiences: write 2 sentences using the Present Perfect with 'already' / 'never', and 2 sentences using the Past Simple with specific past time indicators (e.g. 'in 2022', 'last weekend').";
+
+        answerKey = [
+          "Section A: 1. Present Perfect describes actions connected to the present / unfinished time periods; Past Simple describes completed actions at a definite past time.",
+          "Section A: 2. 'SINCE' is used with a specific starting point in time (since 2015, since 9 AM); 'FOR' is used with a duration of time (for 3 years, for 2 hours).",
+          "Section B: 1. has not finished / hasn't finished | 2. traveled (or travelled) | 3. have you known | 4. has already visited | 5. arrived | 6. (B) since | 7. (B) did you buy",
+          "Section C: 1. It refers to life experience up to the present with an unspecified time frame. | 2. It refers to a completed event in a finished past time period (in 2021). | 3. Error: 'has published' -> Correction: 'published' (because 'yesterday morning' is a specific finished past time).",
+          "Section D: Award 5 marks for grammatically accurate sentences with correct tense morphology and appropriate time adverbials."
+        ];
+
+      } else if (isConditionals) {
+        wordBank = ["if", "unless", "provided that", "would buy", "will happen", "had known", "would have called", "studied", "were"];
+
+        secA.items = [
+          { q: "Define the difference in probability and structure between the First Conditional (Real) and Second Conditional (Hypothetical).", lineCount: 2 },
+          { q: "Why do we typically say 'If I were you' instead of 'If I was you' in formal subjunctive English?", lineCount: 2 }
+        ];
+
+        secB.items = [
+          { type: 'blank', num: 1, text: "If it ____________________ (rain) heavily this afternoon, we will postpone the outdoor sports tournament." },
+          { type: 'blank', num: 2, text: "If I ____________________ (win) a million dollars in the national lottery, I would establish an animal sanctuary." },
+          { type: 'blank', num: 3, text: "You won't pass the final Cambridge exam unless you ____________________ (revise) the grammar modules daily." },
+          { type: 'blank', num: 4, text: "If she had more free time, she ____________________ (learn) how to speak fluent Italian." },
+          { type: 'mcq', num: 5, text: "If you __________ ice in warm sunlight, it melts.", options: ["(A) will leave", "(B) leave", "(C) left", "(D) had left"] },
+          { type: 'mcq', num: 6, text: "What __________ if your flight is cancelled tomorrow?", options: ["(A) would you do", "(B) will you do", "(C) did you do", "(D) had you done"] },
+          { type: 'mcq', num: 7, text: "If I __________ you, I would accept the job offer in Zurich immediately.", options: ["(A) am", "(B) were", "(C) will be", "(D) would be"] }
+        ];
+
+        secC.instructions = "Rewrite each real-world situation as a conditional sentence according to the prompts.";
+        secC.items = [
+          { num: 1, text: "Situation: I don't have a bicycle, so I walk to school every morning.\n-> Rewrite using 2nd Conditional: If I __________________________________________________" },
+          { num: 2, text: "Situation: Perhaps it will snow tomorrow, and we will stay indoors.\n-> Rewrite using 1st Conditional: If it __________________________________________________" },
+          { num: 3, text: "Situation: He eats too much junk food, so he feels tired constantly.\n-> Rewrite using 2nd Conditional: If he __________________________________________________" }
+        ];
+
+        secD.promptText = "Describe a hypothetical ethical dilemma: 'What would you do if you found an envelope containing $5,000 cash on an empty subway train?' Write at least 4 sentences using 2nd Conditional structures ('If I found..., I would...').";
+
+        answerKey = [
+          "Section A: 1. 1st Conditional expresses real, likely future possibilities (If + Present Simple, will + base verb); 2nd Conditional expresses hypothetical, unlikely or imaginary situations (If + Past Simple, would + base verb).",
+          "Section A: 2. 'Were' is the subjunctive mood form traditionally used with all subjects (I, he, she, it) in formal hypothetical conditions.",
+          "Section B: 1. rains | 2. won | 3. revise | 4. would learn | 5. (B) leave | 6. (B) will you do | 7. (B) were",
+          "Section C: 1. If I had a bicycle, I wouldn't walk to school every morning. | 2. If it snows tomorrow, we will stay indoors. | 3. If he didn't eat so much junk food, he wouldn't feel tired constantly.",
+          "Section D: Award 5 marks for correct 'If + past simple, would + verb' structures and thoughtful reasoning."
+        ];
+
+      } else if (isBusiness || isPhrasal) {
+        wordBank = ["look forward to", "call off", "follow up", "touch base", "draw up", "put off", "bring up", "deal with", "break down"];
+
+        secA.items = [
+          { q: "Match each phrasal verb to its formal corporate equivalent: (A) call off, (B) put off, (C) look into.", lineCount: 2 },
+          { q: "Why is formal register and polite phrasing essential in international business correspondence?", lineCount: 2 }
+        ];
+
+        secB.items = [
+          { type: 'blank', num: 1, text: "Due to unexpected supply chain delays, management had to ____________________ (cancel / call off) tomorrow's product launch." },
+          { type: 'blank', num: 2, text: "I am writing to ____________________ (follow up / check) on our phone discussion regarding the software license agreement." },
+          { type: 'blank', num: 3, text: "Our legal department will ____________________ (draft / draw up) the non-disclosure agreement by Thursday." },
+          { type: 'blank', num: 4, text: "Please let me know when you are available next week to ____________________ (touch base / meet briefly) on Q3 KPIs." },
+          { type: 'mcq', num: 5, text: "I look forward to __________ from you at your earliest convenience.", options: ["(A) hear", "(B) hearing", "(C) heard", "(D) be hearing"] },
+          { type: 'mcq', num: 6, text: "We must __________ this client dispute before it escalates.", options: ["(A) deal with", "(B) look forward to", "(C) give up", "(D) get off"] }
+        ];
+
+        secC.instructions = "Rewrite the following informal email sentences into professional, courteous corporate English.";
+        secC.items = [
+          { num: 1, text: "Informal: 'Send me the numbers now, I need them asap.'\n-> Professional Rewrite: __________________________________________________" },
+          { num: 2, text: "Informal: 'Sorry I didn't reply, I was super busy with stuff.'\n-> Professional Rewrite: __________________________________________________" },
+          { num: 3, text: "Informal: 'I can't come to your meeting because of another thing.'\n-> Professional Rewrite: __________________________________________________" }
+        ];
+
+        secD.promptText = "Write a formal 4-sentence email to a prospective client proposing a 20-minute Zoom introductory meeting next Tuesday. Include greeting, polite opening, proposal, and formal sign-off.";
+
+        answerKey = [
+          "Section A: 1. (A) call off = cancel; (B) put off = postpone / defer; (C) look into = investigate / examine.",
+          "Section A: 2. Formal register builds trust, prevents cross-cultural misunderstandings, and projects professional competence.",
+          "Section B: 1. call off | 2. follow up | 3. draw up | 4. touch base | 5. (B) hearing | 6. (A) deal with",
+          "Section C: 1. Model: 'Could you please provide the updated figures at your earliest convenience?' | 2. Model: 'Please accept my apologies for the delayed response due to urgent project commitments.' | 3. Model: 'Regrettably, I will be unable to attend the scheduled meeting due to a prior engagement.'",
+          "Section D: Award 5 marks for proper formal salutation (Dear Mr./Ms.), polite request phrasing, and formal closing (Sincerely / Best regards)."
+        ];
+
+      } else {
+        // Universal High-Yield Custom Topic Engine
+        const sanitizedTopic = topic.replace(/[^\w\s]/gi, '');
+        wordBank = ["analyze", "demonstrate", "illustrate", "synthesize", "evaluate", "conclude", "principle", "evidence", "methodology"];
+
+        secA.items = [
+          { q: `State the primary definition and core learning objective of '${sanitizedTopic}'.`, lineCount: 2 },
+          { q: `Identify two fundamental concepts or practical rules associated with '${sanitizedTopic}'.`, lineCount: 2 }
+        ];
+
+        secB.items = [
+          { type: 'blank', num: 1, text: `The primary mechanism of ${sanitizedTopic} operates by ____________________ (utilize / verb) foundational principles.` },
+          { type: 'blank', num: 2, text: `In order to achieve optimal results in ${sanitizedTopic}, practitioners must ____________________ (careful / evaluate) key variables.` },
+          { type: 'blank', num: 3, text: `Historical analysis reveals that ${sanitizedTopic} ____________________ (develop / passive) over multiple iterations.` },
+          { type: 'blank', num: 4, text: `When examining ${sanitizedTopic}, one must ensure that ____________________ (evidence / support) every conclusion.` },
+          { type: 'mcq', num: 5, text: `Which of the following best characterizes '${sanitizedTopic}'?`, options: [`(A) Systematic implementation of core rules`, `(B) Random unstructured experimentation`, `(C) Outdated theory without application`, `(D) Isolated occurrence with no context`] },
+          { type: 'mcq', num: 6, text: `What is the most critical first step when analyzing ${sanitizedTopic}?`, options: [`(A) Formulating clear objectives`, `(B) Skipping prerequisite foundations`, `(C) Ignoring verified evidence`, `(D) Repeating previous errors`] }
+        ];
+
+        secC.instructions = `Carefully read the case study regarding ${sanitizedTopic}, then answer the critical analysis questions.`;
+        secC.passage = `In contemporary educational and professional contexts, the mastery of ${sanitizedTopic} is recognized as a cornerstone of competence. Effective application requires a systematic understanding of underlying frameworks, precise attention to technical detail, and regular reflective practice. Recent studies indicate that structured exercises accelerate proficiency by over 45%.`;
+        secC.items = [
+          { num: 1, text: `Summarize the central thesis of the passage regarding ${sanitizedTopic}.` },
+          { num: 2, text: `Explain how regular deliberate practice influences student performance according to the text.` },
+          { num: 3, text: `Identify one actionable takeaway for solving complex problems within ${sanitizedTopic}.` }
+        ];
+
+        secD.promptText = `Construct a reasoned paragraph (4-6 sentences) synthesizing how knowledge of ${sanitizedTopic} can be applied to solve an authentic real-world challenge. Include at least two supporting examples.`;
+
+        answerKey = [
+          `Section A: 1. Core definition accurately describes the foundational mechanics and purpose of ${sanitizedTopic}.`,
+          `Section A: 2. Identifies two accurate structural principles and practical conventions.`,
+          `Section B: 1. utilizing | 2. carefully evaluate | 3. was developed / has been developed | 4. evidence supports | 5. (A) | 6. (A)`,
+          `Section C: 1. Mastery requires systematic framework understanding and deliberate practice. | 2. Accelerates proficiency by over 45% through structured reinforcement. | 3. Systematic attention to detail and reflective analysis.`,
+          `Section D: Award 5 marks for clear thesis, coherent argumentation, accurate domain vocabulary, and logical real-world application.`
+        ];
+      }
+
+      // Build Formatted HTML representation for A4 Preview & Print
+      const htmlSheet = `
+        <div class="a4-sheet-container">
+          <div class="a4-header-top">
+            <div>
+              <div class="a4-school-title">${school}</div>
+              <div class="a4-sheet-title">${topic}</div>
+              <div class="a4-meta-pills">
+                <span class="a4-pill">Level: ${grade}</span>
+                <span class="a4-pill">Focus: ${type}</span>
+                <span class="a4-pill">Duration: ${timeAllowed}</span>
+                <span class="a4-pill">Total: ${marks}</span>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 11px; font-weight: 700; color: #475569;">OFFICIAL WORKSHEET</div>
+              <div style="font-size: 10px; color: #94A3B8; margin-top: 2px;">Doc Ref: EDU-${Date.now().toString().slice(-6)}</div>
+            </div>
+          </div>
+
+          <div class="a4-student-grid">
+            <div>Student Name: <span class="a4-dotted-blank" style="width: 140px;"></span></div>
+            <div>Class/Group: <span class="a4-dotted-blank" style="width: 60px;"></span></div>
+            <div>Date: <span class="a4-dotted-blank" style="width: 70px;"></span></div>
+            <div>Score: <span class="a4-dotted-blank" style="width: 45px;"> / ${marks.replace(/[^\d]/g, '') || '50'}</span></div>
+          </div>
+
+          <!-- Section A -->
+          <div class="a4-section">
+            <div class="a4-section-header">
+              <span>${secA.title}</span>
+              <span>[${secA.marks}]</span>
+            </div>
+            <div class="a4-instructions">${secA.instructions}</div>
+            ${secA.items.map((item, idx) => `
+              <div class="a4-task-item">
+                <div><span class="a4-task-num">${idx + 1}.</span> ${item.q}</div>
+                <div class="a4-answer-line"></div>
+                <div class="a4-answer-line"></div>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Section B -->
+          <div class="a4-section">
+            <div class="a4-section-header">
+              <span>${secB.title}</span>
+              <span>[${secB.marks}]</span>
+            </div>
+            <div class="a4-instructions">${secB.instructions}</div>
+            ${includeBank && wordBank.length > 0 ? `
+              <div class="a4-wordbank">
+                <strong>WORD BANK:</strong> &nbsp; [ ${wordBank.join(' • ')} ]
+              </div>
+            ` : ''}
+            ${secB.items.map(item => `
+              <div class="a4-task-item">
+                <div><span class="a4-task-num">${item.num}.</span> ${item.text}</div>
+                ${item.type === 'mcq' && item.options ? `
+                  <div class="a4-mcq-grid">
+                    ${item.options.map(opt => `<div>○ ${opt}</div>`).join('')}
+                  </div>
+                ` : ''}
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Section C -->
+          <div class="a4-section">
+            <div class="a4-section-header">
+              <span>${secC.title}</span>
+              <span>[${secC.marks}]</span>
+            </div>
+            <div class="a4-instructions">${secC.instructions}</div>
+            ${secC.passage ? `<div class="a4-passage-box">${secC.passage}</div>` : ''}
+            ${secC.items.map(item => `
+              <div class="a4-task-item">
+                <div><span class="a4-task-num">${item.num}.</span> ${item.text.replace(/\n/g, '<br>')}</div>
+                <div class="a4-answer-line"></div>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Section D -->
+          <div class="a4-section">
+            <div class="a4-section-header">
+              <span>${secD.title}</span>
+              <span>[${secD.marks}]</span>
+            </div>
+            <div class="a4-task-item">
+              <div>${secD.promptText}</div>
+              <div class="a4-answer-line"></div>
+              <div class="a4-answer-line"></div>
+              <div class="a4-answer-line"></div>
+            </div>
+          </div>
+
+          ${includeKey ? `
+            <!-- Teacher Answer Key -->
+            <div class="a4-section a4-key-box" style="page-break-before: always; margin-top: 24px;">
+              <div style="font-weight: 800; font-size: 14px; margin-bottom: 8px; border-bottom: 1px solid #D97706; padding-bottom: 4px;">
+                TEACHER'S OFFICIAL ANSWER KEY & GRADING RUBRIC
+              </div>
+              <div style="font-size: 12.5px; line-height: 1.8;">
+                ${answerKey.map(k => `<div>• ${k}</div>`).join('')}
+              </div>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      // Build Clean Markdown for Raw Text View
+      let md = `========================================================================\n`;
+      md += `${school.toUpperCase()}\n`;
+      md += `A4 WORKSHEET: ${topic.toUpperCase()}\n`;
+      md += `Level: ${grade} | Duration: ${timeAllowed} | Total Marks: ${marks}\n`;
+      md += `========================================================================\n\n`;
+      md += `Student Name: _____________________  Class: ________  Date: ________  Score: ____ / ${marks.replace(/[^\d]/g, '') || '50'}\n\n`;
+
+      md += `--- ${secA.title.toUpperCase()} [${secA.marks}] ---\n`;
+      md += `Directions: ${secA.instructions}\n`;
+      secA.items.forEach((item, i) => {
+        md += `${i + 1}. ${item.q}\n   Ans: _______________________________________________________________\n\n`;
+      });
+
+      md += `--- ${secB.title.toUpperCase()} [${secB.marks}] ---\n`;
+      md += `Directions: ${secB.instructions}\n`;
+      if (includeBank && wordBank.length > 0) {
+        md += `WORD BANK: [ ${wordBank.join(' | ')} ]\n\n`;
+      }
+      secB.items.forEach(item => {
+        md += `${item.num}. ${item.text}\n`;
+        if (item.type === 'mcq' && item.options) {
+          md += `   ${item.options.join('   ')}\n`;
+        }
+        md += `\n`;
+      });
+
+      md += `--- ${secC.title.toUpperCase()} [${secC.marks}] ---\n`;
+      md += `Directions: ${secC.instructions}\n`;
+      if (secC.passage) {
+        md += `\n[PASSAGE]\n"${secC.passage}"\n\n`;
+      }
+      secC.items.forEach(item => {
+        md += `${item.num}. ${item.text}\n   Ans: _______________________________________________________________\n\n`;
+      });
+
+      md += `--- ${secD.title.toUpperCase()} [${secD.marks}] ---\n`;
+      md += `${secD.promptText}\n`;
+      md += `Ans:\n1. _____________________________________________________________________\n2. _____________________________________________________________________\n3. _____________________________________________________________________\n\n`;
+
+      if (includeKey) {
+        md += `========================================================================\n`;
+        md += `TEACHER'S OFFICIAL ANSWER KEY & SCORING GUIDE (PAGE 2)\n`;
+        md += `========================================================================\n`;
+        answerKey.forEach(k => {
+          md += `• ${k}\n`;
+        });
+      }
+
+      return { htmlSheet, markdownContent: md };
+    }
+
     const templates = [
       {
         title: "Present Perfect vs Past Simple Masterclass",
         type: "worksheet",
         level: "B1 Intermediate",
-        desc: "Comprehensive gap-fill exercises, timeline charts, and error-correction tasks.",
+        desc: "High-yield gap-fill exercises, timeline distinction rules, error-detection, and answer key.",
         art: "Grammar timeline chart with dialogue bubbles",
-        content: `🎨 [AI Generated Illustration: Grammar timeline chart]\n\nEnglish A4 Worksheet: Present Perfect vs Past Simple\nLevel: B1 Intermediate\n\n1. I (visit) London three times last year.\n2. She (already / finish) her homework.\n3. Teacher Answer Key Provided.`
+        content: ``,
+        config: {
+          topic: "Present Perfect vs Past Simple Masterclass",
+          grade: "B1 Intermediate",
+          prompt: "5 gap-fill sentences with past participles, 4 multiple choice questions, 3 error-correction sentences, and full teacher answer key."
+        }
       },
       {
-        title: "Business English Email Etiquette & Tone",
+        title: "Business English Email Etiquette & Phrasal Verbs",
         type: "worksheet",
         level: "B2 Upper-Intermediate",
-        desc: "Formal sign-offs, polite requests, and professional vocabulary matching exercises.",
+        desc: "Formal corporate sign-offs, polite requests, and professional phrasal verb conversions.",
         art: "Professional workplace correspondence",
-        content: `🎨 [AI Generated Illustration: Professional workplace correspondence]\n\nEnglish A4 Worksheet: Business Email Etiquette\nLevel: B2 Upper-Intermediate\n\n1. Match formal email sign-offs with their context.\n2. Rewrite informal sentences into professional corporate tone.`
+        content: ``,
+        config: {
+          topic: "Business English Email Etiquette & Phrasal Verbs",
+          grade: "B2 Upper-Intermediate",
+          prompt: "Match formal email phrasal verbs with corporate tone, rewrite informal requests into polite executive phrasing, and full answer key."
+        }
+      },
+      {
+        title: "1st & 2nd Conditionals: Decisions & Dilemmas",
+        type: "worksheet",
+        level: "B2 Upper-Intermediate",
+        desc: "Authentic scenarios, hypothetical choices, error-detection, and sentence rewrites.",
+        art: "Branching path decision tree illustration",
+        content: ``,
+        config: {
+          topic: "1st & 2nd Conditionals: Decisions & Dilemmas",
+          grade: "B2 Upper-Intermediate",
+          prompt: "4 realistic scenario sentences, 4 multiple choice questions on hypothetical vs real outcomes, rewrite tasks, and answer key."
+        }
       },
       {
         title: "Exam Speaking Part 2: Travel & Culture",
@@ -1585,31 +2236,28 @@
         level: "C1 Advanced",
         desc: "8-slide interactive deck with cue cards, advanced vocabulary, and band score rubric.",
         art: "Global travel imagery and speaking cue card graphic",
-        content: `🎨 [AI Generated Illustration: Global travel imagery]\n\nEnglish Presentation: Exam Speaking Part 2\nTotal Slides: 8\n\nSlide 1: Overview & Timing\nSlide 2: Cue Card (Describe an unforgettable journey)\nSlide 3: High-Scoring Vocabulary`
+        content: `🎨 [AI Generated Illustration: Global travel imagery]\n\nEnglish Presentation: Exam Speaking Part 2\nTotal Slides: 8\n\nSlide 1: Overview & Timing\nSlide 2: Cue Card (Describe an unforgettable journey)\nSlide 3: High-Scoring Vocabulary\nSlide 4: Idiomatic Expressions for Travel\nSlide 5: Band 8+ Model Answer\nSlide 6: Fluency & Cohesion Strategies\nSlide 7: Timed Peer-Practice Activity\nSlide 8: Self-Evaluation Rubric`
       },
       {
-        title: "Phonics & Pronunciation: Silent Letters",
+        title: "Passive Voice in News & Science Headlines",
         type: "worksheet",
-        level: "A2 Elementary",
-        desc: "Engaging phonics exercises highlighting silent consonants in common English words.",
-        art: "Playful phonetic alphabet symbols and speaking mouths",
-        content: `🎨 [AI Generated Illustration: Playful phonetic alphabet symbols]\n\nEnglish A4 Worksheet: Silent Letters Phonics\nLevel: A2 Elementary\n\n1. Circle the silent letter: Knife, Write, Debt.\n2. Pronunciation pairing practice.`
+        level: "B1 Intermediate",
+        desc: "Active-to-passive conversions, headline analysis, laboratory report style drills, and solutions.",
+        art: "Newspaper printing press and scientific discovery icons",
+        content: ``,
+        config: {
+          topic: "Passive Voice in News & Science Headlines",
+          grade: "B1 Intermediate",
+          prompt: "Convert 5 active sentences into passive voice, fill in blanks with passive forms, and headline analysis with answer key."
+        }
       },
       {
         title: "Tech Innovation & AI Pitch Deck",
         type: "presentation",
         level: "B2/C1",
-        desc: "Interactive presentation slides exploring artificial intelligence vocabulary and debates.",
+        desc: "Interactive presentation slides exploring artificial intelligence vocabulary, debates, and future scenarios.",
         art: "Futuristic AI neural network and glowing data streams",
-        content: `🎨 [AI Generated Illustration: Futuristic AI neural network]\n\nEnglish Presentation: Tech Innovation & AI\nTotal Slides: 10\n\nSlide 1: Introduction to AI\nSlide 2: Debate Topics\nSlide 3: Vocabulary Glossary`
-      },
-      {
-        title: "Travel Phrasal Verbs & Airport Situations",
-        type: "worksheet",
-        level: "B1 Intermediate",
-        desc: "Roleplay dialogues and matching tasks for check-in, security, and boarding.",
-        art: "Airport terminal boarding gate and travel luggage vector",
-        content: `🎨 [AI Generated Illustration: Airport terminal boarding gate]\n\nEnglish A4 Worksheet: Travel Phrasal Verbs\nLevel: B1 Intermediate\n\n1. Match phrasal verbs: check in, take off, touch down\n2. Complete airport dialogue roleplay.`
+        content: `🎨 [AI Generated Illustration: Futuristic AI neural network]\n\nEnglish Presentation: Tech Innovation & AI\nTotal Slides: 8\n\nSlide 1: The AI Paradigm Shift\nSlide 2: Core Terminology: LLMs, Neural Networks, Automation\nSlide 3: Ethical Debates: Job Transformation vs Displacement\nSlide 4: Group Roleplay: The AI Ethics Board\nSlide 5: Phrasal Verbs in Technology\nSlide 6: Persuasive Pitch Framework\nSlide 7: Classroom Debate Prompts\nSlide 8: Key Takeaways & Discussion`
       }
     ];
 
@@ -1625,7 +2273,7 @@
 
       const titles = {
         dashboard: ["Dashboard", "Overview & prompt-driven educational generator"],
-        worksheet: ["Worksheet Generator", "Create customized A4 printable English worksheets"],
+        worksheet: ["Worksheet Generator", "Create customized A4 printable English worksheets with real tasks"],
         presentation: ["PowerPoint Generator", "Design interactive slide decks for classroom projection"],
         templates: ["Templates Gallery", "Browse ready-to-use lesson templates and worksheets"],
         library: ["My Library", "View and access your generated materials"]
@@ -1654,38 +2302,88 @@
     }
 
     function generateFromDashboard() {
-      const prompt = document.getElementById('dash-prompt').value.trim() || 'General English Lesson';
-      const content = `🎨 [AI Generated Illustration: "${prompt} visual graphic"]\n\nGenerated Resource: ${prompt}\n\n1. Objectives & Key Competencies\n2. Teacher Delivery Plan & Discussion Prompts\n3. Core Activities & Exercises\n4. Assessment Rubric & Answer Key`;
-      saveToLibrary(prompt, "Quick Resource", "Generated from Dashboard", content);
-      showToast(`Generated "${prompt}" and added to Library!`);
+      const prompt = document.getElementById('dash-prompt').value.trim() || 'General English Lesson: Present Perfect Mastery';
+      const isPpt = prompt.toLowerCase().includes('presentation') || prompt.toLowerCase().includes('slide') || prompt.toLowerCase().includes('deck');
+
+      if (isPpt) {
+        const content = `🎨 [AI Generated Slide Art: "${prompt}"]\n\nEducational Presentation Deck: ${prompt}\n\nSlide 1: Topic Overview & Learning Objectives\nSlide 2: Diagnostic Check & Core Concepts\nSlide 3: Essential Vocabulary & Collocations\nSlide 4: Interactive Group Discussion\nSlide 5: Guided Practice & Analysis\nSlide 6: Live Student Debate\nSlide 7: Practical Real-World Application\nSlide 8: Key Takeaways & Teacher Notes`;
+        saveToLibrary(prompt, "Presentation", "Generated from Dashboard", content);
+        showToast(`Generated presentation deck for "${prompt}"!`);
+      } else {
+        const result = buildRealA4Worksheet({
+          topic: prompt,
+          prompt: prompt,
+          school: 'International Learning Institute',
+          grade: 'B1 Intermediate',
+          type: 'Comprehensive Multi-Section Mastery'
+        });
+        saveToLibrary(prompt, "A4 Worksheet", "Generated from Dashboard", result.markdownContent, result.htmlSheet);
+        showToast(`Generated real A4 worksheet for "${prompt}"!`);
+      }
     }
 
     function generateWorksheet() {
-      const topic = document.getElementById('ws-topic').value || 'Grammar Review';
+      const topic = document.getElementById('ws-topic').value.trim() || 'Present Perfect vs Past Simple';
+      const prompt = document.getElementById('ws-prompt').value.trim();
+      const school = document.getElementById('ws-school').value.trim() || 'Global Academy of English';
+      const timeAllowed = document.getElementById('ws-time').value.trim() || '45 Minutes';
+      const marks = document.getElementById('ws-marks').value.trim() || '50 Marks';
       const grade = document.getElementById('ws-grade').value;
       const type = document.getElementById('ws-type').value;
       const count = document.getElementById('ws-count').value;
-      const art = document.getElementById('ws-art').value || `${topic} educational graphic`;
+      const includeKey = document.getElementById('ws-include-key').checked;
+      const includeBank = document.getElementById('ws-include-bank').checked;
 
-      const content = `🎨 [AI Generated Illustration: "${art}"]\n\nEnglish A4 Worksheet: ${topic}\nProficiency Level: ${grade}\nFocus Area: ${type} (${count})\n\n1. Warm-up Discussion Questions:\n   - How often do you encounter this structure?\n\n2. Exercises:\n   - Fill in the blanks with appropriate grammar structures.\n   - Rewrite sentences to correct errors.\n\n3. Vocabulary & Collocations:\n   - Match vocabulary with definitions.\n\n[Teacher Answer Key Provided on Page 2]`;
+      const { htmlSheet, markdownContent } = buildRealA4Worksheet({
+        topic,
+        prompt,
+        school,
+        timeAllowed,
+        marks,
+        grade,
+        type,
+        count,
+        includeKey,
+        includeBank
+      });
 
-      lastGenerated.ws = { title: topic, type: "A4 Worksheet", details: `${grade} • ${count}`, content: content };
+      lastGenerated.ws = {
+        title: topic,
+        type: "A4 Worksheet",
+        details: `${grade} • ${marks}`,
+        content: markdownContent,
+        htmlSheet: htmlSheet
+      };
 
       document.getElementById('ws-result').classList.remove('hidden');
-      document.getElementById('ws-output').textContent = content;
-      saveToLibrary(topic, "A4 Worksheet", `${grade} • ${count}`, content);
-      showToast(`Worksheet on "${topic}" created!`);
+      document.getElementById('ws-result-title').textContent = topic;
+      document.getElementById('ws-result-subtitle').textContent = `${grade} • ${marks} • ${timeAllowed} • Real Tasks`;
+
+      document.getElementById('ws-formatted-preview').innerHTML = htmlSheet;
+      document.getElementById('ws-output').textContent = markdownContent;
+
+      // Switch to formatted preview by default
+      switchWsPreviewTab('formatted');
+
+      saveToLibrary(topic, "A4 Worksheet", `${grade} • ${marks}`, markdownContent, htmlSheet);
+      showToast(`Real A4 Worksheet for "${topic}" generated!`);
     }
 
     function generatePresentation() {
-      const topic = document.getElementById('ppt-topic').value || 'Classroom Lesson';
+      const topic = document.getElementById('ppt-topic').value.trim() || 'Artificial Intelligence & Future of Work';
       const slides = document.getElementById('ppt-slides').value;
       const style = document.getElementById('ppt-style').value;
-      const art = document.getElementById('ppt-art').value || `${topic} slide theme`;
+      const art = document.getElementById('ppt-art').value.trim() || `${topic} slide theme`;
 
-      const content = `🎨 [AI Generated Slide Art: "${art}"]\n\nEnglish Presentation: ${topic}\nStyle: ${style} | Deck Size: ${slides}\n\nSlide 1: Topic Overview & Learning Objectives\nSlide 2: Core Concepts & Vocabulary\nSlide 3: Group Activity & Roleplay\nSlide 4: Debate & Class Discussion\n\n[Speaker Notes Included for Instructor]`;
+      const content = `🎨 [AI Generated Slide Art: "${art}"]\n\nEducational Presentation: ${topic}\nVisual Style: ${style} | Deck Size: ${slides}\n\nSlide 1: Topic Overview & Learning Objectives\nSlide 2: Core Concepts & Diagnostic Questions\nSlide 3: Essential Vocabulary & Idiomatic Expressions\nSlide 4: Case Study & Real-World Evidence\nSlide 5: Guided Class Activity & Debate\nSlide 6: Student Collaboration & Roleplay\nSlide 7: Advanced Synthesis & Critical Thinking\nSlide 8: Assessment Rubric & Speaker Notes for Instructor`;
 
-      lastGenerated.ppt = { title: topic, type: "Presentation Deck", details: `${slides} • ${style}`, content: content };
+      lastGenerated.ppt = {
+        title: topic,
+        type: "Presentation Deck",
+        details: `${slides} • ${style}`,
+        content: content,
+        htmlSheet: ''
+      };
 
       document.getElementById('ppt-result').classList.remove('hidden');
       document.getElementById('ppt-output').textContent = content;
@@ -1695,27 +2393,26 @@
 
     function printGenerated(typeKey) {
       const item = lastGenerated[typeKey];
-      if (!item || !item.content) {
+      if (!item || (!item.content && !item.htmlSheet)) {
         showToast("Please generate content first before printing.");
         return;
       }
-      printContent(item.title, item.type, item.details, item.content);
+      printContent(item.title, item.type, item.details, item.content, item.htmlSheet);
     }
 
     function printLibraryItem(idx) {
       const item = library[idx];
       if (!item) return;
-      printContent(item.title, item.type, item.details, item.content);
+      printContent(item.title, item.type, item.details, item.content, item.htmlSheet);
     }
 
-    function printContent(title, type, details, rawText) {
+    function printContent(title, type, details, rawText, htmlSheet) {
       const printWindow = window.open('', '_blank');
       if (!printWindow) {
         showToast('Please allow pop-ups to open the print dialog.');
         return;
       }
 
-      const dateStr = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
       const qrImgSrc = generateQrImageUrl(window.location.href);
 
       printWindow.document.write(`
@@ -1725,11 +2422,11 @@
           <title>${title} - ${type}</title>
           <link rel="preconnect" href="https://fonts.googleapis.com">
           <link rel="preconnect" href="https://fonts.gstatic.com">
-          <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+          <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
           <style>
             @page {
-              size: A4;
-              margin: 15mm 15mm 15mm 15mm;
+              size: A4 portrait;
+              margin: 12mm 15mm 12mm 15mm;
             }
             * {
               box-sizing: border-box;
@@ -1740,119 +2437,196 @@
             body {
               background: #ffffff;
               color: #0f172a;
-              padding: 24px;
-              line-height: 1.6;
+              padding: 0;
+              line-height: 1.55;
+              font-size: 13px;
             }
-            .header {
+            .a4-header-top {
               display: flex;
               justify-content: space-between;
               align-items: flex-start;
-              border-bottom: 2px solid #0f172a;
-              padding-bottom: 14px;
-              margin-bottom: 20px;
+              border-bottom: 2.5px solid #0f172a;
+              padding-bottom: 12px;
+              margin-bottom: 14px;
             }
-            .title {
-              font-size: 22px;
+            .a4-school-title {
+              font-size: 12px;
+              text-transform: uppercase;
+              letter-spacing: 1.5px;
+              font-weight: 800;
+              color: #475569;
+            }
+            .a4-sheet-title {
+              font-size: 20px;
               font-weight: 800;
               color: #0f172a;
+              margin-top: 2px;
             }
-            .subtitle {
-              font-size: 13px;
-              color: #475569;
-              font-weight: 600;
-              margin-top: 4px;
-            }
-            .header-right {
+            .a4-meta-pills {
               display: flex;
-              align-items: center;
-              gap: 12px;
-              text-align: right;
+              gap: 8px;
+              margin-top: 6px;
+              flex-wrap: wrap;
+            }
+            .a4-pill {
+              font-size: 10.5px;
+              font-weight: 700;
+              background: #f1f5f9;
+              color: #334155;
+              padding: 2px 7px;
+              border-radius: 4px;
+              border: 1px solid #cbd5e1;
             }
             .header-qr {
-              width: 54px;
-              height: 54px;
+              width: 52px;
+              height: 52px;
               border: 1px solid #cbd5e1;
               border-radius: 6px;
               padding: 2px;
             }
-            .student-fields {
+            .a4-student-grid {
               display: grid;
-              grid-template-columns: 2fr 1fr 1fr;
-              gap: 16px;
+              grid-template-columns: 2fr 1fr 1fr 1fr;
+              gap: 10px;
               background: #f8fafc;
-              border: 1px solid #cbd5e1;
-              border-radius: 8px;
-              padding: 12px 16px;
-              margin-bottom: 24px;
-              font-size: 13px;
+              border: 1.5px solid #cbd5e1;
+              border-radius: 6px;
+              padding: 8px 12px;
+              margin-bottom: 16px;
+              font-size: 12px;
               font-weight: 600;
               color: #334155;
             }
-            .student-field-line {
-              border-bottom: 1px dotted #64748b;
+            .a4-dotted-blank {
+              border-bottom: 1.5px dotted #64748b;
               display: inline-block;
-              min-width: 100px;
-              margin-left: 6px;
+              min-width: 80px;
+              margin-left: 4px;
             }
-            .content {
-              white-space: pre-wrap;
-              font-size: 14px;
-              line-height: 1.8;
+            .a4-section {
+              margin-bottom: 16px;
+              page-break-inside: avoid;
+            }
+            .a4-section-header {
+              background: #0f172a;
+              color: #ffffff;
+              padding: 5px 10px;
+              border-radius: 4px;
+              font-size: 12px;
+              font-weight: 800;
+              letter-spacing: 0.3px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 8px;
+            }
+            .a4-instructions {
+              font-size: 11.5px;
+              font-style: italic;
+              color: #475569;
+              margin-bottom: 8px;
+            }
+            .a4-wordbank {
+              background: #f8fafc;
+              border: 1px dashed #94a3b8;
+              border-radius: 6px;
+              padding: 8px 12px;
+              margin-bottom: 10px;
+              font-size: 11.5px;
+              font-weight: 700;
+              color: #1e293b;
+              text-align: center;
+            }
+            .a4-task-item {
+              margin-bottom: 8px;
+              font-size: 12.5px;
+              color: #1e293b;
+              line-height: 1.6;
+            }
+            .a4-task-num {
+              font-weight: 800;
               color: #0f172a;
-              background: #ffffff;
+            }
+            .a4-mcq-grid {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 4px 12px;
+              margin: 4px 0 8px 16px;
+              font-size: 12px;
+            }
+            .a4-passage-box {
+              background: #f8fafc;
+              border-left: 3.5px solid #4338ca;
+              padding: 10px 14px;
+              border-radius: 0 6px 6px 0;
+              font-size: 12px;
+              line-height: 1.6;
+              margin-bottom: 10px;
+            }
+            .a4-answer-line {
+              border-bottom: 1.5px dotted #94a3b8;
+              height: 20px;
+              margin-top: 4px;
+              margin-bottom: 4px;
+              width: 100%;
+            }
+            .a4-key-box {
+              background: #fef3c7;
+              border: 1.5px solid #f59e0b;
+              border-radius: 8px;
+              padding: 14px;
+              margin-top: 20px;
+              color: #92400e;
+              font-size: 12px;
+              page-break-before: always;
             }
             .footer {
-              margin-top: 40px;
-              padding-top: 12px;
+              margin-top: 20px;
+              padding-top: 8px;
               border-top: 1px solid #e2e8f0;
               display: flex;
               justify-content: space-between;
               align-items: center;
-              font-size: 11px;
+              font-size: 10px;
               color: #64748b;
             }
+            .raw-content-view {
+              white-space: pre-wrap;
+              font-size: 12.5px;
+              line-height: 1.7;
+            }
             @media print {
-              body {
-                padding: 0;
-              }
-              .no-print {
-                display: none !important;
-              }
+              .no-print { display: none !important; }
             }
           </style>
         </head>
         <body>
-          <div class="header">
-            <div>
-              <div class="title">${title || 'EduGen Worksheet'}</div>
-              <div class="subtitle">${type} • ${details || 'Educational Teaching Material'}</div>
-            </div>
-            <div class="header-right">
+          ${htmlSheet || `
+            <div class="a4-header-top">
               <div>
-                <div style="font-size: 12px; color: #475569; font-weight: 600;">Date: ${dateStr}</div>
-                <div style="font-size: 10px; color: #94a3b8; margin-top: 2px;">Scan for digital link</div>
+                <div class="a4-school-title">EduGen Teaching Materials</div>
+                <div class="a4-sheet-title">${title}</div>
+                <div class="a4-meta-pills">
+                  <span class="a4-pill">${type}</span>
+                  <span class="a4-pill">${details}</span>
+                </div>
               </div>
               <img src="${qrImgSrc}" class="header-qr" alt="QR Link" />
             </div>
-          </div>
-
-          <div class="student-fields">
-            <div>Student Name: <span class="student-field-line" style="width: 140px;"></span></div>
-            <div>Class: <span class="student-field-line" style="width: 60px;"></span></div>
-            <div>Score: <span class="student-field-line" style="width: 50px;"> / 100</span></div>
-          </div>
-
-          <div class="content">${rawText}</div>
-
+            <div class="a4-student-grid">
+              <div>Student Name: <span class="a4-dotted-blank" style="width: 140px;"></span></div>
+              <div>Class: <span class="a4-dotted-blank" style="width: 60px;"></span></div>
+              <div>Date: <span class="a4-dotted-blank" style="width: 70px;"></span></div>
+              <div>Score: <span class="a4-dotted-blank" style="width: 45px;"> / 50</span></div>
+            </div>
+            <div class="raw-content-view">${rawText}</div>
+          `}
           <div class="footer">
-            <span>EduGen AI Studio — Teaching Materials</span>
-            <span>📱 Scan QR code on header to open mobile companion</span>
+            <span>EduGen AI Studio — A4 Classroom Worksheet</span>
+            <span>📱 Scan QR code on header for mobile answer key & companion</span>
           </div>
-
           <script>
-            window.onload = function() {
-              window.print();
-            };
+            window.onload = function() { window.print(); };
           <\/script>
         </body>
         </html>
@@ -1890,17 +2664,32 @@
 
     function printTemplate(idx) {
       const t = templates[idx];
-      printContent(t.title, t.type === 'worksheet' ? 'A4 Worksheet' : 'Presentation', t.level, t.content);
+      if (t.config) {
+        const res = buildRealA4Worksheet(t.config);
+        printContent(t.title, 'A4 Worksheet', t.level, res.markdownContent, res.htmlSheet);
+      } else {
+        printContent(t.title, t.type === 'worksheet' ? 'A4 Worksheet' : 'Presentation', t.level, t.content);
+      }
     }
 
     function useTemplate(idx) {
       const t = templates[idx];
-      saveToLibrary(t.title, t.type === 'worksheet' ? 'A4 Worksheet' : 'Presentation', t.level, t.content);
-      showToast(`Template "${t.title}" added to Library!`);
+      if (t.config) {
+        const res = buildRealA4Worksheet(t.config);
+        saveToLibrary(t.title, 'A4 Worksheet', t.level, res.markdownContent, res.htmlSheet);
+        switchTabById('worksheet');
+        document.getElementById('ws-topic').value = t.config.topic;
+        document.getElementById('ws-grade').value = t.config.grade;
+        document.getElementById('ws-prompt').value = t.config.prompt;
+        generateWorksheet();
+      } else {
+        saveToLibrary(t.title, t.type === 'worksheet' ? 'A4 Worksheet' : 'Presentation', t.level, t.content);
+      }
+      showToast(`Template "${t.title}" loaded and added to Library!`);
     }
 
-    function saveToLibrary(title, type, details, content) {
-      library.unshift({ id: Date.now(), title, type, details, content, date: new Date().toLocaleDateString() });
+    function saveToLibrary(title, type, details, content, htmlSheet = '') {
+      library.unshift({ id: Date.now(), title, type, details, content, htmlSheet, date: new Date().toLocaleDateString() });
       localStorage.setItem('edugen_lib', JSON.stringify(library));
     }
 
