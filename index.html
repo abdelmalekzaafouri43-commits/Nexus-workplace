@@ -851,6 +851,171 @@
       color: var(--badge-ws-color);
     }
 
+    .badge-lessonplan {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34D399;
+    }
+
+    [data-theme="light"] .badge-lessonplan {
+      background: rgba(16, 185, 129, 0.15);
+      color: #059669;
+    }
+
+    /* Lesson Plan Specific Layout & Tables */
+    .lp-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 640px) {
+      .lp-meta-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .lp-info-box {
+      background: #F8FAFC;
+      border: 1px solid #CBD5E1;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12.5px;
+      color: #334155;
+      line-height: 1.5;
+    }
+
+    .lp-info-box strong {
+      color: #0F172A;
+      display: block;
+      margin-bottom: 3px;
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .lp-table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin-bottom: 20px;
+      border: 1px solid #CBD5E1;
+      border-radius: 8px;
+    }
+
+    .lp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+      background: #FFFFFF;
+    }
+
+    .lp-table th {
+      background: #0F172A;
+      color: #FFFFFF;
+      padding: 9px 12px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      border-right: 1px solid #334155;
+      white-space: nowrap;
+    }
+
+    .lp-table th:last-child {
+      border-right: none;
+    }
+
+    .lp-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #E2E8F0;
+      border-right: 1px solid #E2E8F0;
+      vertical-align: top;
+      color: #1E293B;
+      line-height: 1.55;
+    }
+
+    .lp-table td:last-child {
+      border-right: none;
+    }
+
+    .lp-table tr:nth-child(even) td {
+      background: #F8FAFC;
+    }
+
+    .lp-stage-name {
+      font-weight: 800;
+      color: #0F172A;
+      display: block;
+      font-size: 12.5px;
+    }
+
+    .lp-stage-aim {
+      color: #64748B;
+      font-size: 11px;
+      font-style: italic;
+      margin-top: 2px;
+      display: block;
+    }
+
+    .lp-pattern-badge {
+      display: inline-block;
+      padding: 2px 7px;
+      background: #EEF2F6;
+      border: 1px solid #CBD5E1;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 10.5px;
+      color: #334155;
+      margin-top: 4px;
+    }
+
+    .lp-materials-box {
+      background: #F0FDF4;
+      border: 1.5px solid #86EFAC;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+      color: #166534;
+      font-size: 12.5px;
+      line-height: 1.6;
+    }
+
+    .lp-script-box {
+      background: #F8FAFC;
+      border-left: 4px solid #0891B2;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      font-size: 12.5px;
+      line-height: 1.65;
+      color: #1E293B;
+      margin-bottom: 16px;
+    }
+
+    .lp-script-speaker {
+      font-weight: 800;
+      color: #0891B2;
+      margin-right: 4px;
+    }
+
+    .lp-ccq-item {
+      background: #EFF6FF;
+      border-left: 3px solid #3B82F6;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      border-radius: 0 6px 6px 0;
+      font-size: 12px;
+      color: #1E3A8A;
+    }
+
+    .lp-ccq-q {
+      font-weight: 700;
+    }
+
+    .lp-ccq-a {
+      color: #2563EB;
+      margin-top: 2px;
+      font-style: italic;
+    }
+
     /* Preview Output & Formatted A4 Sheet */
     .preview-box {
       background: var(--preview-bg);
@@ -1271,6 +1436,10 @@
       <span class="material-symbols-outlined">dashboard</span>
       Dashboard
     </button>
+    <button class="nav-btn" onclick="switchTab('lessonplan', this)">
+      <span class="material-symbols-outlined">menu_book</span>
+      Lesson Plan Generator
+    </button>
     <button class="nav-btn" onclick="switchTab('worksheet', this)">
       <span class="material-symbols-outlined">description</span>
       Worksheet Generator
@@ -1338,7 +1507,7 @@
         <div class="card">
           <label>Quick AI Generation Prompt</label>
           <div style="position: relative; margin-top: 8px;">
-            <textarea id="dash-prompt" rows="3" placeholder="e.g. Create a B1 level presentation about climate change with interactive debate slides and vocabulary list..."></textarea>
+            <textarea id="dash-prompt" rows="3" placeholder="e.g. Create a B2 Lesson Plan on Climate Change focusing on Reading & Speaking with audio script, CCQs, and debate activity..."></textarea>
           </div>
           <button class="btn-primary" style="margin-top: 14px;" onclick="generateFromDashboard()">
             <span class="material-symbols-outlined">auto_awesome</span>
@@ -1348,8 +1517,13 @@
 
         <div class="grid">
           <div class="card">
+            <h3 style="font-size: 17px;">📋 Lesson Plan Generator</h3>
+            <p style="color: var(--text-muted); font-size: 13.5px; margin: 8px 0 16px;">Create CELTA/Cambridge standard lesson plans covering Reading, Listening, Language Analysis, Writing, and Speaking.</p>
+            <button class="btn-primary" onclick="switchTabById('lessonplan')">Launch Lesson Planner</button>
+          </div>
+          <div class="card">
             <h3 style="font-size: 17px;">📝 A4 Worksheet Generator</h3>
-            <p style="color: var(--text-muted); font-size: 13.5px; margin: 8px 0 16px;">Generate printable English grammar, reading, and vocabulary exercises.</p>
+            <p style="color: var(--text-muted); font-size: 13.5px; margin: 8px 0 16px;">Generate printable English grammar, reading, and vocabulary exercises with real tasks.</p>
             <button class="btn-primary" onclick="switchTabById('worksheet')">Launch Worksheet Maker</button>
           </div>
           <div class="card">
@@ -1357,6 +1531,140 @@
             <p style="color: var(--text-muted); font-size: 13.5px; margin: 8px 0 16px;">Create classroom presentations with speaker notes and custom AI illustrations.</p>
             <button class="btn-primary" onclick="switchTabById('presentation')">Launch Slide Maker</button>
           </div>
+        </div>
+      </section>
+
+      <!-- LESSON PLAN TAB -->
+      <section id="view-lessonplan" class="hidden">
+        <div class="card">
+          <div class="form-group">
+            <label>Lesson Topic / Theme</label>
+            <input type="text" id="lp-topic" placeholder="e.g. Environmental Action & Renewable Energy, Digital Nomad Lifestyle, Present Perfect in Narratives..." />
+          </div>
+
+          <div class="form-group">
+            <label>Core Skill & Pedagogical Focus</label>
+            <select id="lp-skill" onchange="updateLpSkillHint()">
+              <option selected value="reading">📖 Reading & Language Focus (Skimming, Scanning, Contextual Lexis & Discourse)</option>
+              <option value="listening">🎧 Listening & Speaking Fluency (Audio Script, Prediction, Gist/Detail, Roleplay/Debate)</option>
+              <option value="language">🧠 Language Focus & Grammar/Lexis (PPP / TTT, Marker Sentences, CCQs & Drills)</option>
+              <option value="writing">✍️ Language & Writing Production (Model Text Analysis, Scaffolding, Essay/Review & Rubric)</option>
+              <option value="speaking">🗣️ Speaking & Oral Communication (Pronunciation, Discussion, Timed Speaking Tasks)</option>
+              <option value="integrated">🌟 Integrated 4-Skills Master Plan (Reading + Listening + Language Analysis + Output)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Custom Teacher Directives & Prompt Requirements</label>
+            <textarea id="lp-prompt" rows="3" placeholder="e.g. Include 4 pre-taught blocked vocabulary items with CCQs, authentic 220-word reading passage or 2-speaker audio dialogue, step-by-step stage procedure table, pair speaking task, and delayed feedback rubric."></textarea>
+            <div class="prompt-pills-row">
+              <span style="font-size: 11px; color: var(--text-muted); align-self: center; margin-right: 4px;">Quick Presets:</span>
+              <button type="button" class="prompt-pill" onclick="setLpPreset('Renewable Energy & Climate Action', 'reading', 'B1 Intermediate', '60 Minutes', 'Pre-teach 4 environmental terms with CCQs, 200-word reading text, skimming/scanning comprehension check, and pair solution pitch.')">Reading & Language: Climate (B1)</button>
+              <button type="button" class="prompt-pill" onclick="setLpPreset('Artificial Intelligence & Modern Careers', 'listening', 'B2 Upper-Intermediate', '60 Minutes', 'Complete 2-speaker audio podcast transcript, listening for gist & specific nuance, functional language for agreeing/disagreeing, and pair debate.')">Listening & Speaking: AI Careers (B2)</button>
+              <button type="button" class="prompt-pill" onclick="setLpPreset('Travel Mishaps & Narrative Tenses', 'language', 'B1 Intermediate', '45 Minutes', 'PPP framework for Past Simple vs Past Continuous vs Past Perfect, timeline diagrams, CCQs, and communicative storytelling.')">Language Focus: Narrative Tenses (B1)</button>
+              <button type="button" class="prompt-pill" onclick="setLpPreset('Opinion Essay on Remote Work Culture', 'writing', 'B2 Upper-Intermediate', '90 Minutes', 'Model opinion essay analysis, linking words for concession and addition, paragraph drafting scaffold, and peer review rubric.')">Writing: Opinion Essay (B2)</button>
+              <button type="button" class="prompt-pill" onclick="setLpPreset('Global Tourism & Overtourism Dilemma', 'integrated', 'C1 Advanced', '90 Minutes', 'Integrated 4-skills plan with short article extract, audio interview transcript, advanced idiomatic collocations, and simulated municipal council debate.')">Integrated 4-Skills: Overtourism (C1)</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label>CEFR Target Level</label>
+              <select id="lp-grade">
+                <option>A1 Beginner</option>
+                <option>A2 Elementary</option>
+                <option selected>B1 Intermediate</option>
+                <option>B2 Upper-Intermediate</option>
+                <option>C1 Advanced</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Lesson Duration</label>
+              <select id="lp-duration">
+                <option>45 Minutes</option>
+                <option selected>60 Minutes</option>
+                <option>90 Minutes</option>
+                <option>120 Minutes (Extended Workshop)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Teaching Methodology / Framework</label>
+              <select id="lp-framework">
+                <option selected>Skills-Based (Pre - While - Post Analysis & Output)</option>
+                <option>PPP (Presentation - Practice - Production)</option>
+                <option>TTT (Test - Teach - Test Diagnostic)</option>
+                <option>Task-Based Learning (TBL / Pre-Task - Task Cycle - Language Focus)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label>Institution / School Name</label>
+              <input type="text" id="lp-school" value="International Language Academy" placeholder="e.g. Cambridge Language School" />
+            </div>
+            <div class="form-group">
+              <label>Class Profile & Group Size</label>
+              <input type="text" id="lp-class" value="Adult / Young Adult Learners (14-18 Students)" placeholder="e.g. 15 B1 Adult Learners" />
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 16px; margin: 8px 0 16px; flex-wrap: wrap;">
+            <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; color: var(--text-main);">
+              <input type="checkbox" id="lp-include-text" checked style="accent-color: var(--primary); width: 16px; height: 16px;" />
+              Include Full Reading Text / Audio Transcript Script
+            </label>
+            <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; color: var(--text-main);">
+              <input type="checkbox" id="lp-include-mfp" checked style="accent-color: var(--primary); width: 16px; height: 16px;" />
+              Include Meaning, Form, Pronunciation (MFP) & Concept Checking Questions (CCQs)
+            </label>
+            <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; color: var(--text-main);">
+              <input type="checkbox" id="lp-include-table" checked style="accent-color: var(--primary); width: 16px; height: 16px;" />
+              Include Stage-by-Stage Procedure Table
+            </label>
+            <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; color: var(--text-main);">
+              <input type="checkbox" id="lp-include-rubric" checked style="accent-color: var(--primary); width: 16px; height: 16px;" />
+              Include Board Plan & Assessment Rubric / Homework
+            </label>
+          </div>
+
+          <button class="btn-primary" onclick="generateLessonPlan()">
+            <span class="material-symbols-outlined">auto_awesome</span>
+            Generate Comprehensive Lesson Plan
+          </button>
+        </div>
+
+        <div id="lp-result" class="card hidden">
+          <div class="card-header-row" style="margin-bottom: 12px;">
+            <div>
+              <h3 style="font-size: 17px;" id="lp-result-title">Generated Lesson Plan</h3>
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;" id="lp-result-subtitle">CELTA/Cambridge Standard Teaching Plan & Procedures</div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-action" onclick="openQrForContent('lp')" title="Get QR link for this lesson plan">
+                <span class="material-symbols-outlined" style="font-size: 18px; color: var(--secondary);">qr_code_2</span>
+                QR Link
+              </button>
+              <button class="btn-action" onclick="printGenerated('lp')" title="Print or Save as PDF">
+                <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
+                Print Plan / PDF
+              </button>
+            </div>
+          </div>
+
+          <div class="preview-tabs-bar">
+            <button class="preview-tab-btn active" id="lp-tab-formatted" onclick="switchLpPreviewTab('formatted')">
+              <span class="material-symbols-outlined" style="font-size: 16px;">description</span>
+              Formatted Lesson Plan Sheet
+            </button>
+            <button class="preview-tab-btn" id="lp-tab-raw" onclick="switchLpPreviewTab('raw')">
+              <span class="material-symbols-outlined" style="font-size: 16px;">code</span>
+              Raw Text / Markdown
+            </button>
+          </div>
+
+          <div id="lp-formatted-preview" class="a4-preview-card"></div>
+          <div id="lp-output" class="preview-box hidden"></div>
         </div>
       </section>
 
@@ -1703,8 +2011,873 @@
     // Active generation tracking for print and QR
     let lastGenerated = {
       ws: { title: '', type: 'A4 Worksheet', details: '', content: '', htmlSheet: '' },
+      lp: { title: '', type: 'Lesson Plan', details: '', content: '', htmlSheet: '' },
       ppt: { title: '', type: 'Presentation Deck', details: '', content: '', htmlSheet: '' }
     };
+
+    // Lesson Plan Helpers
+    function setLpPreset(topic, skill, grade, duration, promptText) {
+      document.getElementById('lp-topic').value = topic;
+      document.getElementById('lp-skill').value = skill;
+      document.getElementById('lp-grade').value = grade;
+      document.getElementById('lp-duration').value = duration;
+      document.getElementById('lp-prompt').value = promptText;
+      updateLpSkillHint();
+      showToast(`Loaded Lesson Plan preset: ${topic}`);
+    }
+
+    function updateLpSkillHint() {
+      const skill = document.getElementById('lp-skill').value;
+      const framework = document.getElementById('lp-framework');
+      if (skill === 'language') {
+        framework.value = 'PPP (Presentation - Practice - Production)';
+      } else if (skill === 'writing') {
+        framework.value = 'Skills-Based (Pre - While - Post Analysis & Output)';
+      } else if (skill === 'speaking') {
+        framework.value = 'Task-Based Learning (TBL / Pre-Task - Task Cycle - Language Focus)';
+      }
+    }
+
+    function switchLpPreviewTab(tab) {
+      const btnFormatted = document.getElementById('lp-tab-formatted');
+      const btnRaw = document.getElementById('lp-tab-raw');
+      const viewFormatted = document.getElementById('lp-formatted-preview');
+      const viewRaw = document.getElementById('lp-output');
+
+      if (tab === 'formatted') {
+        btnFormatted.classList.add('active');
+        btnRaw.classList.remove('active');
+        viewFormatted.classList.remove('hidden');
+        viewRaw.classList.add('hidden');
+      } else {
+        btnFormatted.classList.remove('active');
+        btnRaw.classList.add('active');
+        viewFormatted.classList.add('hidden');
+        viewRaw.classList.remove('hidden');
+      }
+    }
+
+    // Comprehensive Pedagogical Lesson Plan Builder
+    function buildRealLessonPlan(config) {
+      const {
+        topic = 'Climate Action & Renewable Energy',
+        skill = 'reading',
+        prompt = '',
+        school = 'International Language Academy',
+        duration = '60 Minutes',
+        grade = 'B1 Intermediate',
+        framework = 'Skills-Based (Pre - While - Post Analysis & Output)',
+        classProfile = 'Adult / Young Adult Learners (14-18 Students)',
+        includeText = true,
+        includeMfp = true,
+        includeTable = true,
+        includeRubric = true
+      } = config;
+
+      const lowerTopic = topic.toLowerCase();
+      const lowerPrompt = prompt.toLowerCase();
+      const qrImgSrc = generateQrImageUrl(window.location.href);
+
+      let skillLabel = "Reading & Language Analysis";
+      let mainAim = "";
+      let subsidiaryAims = "";
+      let assumedKnowledge = "";
+      let problemsAndSolutions = "";
+      let stages = [];
+      let materialsHeader = "";
+      let materialsHtml = "";
+      let materialsMarkdown = "";
+      let mfpData = [];
+      let rubricTitle = "Assessment & Evaluation Criteria";
+      let rubricHtml = "";
+      let rubricMarkdown = "";
+
+      if (skill === 'reading') {
+        skillLabel = "Reading & Language Analysis";
+        mainAim = `By the end of the lesson, learners will have developed reading comprehension sub-skills (skimming for central theme, scanning for specific factual evidence, inferring vocabulary in context) while critically analyzing solutions surrounding "${topic}".`;
+        subsidiaryAims = `1. Pre-teach and clarify 4 domain-specific lexical collocations with CCQs.<br>2. Develop spoken interaction skills through a collaborative solution-pitching post-reading task.`;
+        assumedKnowledge = `Learners are familiar with basic descriptive lexis and general discourse connectors (however, consequently, in addition).`;
+        problemsAndSolutions = `<strong>Problem:</strong> Students may read word-for-word and get stuck on unknown technical jargon.<br><strong>Solution:</strong> Enforce strict 2-minute time limit for skimming; instruct them to ignore unknown words during gist phase.`;
+        
+        stages = [
+          {
+            name: "1. Lead-in & Schema Activation",
+            aim: "Engage learner interest and activate background knowledge about the theme.",
+            time: "6 min",
+            interaction: "T-S / S-S",
+            teacher: `Display 3 contrasting images related to ${topic}. Elicit reactions: <em>"What challenges and modern solutions do you observe?"</em> Conduct brief whole-class check.`,
+            student: `Work in pairs to brainstorm 3 pressing questions regarding ${topic}. Share their top idea with the class.`
+          },
+          {
+            name: "2. Pre-Teaching Blocked Lexis & MFP",
+            aim: "Clarify essential blocking vocabulary items before reading to reduce cognitive overload.",
+            time: "10 min",
+            interaction: "T-S",
+            teacher: `Elicit/present 4 target lexical items. Clarify Meaning via Concept Checking Questions (CCQs), model pronunciation with word stress, and highlight word class on board.`,
+            student: `Respond to CCQs, repeat choral and individual drills, and note down forms and collocations in notebook.`
+          },
+          {
+            name: "3. Reading for Gist (Skimming)",
+            aim: "Develop sub-skill of fast reading to identify overall gist and matching headings.",
+            time: "8 min",
+            interaction: "Indiv -> S-S",
+            teacher: `Distribute text face down. Set task: <em>"Read in 2 minutes. Match the 3 paragraphs to the correct main headings."</em> Monitor strictly without helping.`,
+            student: `Read quickly without dictionaries. Select matching headings individually, then compare answers with a partner.`
+          },
+          {
+            name: "4. Reading for Detail & Scanning",
+            aim: "Develop intensive reading comprehension to locate specific data and evaluate claims.",
+            time: "14 min",
+            interaction: "Indiv -> S-S",
+            teacher: `Distribute detailed comprehension questions (True/False/Not Given + short inference questions). Encourage scanning for keywords. Check answers with open-class elicitation.`,
+            student: `Scan the passage to locate exact line references. Justify answers in pairs before class verification.`
+          },
+          {
+            name: "5. Textual Language Focus & Collocations",
+            aim: "Analyze high-value collocations and cohesive markers used within the passage.",
+            time: "10 min",
+            interaction: "S-S / T-S",
+            teacher: `Direct students to paragraph 2. Ask learners to find collocations matching given definitions. Board the findings and check usage constraints.`,
+            student: `Underline the collocations in context, discuss nuance in pairs, and construct a personalized sentence.`
+          },
+          {
+            name: "6. Productive Output: Solution Pitch & DEC",
+            aim: "Provide communicative fluency practice reacting to the text ideas; provide Delayed Error Correction.",
+            time: "12 min",
+            interaction: "S-S -> T-S",
+            teacher: `Group learners into teams of 3. Task: <em>"Design a 2-minute actionable initiative to address one key challenge from the text."</em> Monitor and collect language for Delayed Error Correction (DEC). Conduct DEC on whiteboard.`,
+            student: `Collaborate in small groups, present initiative to another group, and actively analyze corrected sentences on the board.`
+          }
+        ];
+
+        materialsHeader = `AUTHENTIC READING PASSAGE: ${topic.toUpperCase()}`;
+        materialsHtml = `
+          <div class="lp-materials-box">
+            <h4 style="margin-bottom: 8px; font-size: 14px;">📄 Text Title: The Turning Tide: Real-World Action on ${topic}</h4>
+            <p style="margin-bottom: 8px;"><strong>Paragraph 1 [Introduction]:</strong> In recent years, the discourse surrounding <em>${topic}</em> has transformed from theoretical debate into immediate policy priority. Communities worldwide are experiencing profound structural shifts as sustainable practices and technological innovations gain critical momentum. Analysts emphasize that systemic transformation requires both legislative reform and grassroots civic engagement.</p>
+            <p style="margin-bottom: 8px;"><strong>Paragraph 2 [Challenges & Innovations]:</strong> Despite accelerated adoption, significant hurdles persist. Infrastructure obsolescence, uneven resource allocation, and regulatory inertia frequently impede implementation. However, pioneering initiatives—ranging from decentralized micro-grids to circular economic models—are proving that long-term resilience and economic viability can co-exist harmoniously.</p>
+            <p><strong>Paragraph 3 [Future Outlook & Call to Action]:</strong> Looking ahead to the next decade, collaborative partnerships between academic researchers, industry leaders, and local communities will be paramount. Ultimately, sustainable longevity depends on actionable education and transparent governance at every tier of society.</p>
+          </div>
+          <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 6px; padding: 10px 14px; font-size: 12px; margin-bottom: 14px;">
+            <strong>Comprehension Task Check:</strong><br>
+            1. <em>According to Paragraph 1, what two pillars are essential for systemic transformation?</em><br>
+            2. <em>What three specific barriers are highlighted in Paragraph 2?</em><br>
+            3. <em>True / False / Not Given: Grassroots initiatives are ineffective without multi-national corporate sponsorship.</em>
+          </div>
+        `;
+
+        mfpData = [
+          {
+            term: "Systemic Transformation (noun phrase)",
+            meaning: "Fundamental change that affects an entire system or organization rather than isolated components.",
+            form: "Adjective [systemic] + Noun [transformation / -tion suffix]",
+            pron: "/sɪˈstem.ɪk ˌtræns.fəˈmeɪ.ʃən/ (Primary stress on -MA-)",
+            ccq: "Q: Is this a small cosmetic change or a complete overhaul? A: Complete overhaul.<br>Q: Does it affect only one small department or the entire structure? A: The entire structure."
+          },
+          {
+            term: "Regulatory Inertia (noun phrase)",
+            meaning: "Reluctance or delay by government bodies and policymakers to update outdated rules and legislation.",
+            form: "Adjective [regulatory] + Uncountable Noun [inertia]",
+            pron: "/ˌreɡ.jə.ləˈtɔː.ri ɪˈnɜː.ʃə/ (Stress on -REG- and -NER-)",
+            ccq: "Q: Are regulators moving quickly or slowly? A: Very slowly.<br>Q: Does inertia help fast progress or delay it? A: Delays it."
+          },
+          {
+            term: "Circulate Economic Model (collocation)",
+            meaning: "An industrial system aimed at eliminating waste through continual reuse and recycling of resources.",
+            form: "Adjective [circular] + Compound Noun [economic model]",
+            pron: "/ˈsɜː.kjə.lər ˌiː.kəˈnɒm.ɪk ˈmɒd.əl/",
+            ccq: "Q: In this model, do products get thrown away in landfills after single use? A: No, they are recycled/reused.<br>Q: Is the goal zero waste? A: Yes."
+          }
+        ];
+
+      } else if (skill === 'listening') {
+        skillLabel = "Listening & Speaking Fluency";
+        mainAim = `By the end of the lesson, learners will have improved their listening competence (listening for gist, identifying speaker stance, and extracting key factual data) using an authentic dialogue on "${topic}", and utilized target functional language in a live debate.`;
+        subsidiaryAims = `1. Recognize features of connected speech (weak forms and linking).<br>2. Practice functional exponents for polite disagreement, concession, and persuasive argumentation.`;
+        assumedKnowledge = `Learners understand standard conversational turn-taking and have general B1/B2 listening comprehension abilities.`;
+        problemsAndSolutions = `<strong>Problem:</strong> Natural speech rate and reduced vowels (/ə/) may cause comprehension breakdown.<br><strong>Solution:</strong> Play audio twice; provide targeted pre-listening prediction tasks to prime expectations.`;
+
+        stages = [
+          {
+            name: "1. Warmer & Contextual Prediction",
+            aim: "Prime schema and motivate students to make predictive hypotheses about the audio.",
+            time: "6 min",
+            interaction: "T-S / S-S",
+            teacher: `Introduce speakers: <em>Elena (an industry strategist) and Marcus (an academic researcher)</em> discussing ${topic}. Elicit 3 points they might disagree on.`,
+            student: `Predict speaker viewpoints with a partner and write down 2 questions they expect the audio to answer.`
+          },
+          {
+            name: "2. Pre-Listening Lexis & Connected Speech",
+            aim: "Pre-teach key terms and highlight phonological linking / weak forms.",
+            time: "8 min",
+            interaction: "T-S",
+            teacher: `Clarify 3 key phrases. Highlight connected speech feature: <em>"would have" -> /wʊdəv/</em> and linking consonants to vowels. Drill intonation.`,
+            student: `Identify linked words in example sentences and practice natural connected pronunciation.`
+          },
+          {
+            name: "3. Listening 1: Global Gist & Speaker Stance",
+            aim: "Listen for general perspective without anxiety over minor details.",
+            time: "8 min",
+            interaction: "Indiv -> S-S",
+            teacher: `Play audio extract once. Question: <em>"Do Elena and Marcus ultimately agree, partially agree, or strongly disagree on ${topic}?"</em>`,
+            student: `Listen attentively. Note down overall verdict and verify with peer in 60 seconds.`
+          },
+          {
+            name: "4. Listening 2: Detailed Comprehension & Note-Taking",
+            aim: "Extract specific data, supporting examples, and qualifying nuances.",
+            time: "14 min",
+            interaction: "Indiv -> S-S",
+            teacher: `Distribute structured note-taking grid. Play audio with pause at midpoint if required. Guide open-class feedback.`,
+            student: `Complete note-taking grid with exact arguments, data points, and recommendations mentioned by both speakers.`
+          },
+          {
+            name: "5. Language Focus: Functional Disagreement & Concession",
+            aim: "Extract and practice exponents for polite disagreement and building on arguments.",
+            time: "10 min",
+            interaction: "S-S / T-S",
+            teacher: `Board exponents from audio: <em>"I take your point, but...", "That's valid up to a point, however..."</em>. Check register and intonation.`,
+            student: `Match functional phrases to communicative functions (conceding, counter-arguing, asking for clarification).`
+          },
+          {
+            name: "6. Speaking Task: Simulated Council Debate & DEC",
+            aim: "Apply functional exponents in a structured communicative roleplay; provide feedback on accuracy.",
+            time: "14 min",
+            interaction: "S-S -> T-S",
+            teacher: `Assign stakeholder roles (Stakeholder A vs Stakeholder B). Set 6-minute debate. Note down pronunciation and grammar errors for Delayed Error Correction.`,
+            student: `Participate in active debate using at least 3 target functional exponents. Analyze board feedback during DEC.`
+          }
+        ];
+
+        materialsHeader = `AUTHENTIC 2-SPEAKER AUDIO DIALOGUE TRANSCRIPT: ${topic.toUpperCase()}`;
+        materialsHtml = `
+          <div class="lp-script-box">
+            <p style="margin-bottom: 8px;"><span class="lp-script-speaker">[00:05] Host / Moderator:</span> Welcome back to Perspectives. Today we're examining the transformative dynamics of <strong>${topic}</strong>. Joining us are Dr. Marcus Vance, senior analyst, and Elena Rostova, tech innovation consultant. Marcus, let's start with you.</p>
+            <p style="margin-bottom: 8px;"><span class="lp-script-speaker">[00:28] Marcus:</span> Thanks. Look, my primary concern is that rapid scaling without ethical and infrastructural safeguards creates unintended vulnerabilities. We've seen premature deployment lead to public distrust.</p>
+            <p style="margin-bottom: 8px;"><span class="lp-script-speaker">[00:52] Elena:</span> <em>I see where you're coming from, Marcus, but</em> if we wait for flawless regulatory consensus, we'll miss the window of opportunity entirely. The competitive and social imperative to adapt is now, not in five years.</p>
+            <p style="margin-bottom: 8px;"><span class="lp-script-speaker">[01:20] Marcus:</span> <em>That's a fair point, yet</em> speed cannot excuse a lack of accountability. A balanced hybrid approach is far more sustainable over time.</p>
+            <p><span class="lp-script-speaker">[01:45] Elena:</span> Absolutely. That's why cross-sector collaboration must be built into every roadmap from day one.</p>
+          </div>
+        `;
+
+        mfpData = [
+          {
+            term: "I see where you're coming from, but... (Functional Exponent)",
+            meaning: "Polite concession acknowledging the other person's perspective before presenting a contrasting argument.",
+            form: "Fixed idiomatic formula + Co-ordinating conjunction [but / however]",
+            pron: "/aɪ siː weə jə ˈkʌm.ɪŋ frɒm bʌt/ (Rise-fall intonation on 'coming', contrastive stress on 'but')",
+            ccq: "Q: Am I saying the other person is completely wrong? A: No, I understand their logic.<br>Q: Am I agreeing with their final conclusion? A: No, I am preparing to disagree politely."
+          },
+          {
+            term: "Premature Deployment (noun phrase)",
+            meaning: "Launching a system, tool, or policy before it is thoroughly tested or ready for safe use.",
+            form: "Adjective [premature] + Noun [deployment]",
+            pron: "/ˌprem.ə.tʃʊər dɪˈplɔɪ.mənt/",
+            ccq: "Q: Was the launch on time, delayed, or done too early? A: Too early.<br>Q: Is there a risk of errors because of this? A: Yes, high risk."
+          }
+        ];
+
+      } else if (skill === 'language') {
+        skillLabel = "Language Focus & Grammar/Lexis (PPP / TTT)";
+        mainAim = `By the end of the lesson, learners will be able to accurately form and meaningfully use target grammar structures / lexical patterns in the context of "${topic}" with high accuracy in controlled drills and spontaneous fluency.`;
+        subsidiaryAims = `1. Discriminate between core grammatical aspects and usage constraints.<br>2. Practice spoken self-correction and peer editing in communicative tasks.`;
+        assumedKnowledge = `Learners know basic tense conjugation but struggle with aspectual differences (perfective vs continuous vs simple).`;
+        problemsAndSolutions = `<strong>Problem:</strong> Overgeneralization of auxiliary verbs or L1 interference in tense choices.<br><strong>Solution:</strong> Concept checking questions focusing on aspect and time-line diagrams on board.`;
+
+        stages = [
+          {
+            name: "1. Warmer & Contextual Lead-in",
+            aim: "Establish a clear situational context that naturally generates marker sentences.",
+            time: "6 min",
+            interaction: "T-S / S-S",
+            teacher: `Introduce a compelling scenario or case study related to ${topic}. Elicit students' spontaneous observations.`,
+            student: `Discuss the case in pairs, offering ideas and personal experiences.`
+          },
+          {
+            name: "2. Presentation & Clarification (MFP)",
+            aim: "Isolate marker sentence, clarify Meaning, Form, Pronunciation, and verify via CCQs.",
+            time: "14 min",
+            interaction: "T-S",
+            teacher: `Board the marker sentence. Draw a clear timeline. Elicit the form formula. Ask CCQs to clarify time, completion, and intention. Conduct choral and individual repetition.`,
+            student: `Analyze sentence components, identify auxiliary verbs, repeat with correct sentence stress, and copy board summary.`
+          },
+          {
+            name: "3. Controlled Practice (Accuracy Drills)",
+            aim: "Ensure mechanical mastery of forms and avoid fossilized syntactic errors.",
+            time: "12 min",
+            interaction: "Indiv -> S-S",
+            teacher: `Distribute 8 gap-fill and sentence-transformation tasks. Monitor closely, giving immediate on-the-spot hints for form errors. Check answers with whole class.`,
+            student: `Complete exercises individually, check answers in pairs, and justify grammatical choices.`
+          },
+          {
+            name: "4. Semi-Controlled Practice (Information Gap)",
+            aim: "Transition from pure accuracy towards meaningful peer-to-peer communicative exchange.",
+            time: "12 min",
+            interaction: "S-S",
+            teacher: `Provide prompt cards where students must question each other to discover missing information regarding ${topic}.`,
+            student: `Engage in structured dialogue, formulating accurate questions and recording partner's responses.`
+          },
+          {
+            name: "5. Free Production: Roleplay & Dilemma Solution",
+            aim: "Foster authentic, spontaneous fluency integrating target structures without teacher interruption.",
+            time: "12 min",
+            interaction: "S-S",
+            teacher: `Set an open communicative dilemma: <em>"Resolve this workplace challenge by negotiating a compromise."</em> Take notes for Delayed Error Correction.`,
+            student: `Freely converse and negotiate in pairs, naturally utilizing the target language structures.`
+          },
+          {
+            name: "6. Delayed Error Correction & Language Upgrade",
+            aim: "Analyze student output anonymously on the whiteboard to consolidate learning.",
+            time: "4 min",
+            interaction: "T-S",
+            teacher: `Write 4 student sentences (2 accurate, 2 containing common slips) on board. Prompt students to identify and correct the slips.`,
+            student: `Identify errors collaboratively and explain the correct grammatical principle.`
+          }
+        ];
+
+        materialsHeader = `GRAMMAR / LEXICAL TARGET MATRIX & TIMELINE DIAGRAM`;
+        materialsHtml = `
+          <div class="lp-info-box" style="margin-bottom: 12px;">
+            <strong>📌 Marker Sentence 1 (Narrative / Aspectual):</strong>
+            <em>"By the time the new policy was implemented, researchers <u>had already developed</u> three sustainable alternatives."</em><br>
+            <div style="margin-top: 6px; font-size: 11.5px; color: #475569;">
+              <strong>Timeline:</strong> Past Point A (Policy implemented) <---- Earlier Past Point B (Researchers had already developed) <---- Present (Now)
+            </div>
+          </div>
+          <div class="lp-info-box">
+            <strong>📌 Marker Sentence 2 (Hypothetical / Conditional):</strong>
+            <em>"If organizations <u>invested</u> more heavily in early training, they <u>would avoid</u> costly restructuring later."</em>
+          </div>
+        `;
+
+        mfpData = [
+          {
+            term: "Past Perfect Simple (had + past participle)",
+            meaning: "An action completed before another specified event or point in the past.",
+            form: "Subject + had ('d) + Past Participle (V3) + [by the time / already / before]",
+            pron: "/hæd/ -> Weak form /həd/ in natural connected speech; contracted as /d/",
+            ccq: "Q: Did both actions happen in the past? A: Yes.<br>Q: Did one action finish before the other one started? A: Yes.<br>Q: Which action happened first? A: The one with 'had + V3'."
+          },
+          {
+            term: "Second Conditional (Hypothetical Present/Future)",
+            meaning: "Speculating about an unreal, improbable, or imaginary current/future situation and its consequence.",
+            form: "If + Subject + Past Simple, Subject + would / could / might + Bare Infinitive",
+            pron: "/wʊd/ -> contracted 'd; rising intonation on if-clause, falling on result clause.",
+            ccq: "Q: Is this situation real right now, or imaginary? A: Imaginary.<br>Q: Are we talking about the past, or hypothetical present/future? A: Present/future."
+          }
+        ];
+
+      } else if (skill === 'writing') {
+        skillLabel = "Language & Writing Production";
+        mainAim = `By the end of the lesson, learners will be able to plan, draft, and structure a high-cohesion formal text (opinion essay / proposal / report) on "${topic}" adhering to paragraph conventions and discourse markers.`;
+        subsidiaryAims = `1. Deconstruct an authentic model text for thesis statement, topic sentences, and supporting evidence.<br>2. Utilize formal cohesive devices (moreover, notwithstanding, in stark contrast, consequently).`;
+        assumedKnowledge = `Learners can write isolated sentences but struggle with coherent paragraph transitions and formal register.`;
+        problemsAndSolutions = `<strong>Problem:</strong> Tendency to use informal conversational language (e.g. "a lot of stuff", "kids", "gonna").<br><strong>Solution:</strong> Provide a register upgrade vocabulary bank and model text highlighting academic equivalents.`;
+
+        stages = [
+          {
+            name: "1. Lead-in & Brainstorming Arguments",
+            aim: "Generate ideas, arguments for/against, and build a thematic argument bank.",
+            time: "8 min",
+            interaction: "T-S / S-S",
+            teacher: `Present the writing prompt: <em>"${topic}: Assess the societal and economic ramifications."</em> Create a 2-column Pros/Cons grid on board.`,
+            student: `Brainstorm in pairs, categorizing points into economic, environmental, and social perspectives.`
+          },
+          {
+            name: "2. Model Text Genre & Structure Deconstruction",
+            aim: "Analyze text organization, topic sentences, thesis statement, and conclusion framing.",
+            time: "14 min",
+            interaction: "Indiv -> S-S",
+            teacher: `Distribute 220-word model essay. Direct students to label: Introduction & Thesis Statement, Body Paragraph 1 (Topic sentence + Evidence), Body Paragraph 2 (Counter-argument + Refutation), Conclusion.`,
+            student: `Highlight structural elements in the model text and identify formal linking devices.`
+          },
+          {
+            name: "3. Language Scaffolding & Academic Upgrade",
+            aim: "Equip learners with sophisticated linking phrases, nominalizations, and hedging devices.",
+            time: "10 min",
+            interaction: "S-S / T-S",
+            teacher: `Provide 5 informal sentences. Challenge students to rewrite them into formal academic register using target discourse markers.`,
+            student: `Transform sentences in pairs and board winning examples with correct punctuation (semicolons, commas).`
+          },
+          {
+            name: "4. Collaborative & Individual Drafting",
+            aim: "Draft structured essay paragraphs following a scaffolded outline.",
+            time: "16 min",
+            interaction: "Indiv",
+            teacher: `Set 15-minute drafting window. Walk the room providing real-time micro-feedback on thesis clarity and paragraph cohesion.`,
+            student: `Draft introduction and 2 structured body paragraphs using the writing rubric checklist.`
+          },
+          {
+            name: "5. Peer Review & Rubric Evaluation",
+            aim: "Develop autonomous editing skills using a standardized assessment rubric.",
+            time: "8 min",
+            interaction: "S-S",
+            teacher: `Distribute Peer Review Rubric (Task Achievement, Coherence/Cohesion, Lexical Resource, Grammatical Accuracy). Guide exchange.`,
+            student: `Swap drafts with a partner, mark areas for enhancement, and provide 2 constructive comments.`
+          },
+          {
+            name: "6. Wrap-up & Homework Extension Briefing",
+            aim: "Consolidate learning and assign full revised essay submission.",
+            time: "4 min",
+            interaction: "T-S",
+            teacher: `Summarize top 3 common strengths and clarify homework parameters (full 250-word text).`,
+            student: `Review peer notes and record homework deadline.`
+          }
+        ];
+
+        materialsHeader = `MODEL TEXT ANALYSIS: ${topic.toUpperCase()} (FORMAL ESSAY)`;
+        materialsHtml = `
+          <div class="lp-materials-box">
+            <h4 style="margin-bottom: 8px; font-size: 14px;">📝 Model Text: Navigating the Complexities of ${topic}</h4>
+            <p style="margin-bottom: 8px;"><strong>Introduction:</strong> In the contemporary era, the question of how to sustainably regulate and promote <em>${topic}</em> has emerged as a central pillar of international discourse. While proponents assert that rapid modernization yields unprecedented efficiency, critics underscore considerable socioeconomic inequities. This essay will examine both perspectives before arguing that strategic, multi-tiered governance is indispensable.</p>
+            <p style="margin-bottom: 8px;"><strong>Body Paragraph 1 [Advancement & Efficiency]:</strong> Primarily, embracing modernized approaches to ${topic} delivers palpable productivity gains. Empirical research demonstrates that integrating cutting-edge practices streamlines operations, reduces overhead expenditures, and cultivates cross-disciplinary innovation. <em>Consequently</em>, institutions that prioritize forward-looking investments consistently outperform their traditional counterparts.</p>
+            <p><strong>Conclusion:</strong> In conclusion, although transitioning to novel frameworks inevitably precipitates temporary logistical friction, the long-term societal benefits are compelling. Provided that regulatory oversight remains robust, adopting modern solutions will ensure enduring resilience for generations to come.</p>
+          </div>
+        `;
+
+        mfpData = [
+          {
+            term: "Discourse Marker: 'Notwithstanding...' (Preposition / Concession)",
+            meaning: "In spite of; despite something mentioned previously.",
+            form: "Notwithstanding + Noun Phrase, [Main Clause]",
+            pron: "/ˌnɒt.wɪðˈstæn.dɪŋ/ (Stress on -STAND-)",
+            ccq: "Q: Does this show a cause, or a concession/contrast? A: Concession/contrast.<br>Q: Is it formal academic register or casual slang? A: High formal academic."
+          },
+          {
+            term: "Hedging Phrase: 'Evidence suggests that...'",
+            meaning: "Used in academic writing to make cautious claims without sounding overly absolute or dogmatic.",
+            form: "Noun [Evidence / Research] + Verb [suggests / indicates / points to] + that-clause",
+            pron: "/ˈev.ɪ.dəns səˈdʒests ðæt/",
+            ccq: "Q: Is the writer claiming 100% certainty or careful interpretation? A: Careful interpretation."
+          }
+        ];
+
+      } else if (skill === 'speaking') {
+        skillLabel = "Speaking & Oral Communication";
+        mainAim = `By the end of the lesson, learners will have improved their spoken fluency, strategic turn-taking, and persuasive negotiation abilities in a live structured debate surrounding "${topic}".`;
+        subsidiaryAims = `1. Practice intonation patterns for expressing polite skepticism and conviction.<br>2. Expand functional vocabulary for managing discussions and summarizing agreements.`;
+        assumedKnowledge = `Learners can express personal opinions but often hesitate or rely on monotonous intonation.`;
+        problemsAndSolutions = `<strong>Problem:</strong> Dominant students might monopolize the discussion while quiet students stay silent.<br><strong>Solution:</strong> Assign explicit roles (Chairperson, Advocate A, Advocate B, Skeptic) and timed turn limits.`;
+
+        stages = [
+          {
+            name: "1. Lead-in: Opinion Spectrum / Barometer",
+            aim: "Physically and cognitively engage learners with controversial statements.",
+            time: "8 min",
+            interaction: "T-S / S-S",
+            teacher: `Post statements about ${topic} on opposite sides of room (Strongly Agree <---> Strongly Disagree). Direct students to stand along the line. Ask individuals to justify their position in 30 seconds.`,
+            student: `Take a stand on the continuum, explain reasoning to a nearby classmate, and listen to peers.`
+          },
+          {
+            name: "2. Lexical & Idiomatic Scaffolding",
+            aim: "Introduce idiomatic chunks and conversational discourse fillers for natural spoken flow.",
+            time: "10 min",
+            interaction: "T-S",
+            teacher: `Present 6 conversational chunks: <em>"If you ask me...", "To play devil's advocate...", "The crux of the matter is..."</em>. Model expressive intonation and pitch variations.`,
+            student: `Practice short 2-turn exchanges with target idioms using expressive pitch and vocal range.`
+          },
+          {
+            name: "3. Pronunciation & Intonation Clinic",
+            aim: "Master contrastive stress and polite disagreement intonation curves.",
+            time: "7 min",
+            interaction: "T-S / S-S",
+            teacher: `Model: <em>"I hear what you're saying, BUT..."</em> (high rising pitch falling on contrast). Conduct choral drills.`,
+            student: `Repeat sentence stress drills and test intonation accuracy with a partner.`
+          },
+          {
+            name: "4. Preparation Task: Stakeholder Caucus",
+            aim: "Collaborate in teams to build persuasive arguments and anticipate counter-arguments.",
+            time: "12 min",
+            interaction: "S-S",
+            teacher: `Divide class into 2 opposing stakeholder delegations. Give 7 minutes to formulate 4 compelling arguments and designate speakers.`,
+            student: `Brainstorm evidence, anticipate opposing rebuttals, and assign speaking roles.`
+          },
+          {
+            name: "5. Main Speaking Activity: Town Hall Debate",
+            aim: "Carry out autonomous, high-fluency debate applying functional language and strategic turn-taking.",
+            time: "18 min",
+            interaction: "S-S",
+            teacher: `Act as neutral timekeeper. Do not interrupt. Take detailed notes on language strengths, good idiomatic use, and pronunciation slips.`,
+            student: `Conduct structured debate adhering to time limits, utilizing target discourse markers and challenging arguments respectfully.`
+          },
+          {
+            name: "6. Delayed Error Correction & Feedback",
+            aim: "Provide praise for communicative strategies and analyze language on whiteboard.",
+            time: "5 min",
+            interaction: "T-S",
+            teacher: `Praise effective negotiation strategies. Put 4 authentic utterances on board for student correction.`,
+            student: `Reflect on group performance and correct board sentences collaboratively.`
+          }
+        ];
+
+        materialsHeader = `COMMUNICATIVE DEBATE ROLES & DISCUSSION CARDS: ${topic.toUpperCase()}`;
+        materialsHtml = `
+          <div class="lp-info-box" style="margin-bottom: 10px;">
+            <strong>🎭 Role Card A: The Innovation & Economic Growth Advocate</strong>
+            <em>Your mandate:</em> Argue that rapid implementation of modernized practices in <strong>${topic}</strong> is essential for competitive survival, job creation, and international leadership. Concede minor transitional frictions, but emphasize that waiting creates devastating stagnation.
+          </div>
+          <div class="lp-info-box">
+            <strong>🎭 Role Card B: The Civic & Environmental Protection Council</strong>
+            <em>Your mandate:</em> Argue that unchecked expansion of <strong>${topic}</strong> risks widening inequality, straining public resources, and ignoring long-term sustainability. Insist on stringent regulations, safety nets, and public referendums.
+          </div>
+        `;
+
+        mfpData = [
+          {
+            term: "To play devil's advocate (Idiomatic Chunk)",
+            meaning: "To argue against an idea or position not because you disagree with it, but to test its validity and provoke thought.",
+            form: "Prepositional Infinitive Phrase [To play] + Noun [devil's advocate]",
+            pron: "/tə pleɪ ˌdev.əlz ˈæd.və.kət/ (Stress on DEV- and AD-)",
+            ccq: "Q: Do I necessarily believe the counter-argument myself? A: No.<br>Q: Why am I saying it? A: To test the strength of the argument."
+          },
+          {
+            term: "The crux of the matter (Idiomatic Phrase)",
+            meaning: "The most important or fundamental point of an issue or problem.",
+            form: "Definite Article [The] + Noun [crux] + Prepositional Phrase [of the matter]",
+            pron: "/ðə krʌks əv ðə ˈmæt.ər/",
+            ccq: "Q: Is this a minor side-detail or the core essential issue? A: The core essential issue."
+          }
+        ];
+
+      } else {
+        // Integrated 4-Skills Master Plan
+        skillLabel = "Integrated 4-Skills Master Plan";
+        mainAim = `By the end of the lesson, learners will have synthesized reading, listening, and language analysis to produce a coherent oral and written presentation analyzing "${topic}".`;
+        subsidiaryAims = `1. Integrate receptive text analysis with active audio note-taking.<br>2. Produce collaborative policy briefs using high-level academic lexis and discourse markers.`;
+        assumedKnowledge = `Learners have strong intermediate competence across all 4 skills and can navigate multi-modal inputs.`;
+        problemsAndSolutions = `<strong>Problem:</strong> High cognitive load switching between reading, listening, and speaking.<br><strong>Solution:</strong> Clear task scaffolding with graphic organizers linking each phase seamlessly.`;
+
+        stages = [
+          {
+            name: "1. Lead-in & Multi-Modal Provocation",
+            aim: "Activate schema and set global context.",
+            time: "7 min",
+            interaction: "T-S / S-S",
+            teacher: `Show a short visual infographic and headline regarding ${topic}. Elicit key themes.`,
+            student: `Discuss initial reactions and brainstorm key dilemmas in pairs.`
+          },
+          {
+            name: "2. Receptive Phase: Reading & Listening Synthesis",
+            aim: "Extract complementary facts from written extract and short audio dialogue.",
+            time: "18 min",
+            interaction: "Indiv -> S-S",
+            teacher: `Distribute reading text (2 mins) followed by 2-minute audio interview. Direct students to combine findings in a synthesis chart.`,
+            student: `Read for core data, listen for stakeholder viewpoints, and cross-reference information with partner.`
+          },
+          {
+            name: "3. Language Clarification & Lexical Upgrade",
+            aim: "Clarify 3 advanced collocations and functional discourse markers.",
+            time: "10 min",
+            interaction: "T-S",
+            teacher: `Highlight 3 academic collocations from materials. Check MFP with CCQs and drill connected pronunciation.`,
+            student: `Analyze forms, respond to CCQs, and formulate original sentences.`
+          },
+          {
+            name: "4. Productive Spoken Task: Multi-Stakeholder Forum",
+            aim: "Synthesize insights into an oral presentation and negotiation.",
+            time: "15 min",
+            interaction: "S-S",
+            teacher: `Group students into policy advisory boards. Guide formulation of a 3-point strategy on ${topic}.`,
+            student: `Collaborate, draft speaking points, and pitch proposal to another advisory team.`
+          },
+          {
+            name: "5. Written Consolidation & Delayed Error Correction",
+            aim: "Draft 1-paragraph summary policy brief and review board language corrections.",
+            time: "10 min",
+            interaction: "Indiv -> T-S",
+            teacher: `Direct individual drafting of 100-word policy brief. Conduct whiteboard Delayed Error Correction.`,
+            student: `Write concise summary applying target collocations; participate in class language analysis.`
+          }
+        ];
+
+        materialsHeader = `INTEGRATED 4-SKILLS RESOURCE DOSSIER: ${topic.toUpperCase()}`;
+        materialsHtml = `
+          <div class="lp-materials-box" style="margin-bottom: 12px;">
+            <h4 style="margin-bottom: 6px; font-size: 13.5px;">📖 Briefing Extract: Key Statistics & Context</h4>
+            <p>Recent international data indicates that sustainable development within <em>${topic}</em> has accelerated by 34% over the preceding triennium. However, fiscal disparities between developed and emerging economies threaten to undermine collective gains without structured international financing mechanisms.</p>
+          </div>
+          <div class="lp-script-box">
+            <h4 style="margin-bottom: 6px; font-size: 13.5px; color: #0891B2;">🎧 Audio Dialogue Transcript Extract</h4>
+            <p><span class="lp-script-speaker">Expert A:</span> "If we don't harmonize regulatory standards globally, we risk regulatory arbitrage where companies simply relocate to lax jurisdictions."</p>
+            <p><span class="lp-script-speaker">Expert B:</span> "Precisely. That's why binding multilateral frameworks are the linchpin of long-term stability."</p>
+          </div>
+        `;
+
+        mfpData = [
+          {
+            term: "Multilateral Framework (collocation)",
+            meaning: "An agreed system of rules and standards involving multiple sovereign nations or international organizations.",
+            form: "Adjective [multilateral] + Noun [framework]",
+            pron: "/ˌmʌl.tiˈlæt.ər.əl ˈfreɪm.wɜːk/",
+            ccq: "Q: Does this involve only two countries or many? A: Many countries.<br>Q: Is it an informal chat or an organized formal agreement? A: An organized formal agreement."
+          },
+          {
+            term: "The linchpin of... (idiomatic metaphor)",
+            meaning: "The most vital element that holds an entire complex system or strategy together.",
+            form: "Noun phrase [the linchpin] + Preposition [of]",
+            pron: "/ðə ˈlɪntʃ.pɪn əv/",
+            ccq: "Q: If you remove the linchpin, does the system stay strong or collapse? A: It collapses."
+          }
+        ];
+      }
+
+      // Format MFP HTML
+      let mfpHtml = `
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          ${mfpData.map(item => `
+            <div class="lp-ccq-item">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
+                <span class="lp-ccq-q" style="font-size: 13px; color: #0F172A;">🔑 ${item.term}</span>
+                <span style="font-size: 11px; color: #475569; font-family: monospace;">${item.pron}</span>
+              </div>
+              <div style="margin: 4px 0; color: #1E293B;"><strong>Meaning:</strong> ${item.meaning}</div>
+              <div style="margin: 2px 0; color: #475569; font-size: 11.5px;"><strong>Form:</strong> ${item.form}</div>
+              <div class="lp-ccq-a" style="margin-top: 6px; padding-top: 4px; border-top: 1px dashed #BFDBFE;">
+                <strong>CCQs (Concept Checking Questions):</strong><br>
+                ${item.ccq}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      // Rubric / Evaluation HTML
+      rubricHtml = `
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 12px;">
+          <div class="lp-info-box">
+            <strong>📋 Board Plan Layout</strong>
+            <div style="font-size: 11.5px; color: #334155; line-height: 1.4; margin-top: 4px;">
+              <strong>[Left Board]:</strong> Warmer questions & Lexis / CCQs<br>
+              <strong>[Center Board]:</strong> Marker Sentences, Timeline, Form<br>
+              <strong>[Right Board]:</strong> Task Instructions & Delayed Error Correction (DEC)
+            </div>
+          </div>
+          <div class="lp-info-box">
+            <strong>🎯 Assessment & Rubric</strong>
+            <div style="font-size: 11.5px; color: #334155; line-height: 1.4; margin-top: 4px;">
+              <strong>1. Task Achievement:</strong> Complete fulfillment of prompt aims.<br>
+              <strong>2. Fluency / Cohesion:</strong> Smooth turn-taking & linking.<br>
+              <strong>3. Accuracy:</strong> Correct use of target structures.
+            </div>
+          </div>
+          <div class="lp-info-box">
+            <strong>🏠 Homework & Extension</strong>
+            <div style="font-size: 11.5px; color: #334155; line-height: 1.4; margin-top: 4px;">
+              Write a 180-220 word reflective review analyzing key insights from today's lesson on <em>${topic}</em>, utilizing at least 3 target lexical collocations.
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Complete Formatted HTML Sheet
+      const htmlSheet = `
+        <div class="a4-header-top">
+          <div>
+            <div class="a4-school-title">${school}</div>
+            <div class="a4-sheet-title">LESSON PLAN: ${topic}</div>
+            <div class="a4-meta-pills">
+              <span class="a4-pill">🎯 ${skillLabel}</span>
+              <span class="a4-pill">📊 Level: ${grade}</span>
+              <span class="a4-pill">⏱️ Duration: ${duration}</span>
+              <span class="a4-pill">🏛️ Framework: ${framework}</span>
+              <span class="a4-pill">👥 ${classProfile}</span>
+            </div>
+          </div>
+          <img src="${qrImgSrc}" class="header-qr" alt="QR Companion" />
+        </div>
+
+        <div class="lp-meta-grid">
+          <div class="lp-info-box">
+            <strong>🎯 Main Pedagogical Aim</strong>
+            <div>${mainAim}</div>
+            <div style="margin-top: 8px; padding-top: 6px; border-top: 1px solid #E2E8F0;">
+              <strong>⚡ Subsidiary Aims:</strong>
+              <div>${subsidiaryAims}</div>
+            </div>
+          </div>
+          <div class="lp-info-box">
+            <strong>💡 Assumed Knowledge</strong>
+            <div>${assumedKnowledge}</div>
+            <div style="margin-top: 8px; padding-top: 6px; border-top: 1px solid #E2E8F0;">
+              <strong>⚠️ Anticipated Problems & Solutions:</strong>
+              <div>${problemsAndSolutions}</div>
+            </div>
+          </div>
+        </div>
+
+        ${includeTable ? `
+          <div class="a4-section">
+            <div class="a4-section-header">
+              <span>STAGE-BY-STAGE LESSON PROCEDURE & TIMING MATRIX</span>
+              <span>TOTAL DURATION: ${duration}</span>
+            </div>
+            <div class="lp-table-wrapper">
+              <table class="lp-table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Stage & Aim</th>
+                    <th style="width: 8%;">Time</th>
+                    <th style="width: 9%;">Inter.</th>
+                    <th style="width: 35%;">Teacher Procedure & Instructions</th>
+                    <th style="width: 28%;">Student Activity & Output</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${stages.map(s => `
+                    <tr>
+                      <td>
+                        <span class="lp-stage-name">${s.name}</span>
+                        <span class="lp-stage-aim">${s.aim}</span>
+                      </td>
+                      <td><strong>${s.time}</strong></td>
+                      <td><span class="lp-pattern-badge">${s.interaction}</span></td>
+                      <td>${s.teacher}</td>
+                      <td>${s.student}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ` : ''}
+
+        ${includeText ? `
+          <div class="a4-section">
+            <div class="a4-section-header">
+              <span>${materialsHeader}</span>
+              <span>Authentic Classroom Material</span>
+            </div>
+            ${materialsHtml}
+          </div>
+        ` : ''}
+
+        ${includeMfp ? `
+          <div class="a4-section">
+            <div class="a4-section-header">
+              <span>TARGET LANGUAGE CLARIFICATION (MEANING, FORM, PRONUNCIATION & CCQS)</span>
+              <span>Language Focus</span>
+            </div>
+            ${mfpHtml}
+          </div>
+        ` : ''}
+
+        ${includeRubric ? `
+          <div class="a4-section">
+            <div class="a4-section-header">
+              <span>BOARD PLAN, EVALUATION RUBRIC & HOMEWORK EXTENSION</span>
+              <span>Assessment & Follow-Up</span>
+            </div>
+            ${rubricHtml}
+          </div>
+        ` : ''}
+      `;
+
+      // Markdown representation for Copy / Raw text tab
+      const markdownContent = `# LESSON PLAN: ${topic}
+School: ${school}
+Skill Focus: ${skillLabel}
+CEFR Level: ${grade} | Duration: ${duration} | Framework: ${framework}
+Target Class: ${classProfile}
+
+==================================================
+1. LESSON AIMS & ASSUMPTIONS
+==================================================
+MAIN AIM:
+${mainAim.replace(/<[^>]*>?/gm, '')}
+
+SUBSIDIARY AIMS:
+${subsidiaryAims.replace(/<br>/g, '\n').replace(/<[^>]*>?/gm, '')}
+
+ASSUMED KNOWLEDGE:
+${assumedKnowledge}
+
+ANTICIPATED PROBLEMS & SOLUTIONS:
+${problemsAndSolutions.replace(/<br>/g, '\n').replace(/<[^>]*>?/gm, '')}
+
+==================================================
+2. STAGE PROCEDURE MATRIX
+==================================================
+${stages.map(s => `
+--- STAGE: ${s.name} (${s.time} | ${s.interaction}) ---
+Aim: ${s.aim}
+Teacher Action: ${s.teacher.replace(/<[^>]*>?/gm, '')}
+Student Output: ${s.student.replace(/<[^>]*>?/gm, '')}
+`).join('\n')}
+
+==================================================
+3. TARGET LANGUAGE (MFP & CCQS)
+==================================================
+${mfpData.map(m => `
+* ${m.term} [${m.pron}]
+  - Meaning: ${m.meaning}
+  - Form: ${m.form}
+  - CCQs:
+    ${m.ccq.replace(/<br>/g, '\n    ').replace(/<[^>]*>?/gm, '')}
+`).join('\n')}
+
+==================================================
+4. BOARD PLAN & HOMEWORK EXTENSION
+==================================================
+Board Layout:
+- Left Board: Warmer questions & Target Lexis with CCQs
+- Center Board: Marker Sentences, Timelines & Syntactic Form
+- Right Board: Task Instructions & Delayed Error Correction (DEC)
+
+Homework Task:
+Write a 180-220 word reflective review analyzing key insights from today's lesson on "${topic}", integrating at least 3 target lexical collocations.
+`;
+
+      return { htmlSheet, markdownContent };
+    }
+
+    function generateLessonPlan() {
+      const topic = document.getElementById('lp-topic').value.trim() || 'Climate Action & Renewable Energy';
+      const skill = document.getElementById('lp-skill').value;
+      const prompt = document.getElementById('lp-prompt').value.trim();
+      const grade = document.getElementById('lp-grade').value;
+      const duration = document.getElementById('lp-duration').value;
+      const framework = document.getElementById('lp-framework').value;
+      const school = document.getElementById('lp-school').value.trim() || 'International Language Academy';
+      const classProfile = document.getElementById('lp-class').value.trim() || 'Adult / Young Adult Learners (14-18 Students)';
+      const includeText = document.getElementById('lp-include-text').checked;
+      const includeMfp = document.getElementById('lp-include-mfp').checked;
+      const includeTable = document.getElementById('lp-include-table').checked;
+      const includeRubric = document.getElementById('lp-include-rubric').checked;
+
+      const { htmlSheet, markdownContent } = buildRealLessonPlan({
+        topic,
+        skill,
+        prompt,
+        grade,
+        duration,
+        framework,
+        school,
+        classProfile,
+        includeText,
+        includeMfp,
+        includeTable,
+        includeRubric
+      });
+
+      lastGenerated.lp = {
+        title: topic,
+        type: "Lesson Plan",
+        details: `${grade} • ${duration} • ${skill.toUpperCase()}`,
+        content: markdownContent,
+        htmlSheet: htmlSheet
+      };
+
+      document.getElementById('lp-result').classList.remove('hidden');
+      document.getElementById('lp-result-title').textContent = `Lesson Plan: ${topic}`;
+      document.getElementById('lp-result-subtitle').textContent = `${grade} • ${duration} • ${framework} • Cambridge/CELTA Standard`;
+
+      document.getElementById('lp-formatted-preview').innerHTML = htmlSheet;
+      document.getElementById('lp-output').textContent = markdownContent;
+
+      switchLpPreviewTab('formatted');
+
+      saveToLibrary(topic, "Lesson Plan", `${grade} • ${duration}`, markdownContent, htmlSheet);
+      showToast(`Comprehensive Lesson Plan for "${topic}" generated!`);
+    }
 
     // QR Code System
     let currentQrUrl = window.location.href;
@@ -2192,6 +3365,76 @@
 
     const templates = [
       {
+        title: "Reading & Language Focus: Climate Action & Renewable Energy",
+        type: "lessonplan",
+        level: "B1 Intermediate",
+        desc: "CELTA standard 60-min reading skills plan with 220-word authentic text, 4 blocked lexis items with CCQs, and solution pitch.",
+        art: "Green renewable turbine and solar eco graphic",
+        lpConfig: {
+          topic: "Climate Action & Renewable Energy",
+          skill: "reading",
+          grade: "B1 Intermediate",
+          duration: "60 Minutes",
+          prompt: "Pre-teach 4 environmental terms with CCQs, 200-word reading text, skimming/scanning comprehension check, and pair solution pitch."
+        }
+      },
+      {
+        title: "Listening & Speaking Fluency: AI in Modern Careers",
+        type: "lessonplan",
+        level: "B2 Upper-Intermediate",
+        desc: "2-speaker podcast transcript, gist/detail listening comprehension, functional language for polite disagreement, and debate.",
+        art: "Audio soundwave podcast recording studio",
+        lpConfig: {
+          topic: "AI in Modern Careers & Ethical Tech",
+          skill: "listening",
+          grade: "B2 Upper-Intermediate",
+          duration: "60 Minutes",
+          prompt: "Complete 2-speaker audio podcast transcript, listening for gist & specific nuance, functional language for agreeing/disagreeing, and pair debate."
+        }
+      },
+      {
+        title: "Language Focus (PPP): Narrative Tenses & Travel Stories",
+        type: "lessonplan",
+        level: "B1 Intermediate",
+        desc: "Past Simple vs Past Continuous vs Past Perfect marker sentences, timeline diagrams, CCQs, and storytelling production.",
+        art: "Storybook timeline and grammar marker boards",
+        lpConfig: {
+          topic: "Travel Mishaps & Narrative Tenses",
+          skill: "language",
+          grade: "B1 Intermediate",
+          duration: "45 Minutes",
+          prompt: "PPP framework for Past Simple vs Past Continuous vs Past Perfect, timeline diagrams, CCQs, and communicative storytelling."
+        }
+      },
+      {
+        title: "Writing Workshop: Formal Opinion Essay on Remote Work",
+        type: "lessonplan",
+        level: "B2 Upper-Intermediate",
+        desc: "Model essay deconstruction, thesis statement framing, discourse markers for concession, and peer evaluation rubric.",
+        art: "Academic essay structure and rubric checklist",
+        lpConfig: {
+          topic: "Opinion Essay on Remote Work Culture",
+          skill: "writing",
+          grade: "B2 Upper-Intermediate",
+          duration: "90 Minutes",
+          prompt: "Model opinion essay analysis, linking words for concession and addition, paragraph drafting scaffold, and peer review rubric."
+        }
+      },
+      {
+        title: "Speaking & Debate: Global Tourism & Overtourism Dilemma",
+        type: "lessonplan",
+        level: "C1 Advanced",
+        desc: "Opinion barometer, idiomatic discourse fillers, intonation clinic, and town hall fishbowl debate with delayed error correction.",
+        art: "Parliamentary council debate podium",
+        lpConfig: {
+          topic: "Global Tourism & Overtourism Dilemma",
+          skill: "speaking",
+          grade: "C1 Advanced",
+          duration: "60 Minutes",
+          prompt: "Fishbowl council debate, 6 conversational idioms with CCQs, intonation practice for polite skepticism, and delayed error correction."
+        }
+      },
+      {
         title: "Present Perfect vs Past Simple Masterclass",
         type: "worksheet",
         level: "B1 Intermediate",
@@ -2267,20 +3510,28 @@
       document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
       if (el) el.classList.add('active');
 
-      const views = ['dashboard', 'worksheet', 'presentation', 'templates', 'library'];
-      views.forEach(v => document.getElementById(`view-${v}`).classList.add('hidden'));
-      document.getElementById(`view-${tabId}`).classList.remove('hidden');
+      const views = ['dashboard', 'lessonplan', 'worksheet', 'presentation', 'templates', 'library'];
+      views.forEach(v => {
+        const viewEl = document.getElementById(`view-${v}`);
+        if (viewEl) viewEl.classList.add('hidden');
+      });
+
+      const currentView = document.getElementById(`view-${tabId}`);
+      if (currentView) currentView.classList.remove('hidden');
 
       const titles = {
         dashboard: ["Dashboard", "Overview & prompt-driven educational generator"],
+        lessonplan: ["Lesson Plan Generator", "Create CELTA/Cambridge standard lesson plans for Reading, Listening, Language, Writing & Speaking"],
         worksheet: ["Worksheet Generator", "Create customized A4 printable English worksheets with real tasks"],
         presentation: ["PowerPoint Generator", "Design interactive slide decks for classroom projection"],
-        templates: ["Templates Gallery", "Browse ready-to-use lesson templates and worksheets"],
+        templates: ["Templates Gallery", "Browse ready-to-use lesson templates, plans and worksheets"],
         library: ["My Library", "View and access your generated materials"]
       };
 
-      document.getElementById('tab-title').textContent = titles[tabId][0];
-      document.getElementById('tab-subtitle').textContent = titles[tabId][1];
+      if (titles[tabId]) {
+        document.getElementById('tab-title').textContent = titles[tabId][0];
+        document.getElementById('tab-subtitle').textContent = titles[tabId][1];
+      }
 
       // Auto close sidebar on mobile
       toggleSidebar(false);
@@ -2303,12 +3554,36 @@
 
     function generateFromDashboard() {
       const prompt = document.getElementById('dash-prompt').value.trim() || 'General English Lesson: Present Perfect Mastery';
-      const isPpt = prompt.toLowerCase().includes('presentation') || prompt.toLowerCase().includes('slide') || prompt.toLowerCase().includes('deck');
+      const lower = prompt.toLowerCase();
+      const isPpt = lower.includes('presentation') || lower.includes('slide') || lower.includes('deck');
+      const isLp = lower.includes('lesson plan') || lower.includes('lesson') || lower.includes('celta') || lower.includes('plan') || lower.includes('reading') || lower.includes('listening') || lower.includes('speaking') || lower.includes('writing');
 
       if (isPpt) {
         const content = `🎨 [AI Generated Slide Art: "${prompt}"]\n\nEducational Presentation Deck: ${prompt}\n\nSlide 1: Topic Overview & Learning Objectives\nSlide 2: Diagnostic Check & Core Concepts\nSlide 3: Essential Vocabulary & Collocations\nSlide 4: Interactive Group Discussion\nSlide 5: Guided Practice & Analysis\nSlide 6: Live Student Debate\nSlide 7: Practical Real-World Application\nSlide 8: Key Takeaways & Teacher Notes`;
         saveToLibrary(prompt, "Presentation", "Generated from Dashboard", content);
         showToast(`Generated presentation deck for "${prompt}"!`);
+      } else if (isLp && !lower.includes('worksheet')) {
+        let detectedSkill = 'reading';
+        if (lower.includes('listen')) detectedSkill = 'listening';
+        else if (lower.includes('grammar') || lower.includes('ppp') || lower.includes('language') || lower.includes('tense')) detectedSkill = 'language';
+        else if (lower.includes('writ') || lower.includes('essay')) detectedSkill = 'writing';
+        else if (lower.includes('speak') || lower.includes('debate') || lower.includes('oral')) detectedSkill = 'speaking';
+        else if (lower.includes('integrated') || lower.includes('4-skill')) detectedSkill = 'integrated';
+
+        const result = buildRealLessonPlan({
+          topic: prompt,
+          skill: detectedSkill,
+          prompt: prompt,
+          grade: 'B1 Intermediate',
+          duration: '60 Minutes',
+          school: 'International Language Academy',
+          includeText: true,
+          includeMfp: true,
+          includeTable: true,
+          includeRubric: true
+        });
+        saveToLibrary(prompt, "Lesson Plan", `B1 • 60 Min • ${detectedSkill.toUpperCase()}`, result.markdownContent, result.htmlSheet);
+        showToast(`Generated Lesson Plan for "${prompt}"!`);
       } else {
         const result = buildRealA4Worksheet({
           topic: prompt,
@@ -2580,6 +3855,22 @@
               font-size: 12px;
               page-break-before: always;
             }
+            /* Lesson Plan Specific Print Styles */
+            .lp-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+            .lp-info-box { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 10px; font-size: 11px; }
+            .lp-info-box strong { color: #0f172a; display: block; margin-bottom: 2px; font-size: 10.5px; text-transform: uppercase; }
+            .lp-table-wrapper { width: 100%; margin-bottom: 14px; }
+            .lp-table { width: 100%; border-collapse: collapse; font-size: 10.5px; text-align: left; }
+            .lp-table th { background: #0f172a; color: #ffffff; padding: 6px 8px; font-weight: 800; border: 1px solid #0f172a; }
+            .lp-table td { padding: 6px 8px; border: 1px solid #cbd5e1; vertical-align: top; line-height: 1.4; }
+            .lp-table tr:nth-child(even) td { background: #f8fafc; }
+            .lp-stage-name { font-weight: 800; color: #0f172a; display: block; }
+            .lp-stage-aim { color: #64748b; font-size: 9.5px; font-style: italic; }
+            .lp-pattern-badge { display: inline-block; padding: 1px 4px; background: #e2e8f0; border-radius: 3px; font-weight: 700; font-size: 9px; }
+            .lp-materials-box { background: #f0fdf4; border: 1px solid #86efac; border-radius: 6px; padding: 10px 12px; margin-bottom: 12px; font-size: 11px; }
+            .lp-script-box { background: #f8fafc; border-left: 3.5px solid #0891b2; padding: 8px 12px; border-radius: 0 6px 6px 0; font-size: 11px; line-height: 1.5; margin-bottom: 12px; }
+            .lp-script-speaker { font-weight: 800; color: #0891b2; }
+            .lp-ccq-item { background: #eff6ff; border-left: 3px solid #3b82f6; padding: 6px 8px; margin-bottom: 6px; border-radius: 0 4px 4px 0; font-size: 10.5px; }
             .footer {
               margin-top: 20px;
               padding-top: 8px;
@@ -2622,8 +3913,8 @@
             <div class="raw-content-view">${rawText}</div>
           `}
           <div class="footer">
-            <span>EduGen AI Studio — A4 Classroom Worksheet</span>
-            <span>📱 Scan QR code on header for mobile answer key & companion</span>
+            <span>EduGen AI Studio — A4 Classroom Material & Lesson Plan</span>
+            <span>📱 Scan QR code on header for digital mobile companion</span>
           </div>
           <script>
             window.onload = function() { window.print(); };
@@ -2636,35 +3927,45 @@
 
     function renderTemplates() {
       const grid = document.getElementById('templates-grid');
-      grid.innerHTML = templates.map((t, index) => `
-        <div class="template-card">
-          <div>
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span class="badge ${t.type === 'worksheet' ? 'badge-worksheet' : ''}">${t.type}</span>
-              <span style="font-size: 12px; color: var(--text-muted);">${t.level}</span>
+      if (!grid) return;
+      grid.innerHTML = templates.map((t, index) => {
+        let badgeClass = '';
+        if (t.type === 'worksheet') badgeClass = 'badge-worksheet';
+        else if (t.type === 'lessonplan') badgeClass = 'badge-lessonplan';
+
+        return `
+          <div class="template-card">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="badge ${badgeClass}">${t.type === 'lessonplan' ? 'Lesson Plan' : t.type}</span>
+                <span style="font-size: 12px; color: var(--text-muted);">${t.level}</span>
+              </div>
+              <h3 style="margin-top: 12px; font-size: 16px;">${t.title}</h3>
+              <p style="color: var(--text-muted); font-size: 13px; margin-top: 8px; line-height: 1.5;">${t.desc}</p>
             </div>
-            <h3 style="margin-top: 12px; font-size: 16px;">${t.title}</h3>
-            <p style="color: var(--text-muted); font-size: 13px; margin-top: 8px; line-height: 1.5;">${t.desc}</p>
+            <div style="display:flex; gap:8px; margin-top: 14px;">
+              <button class="btn-primary" style="flex:1;" onclick="useTemplate(${index})">
+                <span class="material-symbols-outlined" style="font-size:18px;">auto_awesome</span>
+                Use Template
+              </button>
+              <button class="btn-action" onclick="openQrModal(window.location.href, '${t.title}', 'Scan to load template on your phone')" title="QR Link">
+                <span class="material-symbols-outlined" style="font-size:18px; color:var(--secondary);">qr_code_2</span>
+              </button>
+              <button class="btn-action" onclick="printTemplate(${index})" title="Print Preview">
+                <span class="material-symbols-outlined" style="font-size:18px;">print</span>
+              </button>
+            </div>
           </div>
-          <div style="display:flex; gap:8px;">
-            <button class="btn-primary" style="flex:1;" onclick="useTemplate(${index})">
-              <span class="material-symbols-outlined" style="font-size:18px;">auto_awesome</span>
-              Use Template
-            </button>
-            <button class="btn-action" onclick="openQrModal(window.location.href, '${t.title}', 'Scan to load template on your phone')" title="QR Link">
-              <span class="material-symbols-outlined" style="font-size:18px; color:var(--secondary);">qr_code_2</span>
-            </button>
-            <button class="btn-action" onclick="printTemplate(${index})" title="Print Preview">
-              <span class="material-symbols-outlined" style="font-size:18px;">print</span>
-            </button>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function printTemplate(idx) {
       const t = templates[idx];
-      if (t.config) {
+      if (t.type === 'lessonplan' && t.lpConfig) {
+        const res = buildRealLessonPlan(t.lpConfig);
+        printContent(t.title, 'Lesson Plan', t.level, res.markdownContent, res.htmlSheet);
+      } else if (t.config) {
         const res = buildRealA4Worksheet(t.config);
         printContent(t.title, 'A4 Worksheet', t.level, res.markdownContent, res.htmlSheet);
       } else {
@@ -2674,7 +3975,17 @@
 
     function useTemplate(idx) {
       const t = templates[idx];
-      if (t.config) {
+      if (t.type === 'lessonplan' && t.lpConfig) {
+        const res = buildRealLessonPlan(t.lpConfig);
+        saveToLibrary(t.title, 'Lesson Plan', t.level, res.markdownContent, res.htmlSheet);
+        switchTabById('lessonplan');
+        document.getElementById('lp-topic').value = t.lpConfig.topic;
+        document.getElementById('lp-skill').value = t.lpConfig.skill;
+        document.getElementById('lp-grade').value = t.lpConfig.grade;
+        document.getElementById('lp-duration').value = t.lpConfig.duration;
+        document.getElementById('lp-prompt').value = t.lpConfig.prompt;
+        generateLessonPlan();
+      } else if (t.config) {
         const res = buildRealA4Worksheet(t.config);
         saveToLibrary(t.title, 'A4 Worksheet', t.level, res.markdownContent, res.htmlSheet);
         switchTabById('worksheet');
