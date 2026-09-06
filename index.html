@@ -3024,6 +3024,110 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
       }
     }
 
+    // ==========================================
+    // INTELLIGENT SEMANTIC EDUCATIONAL GENERATOR
+    // ==========================================
+
+    // Helper: Extract clean topical keywords & context
+    function extractTopicProfile(rawTopic, rawPrompt, grade = 'B1 Intermediate') {
+      const combined = `${rawTopic} ${rawPrompt}`.toLowerCase();
+      
+      // 1. Grammar Topic Checks
+      if (combined.includes('present perfect') || combined.includes('past simple') || combined.includes('since') && combined.includes('for') || combined.includes('have you ever')) {
+        return { category: 'grammar_present_perfect_past_simple', display: 'Present Perfect vs Past Simple' };
+      }
+      if (combined.includes('past continuous') || combined.includes('past perfect') || combined.includes('narrative tenses') || combined.includes('while') && combined.includes('when')) {
+        return { category: 'grammar_past_continuous_narrative', display: 'Past Continuous & Narrative Tenses' };
+      }
+      if (combined.includes('conditional') || combined.includes('if clause') || combined.includes('unless') || combined.includes('second conditional') || combined.includes('third conditional') || combined.includes('zero conditional') || combined.includes('first conditional') || combined.includes('mixed conditional')) {
+        return { category: 'grammar_conditionals', display: 'Conditionals & Hypothetical Situations' };
+      }
+      if (combined.includes('passive') || combined.includes('active to passive') || combined.includes('by agent') || combined.includes('was invented') || combined.includes('is manufactured')) {
+        return { category: 'grammar_passive_voice', display: 'Passive Voice (Present, Past & Modal Passives)' };
+      }
+      if (combined.includes('reported speech') || combined.includes('indirect speech') || combined.includes('say vs tell') || combined.includes('reported question')) {
+        return { category: 'grammar_reported_speech', display: 'Reported Speech & Indirect Reporting' };
+      }
+      if (combined.includes('modal') || combined.includes('must') && combined.includes('have to') || combined.includes('should') || combined.includes('might') || combined.includes('deduction') || combined.includes('obligation') || combined.includes('can\'t be')) {
+        return { category: 'grammar_modal_verbs', display: 'Modal Verbs of Obligation, Deduction & Advice' };
+      }
+      if (combined.includes('relative clause') || combined.includes('who') && combined.includes('which') || combined.includes('whose') || combined.includes('defining') && combined.includes('non-defining')) {
+        return { category: 'grammar_relative_clauses', display: 'Relative Clauses (Defining & Non-Defining)' };
+      }
+      if (combined.includes('comparative') || combined.includes('superlative') || combined.includes('as...as') || combined.includes('more than') || combined.includes('the most')) {
+        return { category: 'grammar_comparatives_superlatives', display: 'Comparatives & Superlatives' };
+      }
+      if (combined.includes('gerund') || combined.includes('infinitive') || combined.includes('-ing') && combined.includes('to + verb') || combined.includes('verb patterns')) {
+        return { category: 'grammar_gerunds_infinitives', display: 'Gerunds vs Infinitives (-ing vs to-infinitive)' };
+      }
+      if (combined.includes('phrasal') || combined.includes('multi-word verb') || combined.includes('turn on') || combined.includes('look after') || combined.includes('get over') || combined.includes('give up')) {
+        return { category: 'grammar_phrasal_verbs', display: 'Essential Phrasal Verbs in Context' };
+      }
+      if (combined.includes('article') || combined.includes('a/an/the') || combined.includes('countable') || combined.includes('uncountable') || combined.includes('quantifier') || combined.includes('much') && combined.includes('many')) {
+        return { category: 'grammar_articles_quantifiers', display: 'Articles (A, An, The) & Quantifiers' };
+      }
+      if (combined.includes('question tag') || combined.includes('indirect question') || combined.includes('embedded question') || combined.includes('polite request')) {
+        return { category: 'grammar_question_tags_indirect', display: 'Question Tags & Polite Indirect Questions' };
+      }
+      if (combined.includes('future') || combined.includes('will') && combined.includes('going to') || combined.includes('future continuous') || combined.includes('future perfect')) {
+        return { category: 'grammar_future_forms', display: 'Future Forms (Will, Going to, Continuous & Perfect)' };
+      }
+
+      // 2. Thematic / Content Domain Checks
+      if (combined.includes('space') || combined.includes('mars') || combined.includes('planet') || combined.includes('astronaut') || combined.includes('astronomy') || combined.includes('galaxy') || combined.includes('telescope') || combined.includes('nasa') || combined.includes('rocket') || combined.includes('solar system')) {
+        return { category: 'theme_space_exploration', display: 'Space Exploration & Astronomical Missions' };
+      }
+      if (combined.includes('animal') || combined.includes('wildlife') || combined.includes('habitat') || combined.includes('endangered') || combined.includes('marine') || combined.includes('rainforest') || combined.includes('biodiversity') || combined.includes('ocean') || combined.includes('species') || combined.includes('conservation') || combined.includes('safari')) {
+        return { category: 'theme_animals_wildlife', display: 'Wildlife, Habitats & Biodiversity Conservation' };
+      }
+      if (combined.includes('food') || combined.includes('cooking') || combined.includes('recipe') || combined.includes('restaurant') || combined.includes('culinary') || combined.includes('nutrition') || combined.includes('diet') || combined.includes('chef') || combined.includes('ingredient') || combined.includes('kitchen') || combined.includes('meal')) {
+        return { category: 'theme_food_cooking', display: 'Culinary Arts, Healthy Nutrition & Food Culture' };
+      }
+      if (combined.includes('travel') || combined.includes('tourism') || combined.includes('airport') || combined.includes('flight') || combined.includes('hotel') || combined.includes('sightseeing') || combined.includes('vacation') || combined.includes('holiday') || combined.includes('luggage') || combined.includes('backpack') || combined.includes('destination')) {
+        return { category: 'theme_travel_tourism', display: 'International Travel, Tourism & Cultural Exploration' };
+      }
+      if (combined.includes('tech') || combined.includes('artificial intelligence') || combined.includes('ai') || combined.includes('robot') || combined.includes('cyber') || combined.includes('software') || combined.includes('coding') || combined.includes('digital') || combined.includes('internet') || combined.includes('smartphone') || combined.includes('computer')) {
+        return { category: 'theme_tech_ai', display: 'Artificial Intelligence, Digital Innovation & Cyber Ethics' };
+      }
+      if (combined.includes('climate') || combined.includes('environment') || combined.includes('renewable') || combined.includes('solar') || combined.includes('energy') || combined.includes('green') || combined.includes('pollution') || combined.includes('recycle') || combined.includes('sustainability') || combined.includes('global warming') || combined.includes('carbon')) {
+        return { category: 'theme_environment_climate', display: 'Climate Action, Renewable Energy & Sustainability' };
+      }
+      if (combined.includes('business') || combined.includes('job') || combined.includes('interview') || combined.includes('career') || combined.includes('workplace') || combined.includes('office') || combined.includes('resume') || combined.includes('cv') || combined.includes('email') || combined.includes('corporate') || combined.includes('management') || combined.includes('negotiation') || combined.includes('company')) {
+        return { category: 'theme_business_career', display: 'Business English, Career Development & Workplace Communication' };
+      }
+      if (combined.includes('health') || combined.includes('fitness') || combined.includes('exercise') || combined.includes('doctor') || combined.includes('medicine') || combined.includes('mental health') || combined.includes('hospital') || combined.includes('wellness') || combined.includes('sleep') || combined.includes('workout') || combined.includes('gym')) {
+        return { category: 'theme_health_fitness', display: 'Health, Physical Fitness & Mental Well-being' };
+      }
+      if (combined.includes('movie') || combined.includes('cinema') || combined.includes('film') || combined.includes('music') || combined.includes('art') || combined.includes('theater') || combined.includes('concert') || combined.includes('painting') || combined.includes('photography') || combined.includes('actor') || combined.includes('song')) {
+        return { category: 'theme_arts_cinema_music', display: 'Cinema, Musical Expression & Visual Arts' };
+      }
+      if (combined.includes('routine') || combined.includes('daily') || combined.includes('habit') || combined.includes('morning') || combined.includes('hobby') || combined.includes('free time') || combined.includes('lifestyle') || combined.includes('chores') || combined.includes('weekend')) {
+        return { category: 'theme_daily_routines', display: 'Daily Routines, Habits & Lifestyle Management' };
+      }
+      if (combined.includes('shopping') || combined.includes('clothes') || combined.includes('fashion') || combined.includes('money') || combined.includes('price') || combined.includes('discount') || combined.includes('bank') || combined.includes('budget') || combined.includes('currency') || combined.includes('store') || combined.includes('e-commerce')) {
+        return { category: 'theme_shopping_money', display: 'Shopping, Personal Finance & Consumer Awareness' };
+      }
+      if (combined.includes('sport') || combined.includes('football') || combined.includes('soccer') || combined.includes('basketball') || combined.includes('tennis') || combined.includes('athlete') || combined.includes('olympic') || combined.includes('running') || combined.includes('swimming') || combined.includes('tournament') || combined.includes('match')) {
+        return { category: 'theme_sports_fitness', display: 'Sports, Athletic Competitions & Team Spirit' };
+      }
+      if (combined.includes('education') || combined.includes('school') || combined.includes('university') || combined.includes('teacher') || combined.includes('student') || combined.includes('exam') || combined.includes('study') || combined.includes('homework') || combined.includes('learning') || combined.includes('classroom')) {
+        return { category: 'theme_education_school', display: 'Education, Academic Life & Modern Learning Methods' };
+      }
+      if (combined.includes('history') || combined.includes('ancient') || combined.includes('pyramid') || combined.includes('roman') || combined.includes('century') || combined.includes('empire') || combined.includes('civilization') || combined.includes('medieval') || combined.includes('discovery') || combined.includes('archaeology')) {
+        return { category: 'theme_history_civilizations', display: 'World History, Ancient Civilizations & Heritage' };
+      }
+      if (combined.includes('personality') || combined.includes('friend') || combined.includes('character') || combined.includes('family') || combined.includes('relationship') || combined.includes('emotion') || combined.includes('generous') || combined.includes('honest') || combined.includes('ambitious')) {
+        return { category: 'theme_personality_friendship', display: 'Personality Traits, Character & Interpersonal Relations' };
+      }
+      if (combined.includes('crime') || combined.includes('police') || combined.includes('detective') || combined.includes('law') || combined.includes('investigation') || combined.includes('court') || combined.includes('mystery') || combined.includes('evidence') || combined.includes('theft') || combined.includes('justice')) {
+        return { category: 'theme_crime_law', display: 'Crime Investigation, Justice & Legal Principles' };
+      }
+
+      // Default: Custom Dynamic Synthesis with sanitized prompt keywords
+      const cleaned = rawTopic.trim() || rawPrompt.trim() || 'General English';
+      return { category: 'custom_dynamic', display: cleaned };
+    }
+
     // Real Educational Task Synthesizer
     function buildRealA4Worksheet(config) {
       const {
@@ -3039,16 +3143,8 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
         includeBank = true
       } = config;
 
-      const lowerTopic = topic.toLowerCase();
-      const lowerPrompt = prompt.toLowerCase();
-
-      // Dynamic Topic Context Detection
-      const isPastVsPresent = lowerTopic.includes('present perfect') || lowerTopic.includes('past simple') || lowerPrompt.includes('present perfect') || lowerPrompt.includes('past simple');
-      const isConditionals = lowerTopic.includes('conditional') || lowerPrompt.includes('conditional') || lowerPrompt.includes('if ');
-      const isPassive = lowerTopic.includes('passive') || lowerPrompt.includes('passive') || lowerPrompt.includes('active to passive');
-      const isBusiness = lowerTopic.includes('business') || lowerTopic.includes('email') || lowerPrompt.includes('business') || lowerPrompt.includes('corporate');
-      const isPhrasal = lowerTopic.includes('phrasal') || lowerPrompt.includes('phrasal') || lowerTopic.includes('verb');
-      const isReadingComp = lowerTopic.includes('reading') || lowerTopic.includes('climate') || lowerPrompt.includes('reading') || lowerTopic.includes('environment');
+      const profile = extractTopicProfile(topic, prompt, grade);
+      const displayTitle = topic || profile.display;
 
       let wordBank = [];
       let secA = { title: "Section A: Concept Diagnostic & Grammar Rules", marks: "10 Marks", instructions: "Read each question carefully and write your answers on the provided lines.", items: [] };
@@ -3057,147 +3153,322 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
       let secD = { title: "Section D: Real-World Communication Challenge", marks: "5 Marks", promptText: "" };
       let answerKey = [];
 
-      if (isPastVsPresent) {
-        wordBank = ["since", "for", "already", "yet", "just", "ever", "last night", "in 2019", "never", "ago"];
-        
-        secA.items = [
-          { q: "Explain the fundamental difference in usage between the Present Perfect ('I have lived') and Past Simple ('I lived').", lineCount: 2 },
-          { q: "State the rule for choosing between the time markers 'FOR' and 'SINCE' with Present Perfect verbs.", lineCount: 2 }
-        ];
+      switch (profile.category) {
+        case 'grammar_present_perfect_past_simple':
+          wordBank = ["since", "for", "already", "yet", "just", "ever", "last night", "in 2021", "never", "ago"];
+          secA.items = [
+            { q: "Explain the fundamental difference in usage between the Present Perfect ('I have lived') and Past Simple ('I lived').", lineCount: 2 },
+            { q: "State the rule for choosing between the time markers 'FOR' and 'SINCE' with Present Perfect verbs.", lineCount: 2 }
+          ];
+          secB.items = [
+            { type: 'blank', num: 1, text: "Sarah ____________________ (not finish) her quarterly project report yet, but she promises to send it before 5 PM." },
+            { type: 'blank', num: 2, text: "We ____________________ (travel) to Kyoto three years ago during the spring cherry blossom festival." },
+            { type: 'blank', num: 3, text: "How long ____________________ (you / know) Professor Henderson? — Since I started university." },
+            { type: 'blank', num: 4, text: "Marcus ____________________ (already / visit) five different countries since he began his gap year." },
+            { type: 'blank', num: 5, text: "They ____________________ (arrive) at the airport at 8:30 AM yesterday and checked in immediately." },
+            { type: 'mcq', num: 6, text: "I haven't seen David __________ last Monday's department meeting.", options: ["(A) for", "(B) since", "(C) ago", "(D) in"] },
+            { type: 'mcq', num: 7, text: "When __________ your new electric vehicle? — Last October.", options: ["(A) have you bought", "(B) did you buy", "(C) had you bought", "(D) you bought"] }
+          ];
+          secC.instructions = "Read the short travel profile below, then complete the comprehension & error-detection questions.";
+          secC.passage = "Elena is a documentary photographer from Barcelona. Over the last decade, she has traveled to over 40 countries to capture wildlife conservation efforts. In 2021, she spent four months living in Costa Rica researching sea turtles. She has won three international photography awards so far, and she has just published her first hard-cover book.";
+          secC.items = [
+            { num: 1, text: "Why is the Present Perfect used in 'she has traveled to over 40 countries'?" },
+            { num: 2, text: "Why is the Past Simple used in 'In 2021, she spent four months living in Costa Rica'?" },
+            { num: 3, text: "Identify and correct the grammatical error in this sentence: 'Elena has published a new photo series yesterday morning.'" }
+          ];
+          secD.promptText = "Write 4 original sentences describing your personal experiences: write 2 sentences using the Present Perfect with 'already' / 'never', and 2 sentences using the Past Simple with specific past time indicators (e.g. 'in 2022', 'last weekend').";
+          answerKey = [
+            "Section A: 1. Present Perfect describes actions connected to the present / unfinished time periods; Past Simple describes completed actions at a definite past time.",
+            "Section A: 2. 'SINCE' is used with a specific starting point in time (since 2015, since 9 AM); 'FOR' is used with a duration of time (for 3 years, for 2 hours).",
+            "Section B: 1. has not finished / hasn't finished | 2. traveled (or travelled) | 3. have you known | 4. has already visited | 5. arrived | 6. (B) since | 7. (B) did you buy",
+            "Section C: 1. It refers to life experience up to the present with an unspecified time frame. | 2. It refers to a completed event in a finished past time period (in 2021). | 3. Error: 'has published' -> Correction: 'published' (because 'yesterday morning' is a specific finished past time).",
+            "Section D: Award 5 marks for grammatically accurate sentences with correct tense morphology and appropriate time adverbials."
+          ];
+          break;
 
-        secB.items = [
-          { type: 'blank', num: 1, text: "Sarah ____________________ (not finish) her quarterly project report yet, but she promises to send it before 5 PM." },
-          { type: 'blank', num: 2, text: "We ____________________ (travel) to Kyoto three years ago during the spring cherry blossom festival." },
-          { type: 'blank', num: 3, text: "How long ____________________ (you / know) Professor Henderson? — Since I started university." },
-          { type: 'blank', num: 4, text: "Marcus ____________________ (already / visit) five different countries since he began his gap year." },
-          { type: 'blank', num: 5, text: "They ____________________ (arrive) at the airport at 8:30 AM yesterday and checked in immediately." },
-          { type: 'mcq', num: 6, text: "I haven't seen David __________ last Monday's department meeting.", options: ["(A) for", "(B) since", "(C) ago", "(D) in"] },
-          { type: 'mcq', num: 7, text: "When __________ your new electric vehicle? — Last October.", options: ["(A) have you bought", "(B) did you buy", "(C) had you bought", "(D) you bought"] }
-        ];
+        case 'grammar_past_continuous_narrative':
+          wordBank = ["while", "when", "as", "had already left", "was raining", "suddenly", "meanwhile", "were driving"];
+          secA.items = [
+            { q: "How do the Past Continuous and Past Simple interact when describing an interrupted past action?", lineCount: 2 },
+            { q: "State the rule for using 'WHILE' vs 'WHEN' in narrative past sentences.", lineCount: 2 }
+          ];
+          secB.items = [
+            { type: 'blank', num: 1, text: "While the students ____________________ (take) their chemistry exam, the fire alarm suddenly sounded." },
+            { type: 'blank', num: 2, text: "Liam ____________________ (walk) down Baker Street when he saw his childhood best friend." },
+            { type: 'blank', num: 3, text: "When we reached the cinema at 7:15 PM, the film ____________________ (already / begin)." },
+            { type: 'blank', num: 4, text: "What ____________________ (you / do) yesterday at 8 PM when the power went out?" },
+            { type: 'mcq', num: 5, text: "They were playing tennis __________ it started pouring with rain.", options: ["(A) while", "(B) when", "(C) during", "(D) as soon"] },
+            { type: 'mcq', num: 6, text: "She realized she __________ her passport at home after she arrived at the terminal.", options: ["(A) left", "(B) has left", "(C) had left", "(D) was leaving"] }
+          ];
+          secC.instructions = "Read the short narrative excerpt and answer the questions.";
+          secC.passage = "It was a stormy Tuesday evening in Edinburgh. Detective Miller was reviewing old case files in his office when his telephone rang sharply. The caller spoke in a whispered voice, claiming they had discovered a secret safe behind the museum library wall. Miller grabbed his trench coat and rushed out into the pouring rain.";
+          secC.items = [
+            { num: 1, text: "Which verb describes the ongoing background activity in the office?" },
+            { num: 2, text: "Which verb describes the sudden interrupting event?" },
+            { num: 3, text: "Rewrite the sentence using 'WHILE': Detective Miller was reviewing case files when the telephone rang." }
+          ];
+          secD.promptText = "Write a 4-sentence suspenseful opening to a mystery story using Past Continuous for atmosphere ('The wind was howling...'), Past Simple for events, and Past Perfect for background backstory.";
+          answerKey = [
+            "Section A: 1. Past Continuous sets the ongoing background scene/activity; Past Simple expresses the shorter event that interrupts it.",
+            "Section A: 2. 'WHILE' is followed by a continuous action (While I was sleeping...); 'WHEN' is typically followed by a simple past event (When the phone rang...).",
+            "Section B: 1. were taking | 2. was walking | 3. had already begun | 4. were you doing | 5. (B) when | 6. (C) had left",
+            "Section C: 1. 'was reviewing' | 2. 'rang' | 3. 'While Detective Miller was reviewing case files, the telephone rang.'",
+            "Section D: Award 5 marks for creative narrative voice and accurate usage of Past Continuous, Past Simple, and Past Perfect."
+          ];
+          break;
 
-        secC.instructions = "Read the short travel profile below, then complete the comprehension & error-detection questions.";
-        secC.passage = "Elena is a documentary photographer from Barcelona. Over the last decade, she has traveled to over 40 countries to capture wildlife conservation efforts. In 2021, she spent four months living in Costa Rica researching sea turtles. She has won three international photography awards so far, and she has just published her first hard-cover book.";
-        secC.items = [
-          { num: 1, text: "Why is the Present Perfect used in 'she has traveled to over 40 countries'?" },
-          { num: 2, text: "Why is the Past Simple used in 'In 2021, she spent four months living in Costa Rica'?" },
-          { num: 3, text: "Identify and correct the grammatical error in this sentence: 'Elena has published a new photo series yesterday morning.'" }
-        ];
+        case 'grammar_conditionals':
+          wordBank = ["if", "unless", "provided that", "would buy", "will happen", "had known", "would have called", "studied", "were"];
+          secA.items = [
+            { q: "Define the difference in probability and structure between the First Conditional (Real) and Second Conditional (Hypothetical).", lineCount: 2 },
+            { q: "Why do we typically say 'If I were you' instead of 'If I was you' in formal subjunctive English?", lineCount: 2 }
+          ];
+          secB.items = [
+            { type: 'blank', num: 1, text: "If it ____________________ (rain) heavily this afternoon, we will postpone the outdoor sports tournament." },
+            { type: 'blank', num: 2, text: "If I ____________________ (win) a million dollars in the national lottery, I would establish an animal sanctuary." },
+            { type: 'blank', num: 3, text: "You won't pass the final Cambridge exam unless you ____________________ (revise) the grammar modules daily." },
+            { type: 'blank', num: 4, text: "If she had more free time, she ____________________ (learn) how to speak fluent Italian." },
+            { type: 'mcq', num: 5, text: "If you __________ ice in warm sunlight, it melts.", options: ["(A) will leave", "(B) leave", "(C) left", "(D) had left"] },
+            { type: 'mcq', num: 6, text: "What __________ if your flight is cancelled tomorrow?", options: ["(A) would you do", "(B) will you do", "(C) did you do", "(D) had you done"] },
+            { type: 'mcq', num: 7, text: "If I __________ you, I would accept the job offer in Zurich immediately.", options: ["(A) am", "(B) were", "(C) will be", "(D) would be"] }
+          ];
+          secC.instructions = "Rewrite each real-world situation as a conditional sentence according to the prompts.";
+          secC.items = [
+            { num: 1, text: "Situation: I don't have a bicycle, so I walk to school every morning.\n-> Rewrite using 2nd Conditional: If I __________________________________________________" },
+            { num: 2, text: "Situation: Perhaps it will snow tomorrow, and we will stay indoors.\n-> Rewrite using 1st Conditional: If it __________________________________________________" },
+            { num: 3, text: "Situation: He eats too much junk food, so he feels tired constantly.\n-> Rewrite using 2nd Conditional: If he __________________________________________________" }
+          ];
+          secD.promptText = "Describe a hypothetical ethical dilemma: 'What would you do if you found an envelope containing $5,000 cash on an empty subway train?' Write at least 4 sentences using 2nd Conditional structures ('If I found..., I would...').";
+          answerKey = [
+            "Section A: 1. 1st Conditional expresses real, likely future possibilities (If + Present Simple, will + base verb); 2nd Conditional expresses hypothetical, unlikely or imaginary situations (If + Past Simple, would + base verb).",
+            "Section A: 2. 'Were' is the subjunctive mood form traditionally used with all subjects (I, he, she, it) in formal hypothetical conditions.",
+            "Section B: 1. rains | 2. won | 3. revise | 4. would learn | 5. (B) leave | 6. (B) will you do | 7. (B) were",
+            "Section C: 1. If I had a bicycle, I wouldn't walk to school every morning. | 2. If it snows tomorrow, we will stay indoors. | 3. If he didn't eat so much junk food, he wouldn't feel tired constantly.",
+            "Section D: Award 5 marks for correct 'If + past simple, would + verb' structures and thoughtful reasoning."
+          ];
+          break;
 
-        secD.promptText = "Write 4 original sentences describing your personal experiences: write 2 sentences using the Present Perfect with 'already' / 'never', and 2 sentences using the Past Simple with specific past time indicators (e.g. 'in 2022', 'last weekend').";
+        case 'grammar_passive_voice':
+          wordBank = ["is produced", "was discovered", "will be completed", "has been repaired", "by", "are spoken", "were painted"];
+          secA.items = [
+            { q: "Why do writers and journalists use the Passive Voice instead of the Active Voice?", lineCount: 2 },
+            { q: "What is the general formula for forming the passive in any English tense?", lineCount: 2 }
+          ];
+          secB.items = [
+            { type: 'blank', num: 1, text: "Penicillin ____________________ (discover) by Alexander Fleming in 1928." },
+            { type: 'blank', num: 2, text: "Over two million electric cars ____________________ (manufacture) in this factory every year." },
+            { type: 'blank', num: 3, text: "The new highway bridge ____________________ (complete) by next November." },
+            { type: 'blank', num: 4, text: "The museum paintings ____________________ (already / restore) by art specialists." },
+            { type: 'mcq', num: 5, text: "English and Spanish __________ by millions of people worldwide.", options: ["(A) speak", "(B) are spoken", "(C) is spoken", "(D) have spoken"] },
+            { type: 'mcq', num: 6, text: "The Mona Lisa __________ by Leonardo da Vinci in the 16th century.", options: ["(A) was painted", "(B) painted", "(C) has painted", "(D) is painting"] }
+          ];
+          secC.instructions = "Transform the following active sentences into the passive voice.";
+          secC.items = [
+            { num: 1, text: "Active: Millions of tourists visit the Louvre Museum every year.\n-> Passive: __________________________________________________" },
+            { num: 2, text: "Active: Thomas Edison invented the commercial incandescent light bulb.\n-> Passive: __________________________________________________" },
+            { num: 3, text: "Active: The municipal council will build a new community library.\n-> Passive: __________________________________________________" }
+          ];
+          secD.promptText = "Write a 4-sentence formal news bulletin report describing a major archaeological discovery or scientific invention using at least 3 passive verb structures.";
+          answerKey = [
+            "Section A: 1. Passive voice is used when the action/receiver is more important than the agent, or when the agent is unknown/obvious.",
+            "Section A: 2. Subject + Appropriate form of verb 'TO BE' + Past Participle (V3) (+ by agent).",
+            "Section B: 1. was discovered | 2. are manufactured | 3. will be completed | 4. have already been restored | 5. (B) are spoken | 6. (A) was painted",
+            "Section C: 1. The Louvre Museum is visited by millions of tourists every year. | 2. The commercial incandescent light bulb was invented by Thomas Edison. | 3. A new community library will be built by the municipal council.",
+            "Section D: Award 5 marks for formal journalistic tone and accurate passive transformations."
+          ];
+          break;
 
-        answerKey = [
-          "Section A: 1. Present Perfect describes actions connected to the present / unfinished time periods; Past Simple describes completed actions at a definite past time.",
-          "Section A: 2. 'SINCE' is used with a specific starting point in time (since 2015, since 9 AM); 'FOR' is used with a duration of time (for 3 years, for 2 hours).",
-          "Section B: 1. has not finished / hasn't finished | 2. traveled (or travelled) | 3. have you known | 4. has already visited | 5. arrived | 6. (B) since | 7. (B) did you buy",
-          "Section C: 1. It refers to life experience up to the present with an unspecified time frame. | 2. It refers to a completed event in a finished past time period (in 2021). | 3. Error: 'has published' -> Correction: 'published' (because 'yesterday morning' is a specific finished past time).",
-          "Section D: Award 5 marks for grammatically accurate sentences with correct tense morphology and appropriate time adverbials."
-        ];
+        case 'grammar_modal_verbs':
+          wordBank = ["must", "have to", "mustn't", "don't have to", "should", "might", "can't be", "could", "ought to"];
+          secA.items = [
+            { q: "What is the difference in meaning between 'You mustn't park here' and 'You don't have to park here'?", lineCount: 2 },
+            { q: "Explain how modal verbs of deduction ('must be', 'might be', 'can't be') indicate degrees of certainty.", lineCount: 2 }
+          ];
+          secB.items = [
+            { type: 'blank', num: 1, text: "You ____________________ (must / have to / don't have to) pay for admission; entry to the national gallery is completely free." },
+            { type: 'blank', num: 2, text: "Students ____________________ (mustn't / shouldn't) use their mobile phones during the official examination." },
+            { type: 'blank', num: 3, text: "Look at the dark storm clouds in the west; it ____________________ (might / must) rain before evening." },
+            { type: 'blank', num: 4, text: "That man ____________________ (can't be / must be) Professor Higgins; he is currently giving a lecture in Toronto!" },
+            { type: 'mcq', num: 5, text: "If you have a persistent cough, you __________ consult a qualified physician.", options: ["(A) should", "(B) mustn't", "(C) can't", "(D) don't have to"] },
+            { type: 'mcq', num: 6, text: "The lights in her office are on; she __________ be working late tonight.", options: ["(A) can't", "(B) must", "(C) shouldn't", "(D) wouldn't"] }
+          ];
+          secC.instructions = "Read the situational clues and write deduction sentences using MUST BE, MIGHT BE, or CAN'T BE.";
+          secC.items = [
+            { num: 1, text: "Clue: Arthur hasn't eaten anything for 12 hours.\n-> Deduction: He __________________________________________________ (hungry)" },
+            { num: 2, text: "Clue: Clara speaks German with a native Berlin accent, but her passport is Swiss.\n-> Deduction: She __________________________________________________ (from Switzerland or Germany)" },
+            { num: 3, text: "Clue: The car keys are still on the kitchen counter.\n-> Deduction: Dad __________________________________________________ (drive to work)" }
+          ];
+          secD.promptText = "Write 4 workplace or school rules: write 2 rules expressing strict obligation/prohibition (must/mustn't) and 2 recommendations expressing polite advice (should/ought to).";
+          answerKey = [
+            "Section A: 1. 'Mustn't' indicates strict prohibition (forbidden); 'Don't have to' indicates lack of obligation (optional).",
+            "Section A: 2. 'Must be' = 95% certain true; 'Might/could be' = 50% possible; 'Can't be' = 95% certain impossible.",
+            "Section B: 1. don't have to | 2. mustn't | 3. might | 4. can't be | 5. (A) should | 6. (B) must",
+            "Section C: 1. He must be starving / very hungry. | 2. She might be from Switzerland or Germany. | 3. Dad can't have driven to work (or can't be driving).",
+            "Section D: Award 5 marks for clear rule formation and accurate modal selection."
+          ];
+          break;
 
-      } else if (isConditionals) {
-        wordBank = ["if", "unless", "provided that", "would buy", "will happen", "had known", "would have called", "studied", "were"];
+        case 'theme_space_exploration':
+          wordBank = ["orbit", "telescope", "atmosphere", "cosmonaut", "gravity", "lunar", "colonization", "rover", "solar", "propulsion"];
+          secA.items = [
+            { q: "Define what a 'planetary orbit' is and name two factors that keep satellites in orbit.", lineCount: 2 },
+            { q: "What is the primary scientific purpose of sending robotic rovers like Perseverance to Mars?", lineCount: 2 }
+          ];
+          secB.items = [
+            { type: 'blank', num: 1, text: "The James Webb Space Telescope ____________________ (orbit) the Sun at approximately 1.5 million kilometers from Earth." },
+            { type: 'blank', num: 2, text: "Astronauts aboard the International Space Station experience zero ____________________ (gravity) and must exercise two hours daily." },
+            { type: 'blank', num: 3, text: "Scientists are currently ____________________ (investigate) whether subsurface water ice exists beneath Martian soil." },
+            { type: 'blank', num: 4, text: "In 1969, Apollo 11 successfully completed the first crewed ____________________ (lunar) landing in human history." },
+            { type: 'mcq', num: 5, text: "Which planet in our solar system is famously known as the 'Red Planet'?", options: ["(A) Venus", "(B) Mars", "(C) Jupiter", "(D) Mercury"] },
+            { type: 'mcq', num: 6, text: "What protects Earth's surface from harmful cosmic radiation and solar flares?", options: ["(A) Atmosphere & Magnetic field", "(B) Lunar tides", "(C) Asteroid belt", "(D) Deep oceans"] }
+          ];
+          secC.instructions = "Read the science passage below about deep space missions, then answer the questions.";
+          secC.passage = "Human space exploration has entered a revolutionary era. With the development of reusable rockets and international lunar bases, space agencies and private enterprises are preparing for crewed expeditions to Mars. A mission to Mars takes roughly seven to nine months each way. Engineers must overcome tremendous challenges, including cosmic radiation shielding, sustainable oxygen recycling, and long-term psychological isolation.";
+          secC.items = [
+            { num: 1, text: "How long does a one-way voyage to Mars typically take according to the text?" },
+            { num: 2, text: "List three significant technical or human obstacles astronauts face on deep space missions." },
+            { num: 3, text: "Identify the meaning of 'reusable rockets' in the context of modern aerospace engineering." }
+          ];
+          secD.promptText = "Imagine you have been selected to join the first human crew to establish a scientific research base on Mars. Write a 4-sentence personal mission statement explaining your role, your main scientific objective, and how you will handle the isolation.";
+          answerKey = [
+            "Section A: 1. An orbit is the curved path of a celestial body or spacecraft around a star, planet, or moon, governed by gravitational pull and forward velocity.",
+            "Section A: 2. To search for ancient signs of microbial life, analyze Martian geology and climate history, and test oxygen production technologies.",
+            "Section B: 1. orbits | 2. gravity | 3. investigating | 4. lunar | 5. (B) Mars | 6. (A) Atmosphere & Magnetic field",
+            "Section C: 1. Roughly seven to nine months each way. | 2. Cosmic radiation shielding, sustainable oxygen recycling, and psychological isolation. | 3. Launch vehicles that can land vertically and be refurbished for multiple flights, lowering mission costs.",
+            "Section D: Award 5 marks for creative engagement, accurate space terminology, and correct sentence structure."
+          ];
+          break;
 
-        secA.items = [
-          { q: "Define the difference in probability and structure between the First Conditional (Real) and Second Conditional (Hypothetical).", lineCount: 2 },
-          { q: "Why do we typically say 'If I were you' instead of 'If I was you' in formal subjunctive English?", lineCount: 2 }
-        ];
+        case 'theme_animals_wildlife':
+          wordBank = ["habitat", "endangered", "ecosystem", "predator", "biodiversity", "species", "poaching", "conservation", "extinction", "adaptation"];
+          secA.items = [
+            { q: "Explain the difference between an 'endangered species' and an 'extinct species'.", lineCount: 2 },
+            { q: "Why are apex predators (such as wolves and tigers) vital for maintaining healthy ecosystems?", lineCount: 2 }
+          ];
+          secB.items = [
+            { type: 'blank', num: 1, text: "Deforestation in the Amazon basin directly threatens the natural ____________________ (habitat) of thousands of rare bird species." },
+            { type: 'blank', num: 2, text: "Polar bears have developed thick layers of blubber as an evolutionary ____________________ (adapt) to sub-zero Arctic temperatures." },
+            { type: 'blank', num: 3, text: "Strict anti-____________________ (poach) laws have helped elephant populations recover in several national parks." },
+            { type: 'blank', num: 4, text: "Coral reefs support more than 25 percent of all marine ____________________ (biodiverse)." },
+            { type: 'mcq', num: 5, text: "Which of the following animals is classified as a critically endangered marine mammal?", options: ["(A) Vaquita porpoise", "(B) Bottlenose dolphin", "(C) California sea lion", "(D) Harbour seal"] },
+            { type: 'mcq', num: 6, text: "What term describes animals that hunt and feed on other living animals?", options: ["(A) Herbivores", "(B) Predators", "(C) Scavengers", "(D) Parasites"] }
+          ];
+          secC.instructions = "Read the wildlife conservation report below and answer the questions.";
+          secC.passage = "The Monarch butterfly is celebrated for its incredible 4,000-kilometer annual migration across North America. However, over the past two decades, Monarch populations have declined by over 80 percent due to pesticide use, climate fluctuations, and the destruction of milkweed plants along their migratory corridor. In response, community conservationists are planting native wildflower sanctuaries in urban parks and school gardens.";
+          secC.items = [
+            { num: 1, text: "What is remarkable about the Monarch butterfly's migration pattern?" },
+            { num: 2, text: "What three primary factors have caused the dramatic decline in Monarch populations?" },
+            { num: 3, text: "How are local communities actively helping to restore butterfly numbers?" }
+          ];
+          secD.promptText = "Write a 4-sentence public awareness appeal urging citizens to protect endangered wildlife in their region. Suggest two practical actions anyone can take in their daily life.";
+          answerKey = [
+            "Section A: 1. An endangered species is at serious risk of dying out; an extinct species has completely died out with no living individuals left.",
+            "Section A: 2. Apex predators control herbivore populations, preventing overgrazing and maintaining vegetation and species balance.",
+            "Section B: 1. habitat | 2. adaptation | 3. poaching | 4. biodiversity | 5. (A) Vaquita porpoise | 6. (B) Predators",
+            "Section C: 1. They complete an extraordinary 4,000-kilometer annual migration. | 2. Pesticide use, climate fluctuations, and destruction of milkweed plants. | 3. By planting native wildflower sanctuaries in urban parks and school gardens.",
+            "Section D: Award 5 marks for persuasive tone, accurate ecological vocabulary, and coherent suggestions."
+          ];
+          break;
 
-        secB.items = [
-          { type: 'blank', num: 1, text: "If it ____________________ (rain) heavily this afternoon, we will postpone the outdoor sports tournament." },
-          { type: 'blank', num: 2, text: "If I ____________________ (win) a million dollars in the national lottery, I would establish an animal sanctuary." },
-          { type: 'blank', num: 3, text: "You won't pass the final Cambridge exam unless you ____________________ (revise) the grammar modules daily." },
-          { type: 'blank', num: 4, text: "If she had more free time, she ____________________ (learn) how to speak fluent Italian." },
-          { type: 'mcq', num: 5, text: "If you __________ ice in warm sunlight, it melts.", options: ["(A) will leave", "(B) leave", "(C) left", "(D) had left"] },
-          { type: 'mcq', num: 6, text: "What __________ if your flight is cancelled tomorrow?", options: ["(A) would you do", "(B) will you do", "(C) did you do", "(D) had you done"] },
-          { type: 'mcq', num: 7, text: "If I __________ you, I would accept the job offer in Zurich immediately.", options: ["(A) am", "(B) were", "(C) will be", "(D) would be"] }
-        ];
+        case 'theme_food_cooking':
+          wordBank = ["ingredients", "simmer", "balanced diet", "nutritious", "marinate", "culinary", "recipe", "carbohydrates", "flavor", "organic"];
+          secA.items = [
+            { q: "Explain the difference between 'simmering' and 'boiling' in culinary cooking.", lineCount: 2 },
+            { q: "What are the core components of a healthy, balanced nutritional plate according to dietitians?", lineCount: 2 }
+          ];
+          secB.items = [
+            { type: 'blank', num: 1, text: "Before grilling the salmon fillets, you should ____________________ (marinate) them in olive oil, lemon juice, and fresh herbs." },
+            { type: 'blank', num: 2, text: "Leafy green vegetables such as spinach and kale are extremely ____________________ (nutrition) and rich in iron." },
+            { type: 'blank', num: 3, text: "Allow the vegetable soup to ____________________ (simmer) gently on low heat for twenty minutes." },
+            { type: 'blank', num: 4, text: "Traditional Italian chefs emphasize using fresh, seasonal ____________________ (ingredient) rather than artificial flavorings." },
+            { type: 'mcq', num: 5, text: "Which cooking method involves cooking food quickly in a small amount of hot oil in a wok or skillet?", options: ["(A) Baking", "(B) Stir-frying", "(C) Steaming", "(D) Poaching"] },
+            { type: 'mcq', num: 6, text: "Which essential nutrient is primarily responsible for muscle repair and cell growth?", options: ["(A) Protein", "(B) Sugar", "(C) Saturated fat", "(D) Sodium"] }
+          ];
+          secC.instructions = "Read the culinary article regarding the Mediterranean diet, then complete the tasks.";
+          secC.passage = "The Mediterranean diet has consistently been ranked as one of the healthiest dietary patterns in the world. Characterized by abundant consumption of fresh vegetables, legumes, whole grains, nuts, and extra virgin olive oil, it incorporates moderate amounts of fish and poultry while minimizing processed sugars and red meat. Epidemiological studies demonstrate that adherence to this diet reduces the incidence of cardiovascular disease and promotes cognitive longevity.";
+          secC.items = [
+            { num: 1, text: "What are the primary healthy fats emphasized in the Mediterranean diet?" },
+            { num: 2, text: "What health benefits are linked to this dietary pattern according to medical research?" },
+            { num: 3, text: "Explain what foods are consumed only in moderation or minimized." }
+          ];
+          secD.promptText = "Write a 4-sentence review of your favorite homemade dish or restaurant meal: describe its key ingredients, the cooking method, its flavor profile, and why you recommend it.";
+          answerKey = [
+            "Section A: 1. Boiling occurs at 100°C with vigorous rapid bubbles; simmering is cooking gently just below boiling point (85-95°C) with small gentle bubbles.",
+            "Section A: 2. Vegetables & fruits (50%), whole grains/complex carbohydrates (25%), and lean proteins (25%), accompanied by healthy fats and hydration.",
+            "Section B: 1. marinate | 2. nutritious | 3. simmer | 4. ingredients | 5. (B) Stir-frying | 6. (A) Protein",
+            "Section C: 1. Extra virgin olive oil, nuts, and fats from fish. | 2. Reduced incidence of cardiovascular disease and enhanced cognitive longevity. | 3. Fish and poultry are moderate; processed sugars and red meat are minimized.",
+            "Section D: Award 5 marks for vivid descriptive food vocabulary, accurate sensory adjectives, and correct sentence syntax."
+          ];
+          break;
 
-        secC.instructions = "Rewrite each real-world situation as a conditional sentence according to the prompts.";
-        secC.items = [
-          { num: 1, text: "Situation: I don't have a bicycle, so I walk to school every morning.\n-> Rewrite using 2nd Conditional: If I __________________________________________________" },
-          { num: 2, text: "Situation: Perhaps it will snow tomorrow, and we will stay indoors.\n-> Rewrite using 1st Conditional: If it __________________________________________________" },
-          { num: 3, text: "Situation: He eats too much junk food, so he feels tired constantly.\n-> Rewrite using 2nd Conditional: If he __________________________________________________" }
-        ];
+        case 'theme_tech_ai':
+          wordBank = ["algorithm", "artificial intelligence", "automation", "cybersecurity", "encryption", "machine learning", "dataset", "privacy", "interface"];
+          secA.items = [
+            { q: "Explain how 'Machine Learning' algorithms differ from traditional rule-based computer programming.", lineCount: 2 },
+            { q: "Why is strong data encryption critical for protecting user privacy in cloud computing?", lineCount: 2 }
+          ];
+          secB.items = [
+            { type: 'blank', num: 1, text: "Neural network models require massive training ____________________ (dataset) to recognize patterns with high accuracy." },
+            { type: 'blank', num: 2, text: "Two-factor authentication adds a vital layer of ____________________ (secure) against unauthorized account breaches." },
+            { type: 'blank', num: 3, text: "Many repetitive administrative tasks are now being ____________________ (automate) through intelligent software tools." },
+            { type: 'blank', num: 4, text: "Ethical guidelines must be established to ensure that AI algorithms do not propagate unfair ____________________ (bias)." },
+            { type: 'mcq', num: 5, text: "What technology is used to convert sensitive data into unreadable code during digital transmission?", options: ["(A) Encryption", "(B) Phishing", "(C) Compression", "(D) Caching"] },
+            { type: 'mcq', num: 6, text: "Which field focuses on creating systems capable of performing tasks that normally require human intelligence?", options: ["(A) Robotics & AI", "(B) Analog electronics", "(C) Mechanical printing", "(D) Manual transcription"] }
+          ];
+          secC.instructions = "Read the technology analysis below and answer the questions.";
+          secC.passage = "Artificial Intelligence is transforming workplace productivity across global industries. Generative AI tools assist doctors in diagnosing medical scans, help programmers draft clean software code, and enable educators to personalize student tutoring. However, rapid technological adoption raises urgent societal questions regarding algorithmic transparency, intellectual property rights, and workforce retraining for displaced employees.";
+          secC.items = [
+            { num: 1, text: "List two positive applications of AI in healthcare and education mentioned in the passage." },
+            { num: 2, text: "What three ethical and economic concerns are highlighted in the second sentence?" },
+            { num: 3, text: "In your own words, explain why 'workforce retraining' is necessary in the age of automation." }
+          ];
+          secD.promptText = "Write a 4-sentence reasoned opinion paragraph: 'Should schools allow students to use AI tools for homework assignments?' State your opinion, provide one strong benefit, address one valid concern, and give your final recommendation.";
+          answerKey = [
+            "Section A: 1. Traditional programming follows explicit hardcoded rules; Machine Learning learns patterns autonomously from historical data.",
+            "Section A: 2. Encryption scrambles data into ciphertext so that unauthorized third parties or hackers cannot read personal or financial information.",
+            "Section B: 1. datasets | 2. security | 3. automated | 4. bias | 5. (A) Encryption | 6. (A) Robotics & AI",
+            "Section C: 1. Assisting medical scan diagnostics and personalizing student tutoring. | 2. Algorithmic transparency, intellectual property rights, and workforce displacement. | 3. Because repetitive manual tasks become automated, requiring workers to develop higher-order analytical and digital skills.",
+            "Section D: Award 5 marks for well-structured opinion writing with coherent transitional markers and balanced critical argumentation."
+          ];
+          break;
 
-        secD.promptText = "Describe a hypothetical ethical dilemma: 'What would you do if you found an envelope containing $5,000 cash on an empty subway train?' Write at least 4 sentences using 2nd Conditional structures ('If I found..., I would...').";
+        default:
+          // Dynamic Tailored Synthesis for Custom Prompts
+          const cleanTopic = displayTitle.replace(/[^\w\s-]/gi, '').trim() || 'English Language Mastery';
+          wordBank = ["analyze", "essential", "demonstrate", "perspective", "implement", "significance", "evaluate", "context", "effective", "distinction"];
+          
+          secA.items = [
+            { q: `Explain the central meaning and real-world significance of '${cleanTopic}'.`, lineCount: 2 },
+            { q: `Identify two key principles or best practices associated with '${cleanTopic}'.`, lineCount: 2 }
+          ];
 
-        answerKey = [
-          "Section A: 1. 1st Conditional expresses real, likely future possibilities (If + Present Simple, will + base verb); 2nd Conditional expresses hypothetical, unlikely or imaginary situations (If + Past Simple, would + base verb).",
-          "Section A: 2. 'Were' is the subjunctive mood form traditionally used with all subjects (I, he, she, it) in formal hypothetical conditions.",
-          "Section B: 1. rains | 2. won | 3. revise | 4. would learn | 5. (B) leave | 6. (B) will you do | 7. (B) were",
-          "Section C: 1. If I had a bicycle, I wouldn't walk to school every morning. | 2. If it snows tomorrow, we will stay indoors. | 3. If he didn't eat so much junk food, he wouldn't feel tired constantly.",
-          "Section D: Award 5 marks for correct 'If + past simple, would + verb' structures and thoughtful reasoning."
-        ];
+          secB.items = [
+            { type: 'blank', num: 1, text: `When studying ${cleanTopic}, learners must ____________________ (careful / analyze) the foundational rules.` },
+            { type: 'blank', num: 2, text: `Experts in ${cleanTopic} have ____________________ (recently / develop) more effective practical strategies.` },
+            { type: 'blank', num: 3, text: `If individuals practice ${cleanTopic} consistently, they ____________________ (achieve) measurable progress within weeks.` },
+            { type: 'blank', num: 4, text: `A thorough understanding of ${cleanTopic} ____________________ (regard) as a valuable skill in modern education.` },
+            { type: 'mcq', num: 5, text: `What is the most effective approach when mastering ${cleanTopic}?`, options: [`(A) Regular structured practice and reflection`, `(B) Memorizing isolated facts without context`, `(C) Skipping fundamental principles`, `(D) Avoiding feedback from instructors`] },
+            { type: 'mcq', num: 6, text: `Which statement accurately describes a key advantage of understanding ${cleanTopic}?`, options: [`(A) It provides practical analytical and problem-solving tools`, `(B) It has no relevance to real-world communication`, `(C) It replaces all other foundational skills`, `(D) It requires no active cognitive effort`] }
+          ];
 
-      } else if (isBusiness || isPhrasal) {
-        wordBank = ["look forward to", "call off", "follow up", "touch base", "draw up", "put off", "bring up", "deal with", "break down"];
+          secC.instructions = `Read the informative text regarding ${cleanTopic} below, then answer the analytical comprehension questions.`;
+          secC.passage = `In contemporary education and professional life, exploring ${cleanTopic} offers invaluable insights into both theory and practical application. Developing proficiency requires curiosity, active participation, and systematic reflection. Whether in collaborative group workshops or independent study, engaging with ${cleanTopic} enables students to build critical vocabulary, sharpen communication skills, and connect classroom knowledge to broader global issues.`;
+          secC.items = [
+            { num: 1, text: `According to the passage, what three qualities are necessary to develop proficiency in ${cleanTopic}?` },
+            { num: 2, text: `How does studying ${cleanTopic} benefit both communication skills and broader global understanding?` },
+            { num: 3, text: `Formulate a question you would ask an expert in ${cleanTopic} to deepen your knowledge.` }
+          ];
 
-        secA.items = [
-          { q: "Match each phrasal verb to its formal corporate equivalent: (A) call off, (B) put off, (C) look into.", lineCount: 2 },
-          { q: "Why is formal register and polite phrasing essential in international business correspondence?", lineCount: 2 }
-        ];
+          secD.promptText = `Write a 4-sentence personal reflection: Explain why learning about '${cleanTopic}' is important to you or your community, and describe one practical project or activity you could organize to share this knowledge with others.`;
 
-        secB.items = [
-          { type: 'blank', num: 1, text: "Due to unexpected supply chain delays, management had to ____________________ (cancel / call off) tomorrow's product launch." },
-          { type: 'blank', num: 2, text: "I am writing to ____________________ (follow up / check) on our phone discussion regarding the software license agreement." },
-          { type: 'blank', num: 3, text: "Our legal department will ____________________ (draft / draw up) the non-disclosure agreement by Thursday." },
-          { type: 'blank', num: 4, text: "Please let me know when you are available next week to ____________________ (touch base / meet briefly) on Q3 KPIs." },
-          { type: 'mcq', num: 5, text: "I look forward to __________ from you at your earliest convenience.", options: ["(A) hear", "(B) hearing", "(C) heard", "(D) be hearing"] },
-          { type: 'mcq', num: 6, text: "We must __________ this client dispute before it escalates.", options: ["(A) deal with", "(B) look forward to", "(C) give up", "(D) get off"] }
-        ];
-
-        secC.instructions = "Rewrite the following informal email sentences into professional, courteous corporate English.";
-        secC.items = [
-          { num: 1, text: "Informal: 'Send me the numbers now, I need them asap.'\n-> Professional Rewrite: __________________________________________________" },
-          { num: 2, text: "Informal: 'Sorry I didn't reply, I was super busy with stuff.'\n-> Professional Rewrite: __________________________________________________" },
-          { num: 3, text: "Informal: 'I can't come to your meeting because of another thing.'\n-> Professional Rewrite: __________________________________________________" }
-        ];
-
-        secD.promptText = "Write a formal 4-sentence email to a prospective client proposing a 20-minute Zoom introductory meeting next Tuesday. Include greeting, polite opening, proposal, and formal sign-off.";
-
-        answerKey = [
-          "Section A: 1. (A) call off = cancel; (B) put off = postpone / defer; (C) look into = investigate / examine.",
-          "Section A: 2. Formal register builds trust, prevents cross-cultural misunderstandings, and projects professional competence.",
-          "Section B: 1. call off | 2. follow up | 3. draw up | 4. touch base | 5. (B) hearing | 6. (A) deal with",
-          "Section C: 1. Model: 'Could you please provide the updated figures at your earliest convenience?' | 2. Model: 'Please accept my apologies for the delayed response due to urgent project commitments.' | 3. Model: 'Regrettably, I will be unable to attend the scheduled meeting due to a prior engagement.'",
-          "Section D: Award 5 marks for proper formal salutation (Dear Mr./Ms.), polite request phrasing, and formal closing (Sincerely / Best regards)."
-        ];
-
-      } else {
-        // Universal High-Yield Custom Topic Engine
-        const sanitizedTopic = topic.replace(/[^\w\s]/gi, '');
-        wordBank = ["analyze", "demonstrate", "illustrate", "synthesize", "evaluate", "conclude", "principle", "evidence", "methodology"];
-
-        secA.items = [
-          { q: `State the primary definition and core learning objective of '${sanitizedTopic}'.`, lineCount: 2 },
-          { q: `Identify two fundamental concepts or practical rules associated with '${sanitizedTopic}'.`, lineCount: 2 }
-        ];
-
-        secB.items = [
-          { type: 'blank', num: 1, text: `The primary mechanism of ${sanitizedTopic} operates by ____________________ (utilize / verb) foundational principles.` },
-          { type: 'blank', num: 2, text: `In order to achieve optimal results in ${sanitizedTopic}, practitioners must ____________________ (careful / evaluate) key variables.` },
-          { type: 'blank', num: 3, text: `Historical analysis reveals that ${sanitizedTopic} ____________________ (develop / passive) over multiple iterations.` },
-          { type: 'blank', num: 4, text: `When examining ${sanitizedTopic}, one must ensure that ____________________ (evidence / support) every conclusion.` },
-          { type: 'mcq', num: 5, text: `Which of the following best characterizes '${sanitizedTopic}'?`, options: [`(A) Systematic implementation of core rules`, `(B) Random unstructured experimentation`, `(C) Outdated theory without application`, `(D) Isolated occurrence with no context`] },
-          { type: 'mcq', num: 6, text: `What is the most critical first step when analyzing ${sanitizedTopic}?`, options: [`(A) Formulating clear objectives`, `(B) Skipping prerequisite foundations`, `(C) Ignoring verified evidence`, `(D) Repeating previous errors`] }
-        ];
-
-        secC.instructions = `Carefully read the case study regarding ${sanitizedTopic}, then answer the critical analysis questions.`;
-        secC.passage = `In contemporary educational and professional contexts, the mastery of ${sanitizedTopic} is recognized as a cornerstone of competence. Effective application requires a systematic understanding of underlying frameworks, precise attention to technical detail, and regular reflective practice. Recent studies indicate that structured exercises accelerate proficiency by over 45%.`;
-        secC.items = [
-          { num: 1, text: `Summarize the central thesis of the passage regarding ${sanitizedTopic}.` },
-          { num: 2, text: `Explain how regular deliberate practice influences student performance according to the text.` },
-          { num: 3, text: `Identify one actionable takeaway for solving complex problems within ${sanitizedTopic}.` }
-        ];
-
-        secD.promptText = `Construct a reasoned paragraph (4-6 sentences) synthesizing how knowledge of ${sanitizedTopic} can be applied to solve an authentic real-world challenge. Include at least two supporting examples.`;
-
-        answerKey = [
-          `Section A: 1. Core definition accurately describes the foundational mechanics and purpose of ${sanitizedTopic}.`,
-          `Section A: 2. Identifies two accurate structural principles and practical conventions.`,
-          `Section B: 1. utilizing | 2. carefully evaluate | 3. was developed / has been developed | 4. evidence supports | 5. (A) | 6. (A)`,
-          `Section C: 1. Mastery requires systematic framework understanding and deliberate practice. | 2. Accelerates proficiency by over 45% through structured reinforcement. | 3. Systematic attention to detail and reflective analysis.`,
-          `Section D: Award 5 marks for clear thesis, coherent argumentation, accurate domain vocabulary, and logical real-world application.`
-        ];
+          answerKey = [
+            `Section A: 1. Accurately defines the core concept of ${cleanTopic} and its practical relevance.`,
+            `Section A: 2. Identifies two valid structural principles, rules, or practical applications.`,
+            `Section B: 1. carefully analyze | 2. recently developed | 3. will achieve | 4. is regarded | 5. (A) Regular structured practice | 6. (A) It provides practical analytical tools`,
+            `Section C: 1. Curiosity, active participation, and systematic reflection. | 2. It builds critical vocabulary, sharpens clarity, and connects theoretical concepts to global contexts. | 3. Award mark for a thoughtful, grammatically correct inquiry.`,
+            `Section D: Award 5 marks for clear personal engagement, well-structured sentences, domain-appropriate vocabulary, and logical project planning.`
+          ];
+          break;
       }
 
       // Build Formatted HTML representation for A4 Preview & Print
@@ -3206,7 +3477,7 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
           <div class="a4-header-top">
             <div>
               <div class="a4-school-title">${school}</div>
-              <div class="a4-sheet-title">${topic}</div>
+              <div class="a4-sheet-title">${displayTitle}</div>
               <div class="a4-meta-pills">
                 <span class="a4-pill">Level: ${grade}</span>
                 <span class="a4-pill">Focus: ${type}</span>
@@ -3215,8 +3486,8 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
               </div>
             </div>
             <div style="text-align: right;">
-              <div style="font-size: 11px; font-weight: 700; color: #475569;">OFFICIAL WORKSHEET</div>
-              <div style="font-size: 10px; color: #94A3B8; margin-top: 2px;">Doc Ref: EDU-${Date.now().toString().slice(-6)}</div>
+              <div style="font-size: 11px; font-weight: 800; color: #475569; letter-spacing: 0.5px;">OFFICIAL A4 WORKSHEET</div>
+              <div style="font-size: 10px; color: #94A3B8; margin-top: 2px;">Ref: EDU-${Date.now().toString().slice(-6)}</div>
             </div>
           </div>
 
@@ -3301,7 +3572,7 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
             <!-- Teacher Answer Key -->
             <div class="a4-section a4-key-box" style="page-break-before: always; margin-top: 24px;">
               <div style="font-weight: 800; font-size: 14px; margin-bottom: 8px; border-bottom: 1px solid #D97706; padding-bottom: 4px;">
-                TEACHER'S OFFICIAL ANSWER KEY & GRADING RUBRIC
+                TEACHER'S OFFICIAL ANSWER KEY & GRADING RUBRIC (PAGE 2)
               </div>
               <div style="font-size: 12.5px; line-height: 1.8;">
                 ${answerKey.map(k => `<div>• ${k}</div>`).join('')}
@@ -3314,7 +3585,7 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
       // Build Clean Markdown for Raw Text View
       let md = `========================================================================\n`;
       md += `${school.toUpperCase()}\n`;
-      md += `A4 WORKSHEET: ${topic.toUpperCase()}\n`;
+      md += `A4 WORKSHEET: ${displayTitle.toUpperCase()}\n`;
       md += `Level: ${grade} | Duration: ${timeAllowed} | Total Marks: ${marks}\n`;
       md += `========================================================================\n\n`;
       md += `Student Name: _____________________  Class: ________  Date: ________  Score: ____ / ${marks.replace(/[^\d]/g, '') || '50'}\n\n`;

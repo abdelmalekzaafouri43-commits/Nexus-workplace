@@ -165,6 +165,89 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    private fun generateContextualTeachingContent(topic: String, grade: String = "B1 Intermediate", type: String = "Comprehensive Practice"): String {
+        val lower = topic.lowercase()
+        val cleanTopic = topic.trim()
+        
+        val isGrammar = lower.contains("present perfect") || lower.contains("past simple") || lower.contains("conditional") || lower.contains("passive") || lower.contains("modal") || lower.contains("future") || lower.contains("tense")
+        val isSpace = lower.contains("space") || lower.contains("mars") || lower.contains("planet") || lower.contains("astronaut")
+        val isAnimals = lower.contains("animal") || lower.contains("wildlife") || lower.contains("habitat") || lower.contains("species")
+        val isFood = lower.contains("food") || lower.contains("cooking") || lower.contains("recipe") || lower.contains("nutrition")
+        val isTech = lower.contains("tech") || lower.contains("ai") || lower.contains("computer") || lower.contains("cyber")
+        val isBusiness = lower.contains("business") || lower.contains("job") || lower.contains("interview") || lower.contains("career") || lower.contains("email")
+        
+        val content = StringBuilder()
+        content.append("🎨 [AI Educational Header: \"$cleanTopic\"]\n\n")
+        content.append("═══════════════════════════════════════════════════════════════\n")
+        content.append("OFFICIAL A4 WORKSHEET: ${cleanTopic.uppercase()}\n")
+        content.append("Proficiency Level: $grade | Target Focus: $type | Total: 50 Marks\n")
+        content.append("═══════════════════════════════════════════════════════════════\n\n")
+        
+        content.append("--- SECTION A: CONCEPT DIAGNOSTIC & RULES [10 Marks] ---\n")
+        if (isGrammar) {
+            content.append("1. Explain the core grammatical function and form of $cleanTopic with two example sentences.\n")
+            content.append("2. Identify the common error students make when applying $cleanTopic and how to correct it.\n\n")
+        } else {
+            content.append("1. Define the central concept and practical importance of '$cleanTopic'.\n")
+            content.append("2. List two essential principles or real-world factors directly related to '$cleanTopic'.\n\n")
+        }
+        
+        content.append("--- SECTION B: TARGETED PRACTICE EXERCISES [20 Marks] ---\n")
+        if (isSpace) {
+            content.append("1. Robotic rovers on Mars are currently ____________________ (search) for signs of ancient water ice.\n")
+            content.append("2. The space telescope ____________________ (orbit) at over one million miles from Earth.\n")
+            content.append("3. Astronauts must ____________________ (undergo) extensive physiological simulation training.\n")
+            content.append("4. Which planet is closest in size to Earth? (A) Venus (B) Mars (C) Jupiter (D) Mercury\n\n")
+        } else if (isAnimals) {
+            content.append("1. Deforestation directly threatens the natural ____________________ (habitat) of rare species.\n")
+            content.append("2. Polar bears have thick blubber as an evolutionary ____________________ (adapt) to the cold.\n")
+            content.append("3. Strict laws are required to prevent illegal ____________________ (poach) in reserves.\n")
+            content.append("4. What term describes animals that hunt for food? (A) Predators (B) Herbivores (C) Scavengers\n\n")
+        } else if (isFood) {
+            content.append("1. Always ____________________ (marinate) the ingredients before roasting them in the oven.\n")
+            content.append("2. Fresh vegetables provide vital ____________________ (nutrition) and dietary fiber.\n")
+            content.append("3. Allow the soup to ____________________ (simmer) gently over low heat for 15 minutes.\n")
+            content.append("4. Which cooking method uses hot steam? (A) Steaming (B) Deep-frying (C) Searing\n\n")
+        } else if (isTech) {
+            content.append("1. Machine learning models require large training ____________________ (dataset) to ensure accuracy.\n")
+            content.append("2. Two-factor authentication provides essential digital ____________________ (secure).\n")
+            content.append("3. Software engineers are working to ____________________ (automate) routine data entry.\n")
+            content.append("4. Converting sensitive data to protected code is called: (A) Encryption (B) Caching (C) Phishing\n\n")
+        } else if (isBusiness) {
+            content.append("1. I am writing to ____________________ (follow up) regarding our proposal meeting last Thursday.\n")
+            content.append("2. The legal department will ____________________ (draft) the service contract by Monday.\n")
+            content.append("3. We look forward to ____________________ (hear) from you at your earliest convenience.\n")
+            content.append("4. Select the most formal email closing: (A) Best regards (B) Later! (C) Cheers\n\n")
+        } else {
+            content.append("1. When analyzing $cleanTopic, learners must ____________________ (careful / evaluate) key evidence.\n")
+            content.append("2. Researchers have ____________________ (recent / discover) important insights into $cleanTopic.\n")
+            content.append("3. If practitioners apply these principles, they ____________________ (achieve) superior outcomes.\n")
+            content.append("4. Which approach is most recommended? (A) Structured deliberate practice (B) Disorganized guesswork\n\n")
+        }
+        
+        content.append("--- SECTION C: CONTEXTUAL READING & ANALYSIS [15 Marks] ---\n")
+        content.append("[PASSAGE: The Core Insights of $cleanTopic]\n")
+        content.append("\"Understanding $cleanTopic is essential for developing critical perspectives and practical competence. ")
+        content.append("Recent research highlights that active engagement with core concepts leads to deeper retention and sharper analytical skills. ")
+        content.append("By examining authentic case studies and applying structured frameworks, students learn to navigate complex real-world challenges with confidence.\"\n\n")
+        content.append("1. What is the central thesis regarding $cleanTopic presented in the text?\n")
+        content.append("2. How does active structured practice enhance student performance according to the passage?\n")
+        content.append("3. Propose one concrete action a learner can take to master $cleanTopic.\n\n")
+        
+        content.append("--- SECTION D: COMMUNICATIVE WRITING CHALLENGE [5 Marks] ---\n")
+        content.append("Write 4 reasoned sentences expressing your personal insights or giving advice regarding $cleanTopic. Include at least two supporting examples.\n\n")
+        
+        content.append("═══════════════════════════════════════════════════════════════\n")
+        content.append("TEACHER'S OFFICIAL ANSWER KEY & SCORING RUBRIC (PAGE 2)\n")
+        content.append("═══════════════════════════════════════════════════════════════\n")
+        content.append("• Section A: Award full marks for precise definitions, accurate rule articulation, and valid examples.\n")
+        content.append("• Section B: Verify correct grammatical morphology, tense conjugation, and accurate multiple choice selections.\n")
+        content.append("• Section C: Award 5 marks per question for answers citing passage evidence with clear justification.\n")
+        content.append("• Section D: Grade based on syntactic accuracy, rich domain vocabulary, and coherent communicative reasoning.\n")
+        
+        return content.toString()
+    }
+
     fun generateFromPrompt(onComplete: (LibraryItem) -> Unit) {
         val prompt = _promptText.value.trim()
         if (prompt.isEmpty()) {
@@ -174,7 +257,7 @@ class MainViewModel : ViewModel() {
         _isGenerating.value = true
         CoroutineScope(Dispatchers.Main).launch {
             val apiPrompt = "Create a professional English teaching resource for teachers and learners based on: $prompt. Include clear pedagogical structure, exercises, vocabulary notes, and teacher answer key."
-            val contentResult = callGeminiApi(apiPrompt) ?: "🎨 [AI Generated Illustration & Graphic Header]\n\nEnglish AI Generated Material for: \"$prompt\"\n\n- CEFR Aligned Curriculum\n- Vocabulary & Grammar Exercises\n- Teacher Answer Key Included\n- Ready to Save, Share & Export"
+            val contentResult = callGeminiApi(apiPrompt) ?: generateContextualTeachingContent(prompt)
 
             _isGenerating.value = false
             val isPpt = prompt.lowercase().contains("pitch") || prompt.lowercase().contains("deck") || prompt.lowercase().contains("presentation") || prompt.lowercase().contains("ppt")
@@ -205,11 +288,9 @@ class MainViewModel : ViewModel() {
                     (if (includeAnswerKey) "Teacher Answer Key, " else "") +
                     (if (includeVocabulary) "Vocabulary Glossary, " else "") +
                     "practice tasks and exercises, incorporating custom illustration theme: $illDesc."
-            val baseContent = callGeminiApi(apiPrompt) ?: "English A4 Worksheet: $topic\nProficiency Level: $grade\nActivity Type: $type ($questionCount Questions)\n\n1. Warm-up Discussion Questions...\n2. Core Grammar & Vocabulary Practice...\n" +
-                    (if (includeVocabulary) "3. Vocabulary Glossary & Phrasal Verbs...\n" else "") +
-                    "\n[Teacher Answer Key Provided on Page 2]"
+            val baseContent = callGeminiApi(apiPrompt) ?: generateContextualTeachingContent(topic, grade, type)
 
-            val contentResult = "🎨 [AI Generated Illustration: \"$illDesc\"]\n\n$baseContent"
+            val contentResult = if (baseContent.startsWith("🎨")) baseContent else "🎨 [AI Generated Illustration: \"$illDesc\"]\n\n$baseContent"
 
             _isGenerating.value = false
             val newItem = LibraryItem(
