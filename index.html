@@ -25,8 +25,8 @@
       --input-focus-bg: rgba(15, 23, 42, 0.85);
       --preview-bg: rgba(10, 15, 30, 0.92);
       --preview-text: #E2E8F0;
-      --header-bg: rgba(15, 23, 42, 0.75);
-      --aside-bg: rgba(15, 23, 42, 0.95);
+      --header-bg: rgba(15, 23, 42, 0.85);
+      --aside-bg: #0F172A;
       --radial-1: rgba(79, 70, 229, 0.12);
       --radial-2: rgba(6, 182, 212, 0.1);
       --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
@@ -48,7 +48,7 @@
       --accent: #E11D48;
       --bg: #F8FAFC;
       --surface: #FFFFFF;
-      --surface-card: rgba(255, 255, 255, 0.82);
+      --surface-card: rgba(255, 255, 255, 0.88);
       --border: rgba(15, 23, 42, 0.12);
       --text-main: #0F172A;
       --text-muted: #475569;
@@ -56,8 +56,8 @@
       --input-focus-bg: #FFFFFF;
       --preview-bg: #0F172A;
       --preview-text: #F8FAFC;
-      --header-bg: rgba(255, 255, 255, 0.85);
-      --aside-bg: rgba(255, 255, 255, 0.95);
+      --header-bg: rgba(255, 255, 255, 0.9);
+      --aside-bg: #FFFFFF;
       --radial-1: rgba(79, 70, 229, 0.06);
       --radial-2: rgba(6, 182, 212, 0.05);
       --card-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
@@ -79,40 +79,53 @@
       transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.25s ease;
     }
 
-    body {
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       background-color: var(--bg);
       color: var(--text-main);
+    }
+
+    body {
       display: flex;
-      height: 100vh;
-      overflow: hidden;
+      position: relative;
     }
 
     /* Sidebar Navigation */
     aside {
-      width: 280px;
+      width: 260px;
+      min-width: 260px;
       background: var(--aside-bg);
-      backdrop-filter: blur(20px);
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      padding: 24px 16px;
-      gap: 8px;
+      padding: 20px 14px;
+      gap: 6px;
       z-index: 100;
+      height: 100%;
+      overflow-y: auto;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 8px 12px 24px 12px;
+      justify-content: space-between;
+      padding: 6px 8px 18px 8px;
       border-bottom: 1px solid var(--border);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+    }
+
+    .brand-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .brand-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       display: flex;
       align-items: center;
@@ -123,25 +136,35 @@
 
     .brand-title {
       font-weight: 800;
-      font-size: 19px;
+      font-size: 18px;
       letter-spacing: -0.5px;
       color: var(--text-main);
     }
 
     .brand-sub {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
+    }
+
+    .aside-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: none;
+      padding: 6px;
+      border-radius: 8px;
     }
 
     .nav-btn {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 12px 16px;
+      gap: 12px;
+      padding: 11px 14px;
       border-radius: 12px;
       color: var(--text-muted);
       font-weight: 600;
-      font-size: 14px;
+      font-size: 13.5px;
       cursor: pointer;
       border: none;
       background: transparent;
@@ -167,15 +190,17 @@
     /* Main Container */
     main {
       flex: 1;
+      min-width: 0;
       display: flex;
       flex-direction: column;
+      height: 100%;
       overflow-y: auto;
       background: radial-gradient(circle at 90% 10%, var(--radial-1), transparent 45%),
                   radial-gradient(circle at 10% 90%, var(--radial-2), transparent 45%);
     }
 
     header {
-      padding: 20px 36px;
+      padding: 14px 28px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -185,40 +210,67 @@
       position: sticky;
       top: 0;
       z-index: 50;
+      gap: 12px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .menu-toggle-btn {
+      display: none;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
     }
 
     .page-title {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 800;
       letter-spacing: -0.5px;
       color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .page-subtitle {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--text-muted);
-      margin-top: 4px;
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    /* Theme Toggle Switch */
-    .theme-switch-container {
+    /* Header Actions */
+    .header-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      flex-shrink: 0;
     }
 
     .theme-toggle-btn {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       background: var(--surface-card);
       border: 1px solid var(--border);
-      padding: 8px 14px;
+      padding: 7px 12px;
       border-radius: 9999px;
       cursor: pointer;
       color: var(--text-main);
       box-shadow: var(--card-shadow);
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 700;
       user-select: none;
     }
@@ -228,8 +280,8 @@
     }
 
     .switch-pill {
-      width: 44px;
-      height: 24px;
+      width: 40px;
+      height: 22px;
       background: rgba(15, 23, 42, 0.5);
       border-radius: 9999px;
       position: relative;
@@ -242,8 +294,8 @@
     }
 
     .switch-thumb {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       position: absolute;
@@ -258,17 +310,17 @@
     }
 
     [data-theme="light"] .switch-thumb {
-      transform: translateX(19px);
+      transform: translateX(18px);
       background: linear-gradient(135deg, #F59E0B, #EA580C);
     }
 
     .switch-thumb .material-symbols-outlined {
-      font-size: 12px;
+      font-size: 11px;
     }
 
     .content-area {
-      padding: 32px 36px;
-      max-width: 1200px;
+      padding: 24px 28px;
+      max-width: 1100px;
       width: 100%;
       margin: 0 auto;
     }
@@ -279,8 +331,8 @@
       backdrop-filter: blur(16px);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 26px;
-      margin-bottom: 24px;
+      padding: 22px;
+      margin-bottom: 20px;
       box-shadow: var(--card-shadow);
     }
 
@@ -289,17 +341,19 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     label {
       display: block;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
       color: var(--text-main);
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -307,7 +361,7 @@
 
     input, select, textarea {
       width: 100%;
-      padding: 14px 18px;
+      padding: 12px 16px;
       border-radius: 12px;
       border: 1px solid var(--border);
       background: var(--input-bg);
@@ -333,21 +387,21 @@
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
       border: none;
-      padding: 15px 24px;
+      padding: 13px 20px;
       border-radius: 12px;
       font-weight: 700;
-      font-size: 15px;
+      font-size: 14.5px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       width: 100%;
       box-shadow: var(--btn-shadow);
     }
 
     .btn-primary:hover {
-      box-shadow: 0 6px 22px rgba(79, 70, 229, 0.45);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
       transform: translateY(-1px);
     }
 
@@ -359,9 +413,9 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 16px;
+      padding: 7px 14px;
       border-radius: 10px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 700;
       border: 1px solid var(--border);
       background: rgba(255, 255, 255, 0.08);
@@ -390,19 +444,19 @@
     /* Template Cards Grid */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 18px;
     }
 
     .template-card {
       background: var(--surface-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 24px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 16px;
+      gap: 14px;
       box-shadow: var(--card-shadow);
     }
 
@@ -413,9 +467,9 @@
 
     .badge {
       display: inline-block;
-      padding: 5px 12px;
-      border-radius: 8px;
-      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 7px;
+      font-size: 11.5px;
       font-weight: 700;
       text-transform: uppercase;
       background: var(--badge-ppt-bg);
@@ -433,18 +487,89 @@
       background: var(--preview-bg);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 24px;
+      padding: 20px;
       white-space: pre-wrap;
-      font-size: 14px;
+      font-size: 13.5px;
       line-height: 1.7;
       color: var(--preview-text);
-      max-height: 500px;
+      max-height: 480px;
       overflow-y: auto;
       font-family: 'Plus Jakarta Sans', monospace;
     }
 
     .hidden {
       display: none !important;
+    }
+
+    /* Overlay for mobile drawer */
+    #sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 90;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    #sidebar-overlay.open {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Modal Backdrop & QR Card */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 18px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 26px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      transform: scale(0.94);
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal-backdrop.open .modal-card {
+      transform: scale(1);
+    }
+
+    .qr-frame {
+      background: #FFFFFF;
+      padding: 16px;
+      border-radius: 16px;
+      display: inline-block;
+      margin: 16px 0;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .qr-frame img {
+      display: block;
+      width: 200px;
+      height: 200px;
+      border-radius: 6px;
     }
 
     /* Toast Notification */
@@ -454,39 +579,102 @@
       right: 24px;
       background: var(--surface);
       border: 1px solid var(--border);
-      padding: 14px 20px;
+      padding: 12px 18px;
       border-radius: 12px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
       color: var(--text-main);
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 600;
       transform: translateY(100px);
       opacity: 0;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 999;
+      z-index: 9999;
     }
 
     #toast.show {
       transform: translateY(0);
       opacity: 1;
     }
+
+    /* Responsive Design Media Queries */
+    @media (max-width: 900px) {
+      aside {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 270px;
+        min-width: 270px;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 100;
+        box-shadow: 0 0 35px rgba(0, 0, 0, 0.5);
+      }
+      aside.open {
+        transform: translateX(0);
+      }
+      .aside-close-btn {
+        display: inline-flex;
+      }
+      .menu-toggle-btn {
+        display: inline-flex;
+      }
+      header {
+        padding: 12px 16px;
+      }
+      .content-area {
+        padding: 18px 14px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .row {
+        grid-template-columns: 1fr;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .page-title {
+        font-size: 18px;
+      }
+      .page-subtitle {
+        display: none;
+      }
+      #theme-btn-text {
+        display: none;
+      }
+      .qr-btn-text {
+        display: none;
+      }
+      .theme-toggle-btn {
+        padding: 6px 8px;
+      }
+    }
   </style>
 </head>
 <body>
 
+  <!-- Mobile Drawer Overlay -->
+  <div id="sidebar-overlay" onclick="toggleSidebar(false)"></div>
+
   <!-- Sidebar -->
-  <aside>
+  <aside id="app-sidebar">
     <div class="brand">
-      <div class="brand-icon">
-        <span class="material-symbols-outlined">school</span>
+      <div class="brand-content">
+        <div class="brand-icon">
+          <span class="material-symbols-outlined">school</span>
+        </div>
+        <div>
+          <div class="brand-title">EduGen AI</div>
+          <div class="brand-sub">Teaching Studio</div>
+        </div>
       </div>
-      <div>
-        <div class="brand-title">EduGen AI</div>
-        <div class="brand-sub">Teaching Studio</div>
-      </div>
+      <button class="aside-close-btn" onclick="toggleSidebar(false)" aria-label="Close Sidebar">
+        <span class="material-symbols-outlined">close</span>
+      </button>
     </div>
 
     <button class="nav-btn active" onclick="switchTab('dashboard', this)">
@@ -514,16 +702,28 @@
   <!-- Main Content Area -->
   <main>
     <header>
-      <div>
-        <h1 class="page-title" id="tab-title">Dashboard</h1>
-        <p class="page-subtitle" id="tab-subtitle">Overview & prompt-driven educational generator</p>
+      <div class="header-left">
+        <button class="menu-toggle-btn" onclick="toggleSidebar(true)" aria-label="Open Navigation">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <div>
+          <h1 class="page-title" id="tab-title">Dashboard</h1>
+          <p class="page-subtitle" id="tab-subtitle">Overview & prompt-driven educational generator</p>
+        </div>
       </div>
 
-      <!-- Theme Toggle Switch -->
-      <div class="theme-switch-container">
+      <!-- Header Action Controls -->
+      <div class="header-actions">
+        <!-- QR Link Share Button -->
+        <button class="btn-action" onclick="openQrModal()" title="Share QR Link / Open on Mobile" style="border-radius: 9999px; padding: 7px 13px;">
+          <span class="material-symbols-outlined" style="font-size: 18px; color: var(--secondary);">qr_code_2</span>
+          <span class="qr-btn-text">QR Link</span>
+        </button>
+
+        <!-- Theme Toggle Switch -->
         <button class="theme-toggle-btn" onclick="toggleTheme()" id="theme-btn" aria-label="Toggle Light/Dark Theme">
           <span class="material-symbols-outlined" id="theme-btn-icon" style="font-size: 18px; color: var(--secondary);">dark_mode</span>
-          <span id="theme-btn-text">Dark Mode</span>
+          <span id="theme-btn-text">Dark</span>
           <div class="switch-pill">
             <div class="switch-thumb">
               <span class="material-symbols-outlined" id="thumb-icon">dark_mode</span>
@@ -549,13 +749,13 @@
 
         <div class="grid">
           <div class="card">
-            <h3>📝 A4 Worksheet Generator</h3>
-            <p style="color: var(--text-muted); font-size: 14px; margin: 8px 0 16px;">Generate printable English grammar, reading, and vocabulary exercises.</p>
+            <h3 style="font-size: 17px;">📝 A4 Worksheet Generator</h3>
+            <p style="color: var(--text-muted); font-size: 13.5px; margin: 8px 0 16px;">Generate printable English grammar, reading, and vocabulary exercises.</p>
             <button class="btn-primary" onclick="switchTabById('worksheet')">Launch Worksheet Maker</button>
           </div>
           <div class="card">
-            <h3>📽️ PowerPoint Generator</h3>
-            <p style="color: var(--text-muted); font-size: 14px; margin: 8px 0 16px;">Create classroom presentations with speaker notes and custom AI illustrations.</p>
+            <h3 style="font-size: 17px;">📽️ PowerPoint Generator</h3>
+            <p style="color: var(--text-muted); font-size: 13.5px; margin: 8px 0 16px;">Create classroom presentations with speaker notes and custom AI illustrations.</p>
             <button class="btn-primary" onclick="switchTabById('presentation')">Launch Slide Maker</button>
           </div>
         </div>
@@ -622,8 +822,12 @@
 
         <div id="ws-result" class="card hidden">
           <div class="card-header-row">
-            <h3>Generated Worksheet</h3>
+            <h3 style="font-size: 17px;">Generated Worksheet</h3>
             <div style="display: flex; gap: 8px;">
+              <button class="btn-action" onclick="openQrForContent('ws')" title="Get QR link for this worksheet">
+                <span class="material-symbols-outlined" style="font-size: 18px; color: var(--secondary);">qr_code_2</span>
+                QR Link
+              </button>
               <button class="btn-action" onclick="printGenerated('ws')">
                 <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
                 Print / Save PDF
@@ -676,8 +880,12 @@
 
         <div id="ppt-result" class="card hidden">
           <div class="card-header-row">
-            <h3>Generated Slide Deck</h3>
+            <h3 style="font-size: 17px;">Generated Slide Deck</h3>
             <div style="display: flex; gap: 8px;">
+              <button class="btn-action" onclick="openQrForContent('ppt')" title="Get QR link for this slide deck">
+                <span class="material-symbols-outlined" style="font-size: 18px; color: var(--secondary);">qr_code_2</span>
+                QR Link
+              </button>
               <button class="btn-action" onclick="printGenerated('ppt')">
                 <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
                 Print Slides / PDF
@@ -696,12 +904,51 @@
       <!-- LIBRARY TAB -->
       <section id="view-library" class="hidden">
         <div class="card">
-          <h3>Saved Teaching Materials</h3>
+          <h3 style="font-size: 17px;">Saved Teaching Materials</h3>
           <div id="library-list" style="margin-top: 16px;"></div>
         </div>
       </section>
     </div>
   </main>
+
+  <!-- QR Code Modal Dialog -->
+  <div id="qr-modal" class="modal-backdrop" onclick="closeQrModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="material-symbols-outlined" style="color: var(--secondary); font-size: 24px;">qr_code_2</span>
+          <strong style="font-size: 18px;" id="qr-modal-title">Scan QR Link</strong>
+        </div>
+        <button onclick="closeQrModal()" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer; padding: 4px;">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <p style="color: var(--text-muted); font-size: 13px; line-height: 1.5;" id="qr-modal-desc">
+        Scan this QR code with any smartphone camera to instantly access the educational material or live web app.
+      </p>
+
+      <div class="qr-frame">
+        <img id="qr-image" src="" alt="EduGen QR Code" />
+      </div>
+
+      <div class="form-group" style="margin-bottom: 14px; text-align: left;">
+        <label style="font-size: 11px;">Target URL / Lesson Link</label>
+        <input type="text" id="qr-url-input" oninput="updateQrCode(this.value)" placeholder="https://..." style="font-size: 13px; padding: 10px 14px;" />
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <button class="btn-action" style="justify-content: center; padding: 10px;" onclick="copyQrLink()">
+          <span class="material-symbols-outlined" style="font-size: 18px;">content_copy</span>
+          Copy Link
+        </button>
+        <button class="btn-primary" style="justify-content: center; padding: 10px; font-size: 13px;" onclick="printQrCard()">
+          <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
+          Print QR Card
+        </button>
+      </div>
+    </div>
+  </div>
 
   <div id="toast"></div>
 
@@ -721,12 +968,12 @@
       if (theme === 'light') {
         btnIcon.textContent = 'light_mode';
         btnIcon.style.color = '#EA580C';
-        btnText.textContent = 'Light Mode';
+        if (btnText) btnText.textContent = 'Light';
         thumbIcon.textContent = 'light_mode';
       } else {
         btnIcon.textContent = 'dark_mode';
         btnIcon.style.color = 'var(--secondary)';
-        btnText.textContent = 'Dark Mode';
+        if (btnText) btnText.textContent = 'Dark';
         thumbIcon.textContent = 'dark_mode';
       }
     }
@@ -737,14 +984,145 @@
       showToast(`Switched to ${nextTheme === 'light' ? 'High-Contrast Light' : 'Dark'} Mode`);
     }
 
+    // Sidebar Mobile Drawer Control
+    function toggleSidebar(open) {
+      const sidebar = document.getElementById('app-sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (open) {
+        sidebar.classList.add('open');
+        overlay.classList.add('open');
+      } else {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+      }
+    }
+
     // Apply initial theme on load
     applyTheme(currentTheme);
 
-    // Active generation tracking for print
+    // Active generation tracking for print and QR
     let lastGenerated = {
       ws: { title: '', type: 'A4 Worksheet', details: '', content: '' },
       ppt: { title: '', type: 'Presentation Deck', details: '', content: '' }
     };
+
+    // QR Code System
+    let currentQrUrl = window.location.href;
+    let currentQrTitle = "EduGen AI Teaching Studio";
+
+    function generateQrImageUrl(text) {
+      const cleanText = encodeURIComponent(text || window.location.href);
+      return `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${cleanText}&bgcolor=ffffff&color=0f172a&margin=1`;
+    }
+
+    function openQrModal(customUrl, title, desc) {
+      const url = customUrl || window.location.href;
+      currentQrUrl = url;
+      currentQrTitle = title || "EduGen AI Teaching Studio";
+
+      document.getElementById('qr-modal-title').textContent = title ? `QR: ${title}` : "Scan QR Link";
+      if (desc) document.getElementById('qr-modal-desc').textContent = desc;
+
+      const input = document.getElementById('qr-url-input');
+      input.value = url;
+
+      const img = document.getElementById('qr-image');
+      img.src = generateQrImageUrl(url);
+
+      document.getElementById('qr-modal').classList.add('open');
+    }
+
+    function closeQrModal(e) {
+      if (e && e.target !== e.currentTarget && !e.target.closest('button')) return;
+      document.getElementById('qr-modal').classList.remove('open');
+    }
+
+    function updateQrCode(url) {
+      currentQrUrl = url.trim() || window.location.href;
+      document.getElementById('qr-image').src = generateQrImageUrl(currentQrUrl);
+    }
+
+    function copyQrLink() {
+      const input = document.getElementById('qr-url-input');
+      navigator.clipboard.writeText(input.value || currentQrUrl).then(() => {
+        showToast("Link copied to clipboard!");
+      }).catch(() => {
+        showToast("Link ready to copy: " + currentQrUrl);
+      });
+    }
+
+    function openQrForContent(typeKey) {
+      const item = lastGenerated[typeKey];
+      if (!item || !item.title) {
+        showToast("Please generate content first.");
+        return;
+      }
+      const shareUrl = `${window.location.origin}${window.location.pathname}#${encodeURIComponent(item.title)}`;
+      openQrModal(shareUrl, item.title, `Scan to view "${item.title}" digital teaching material.`);
+    }
+
+    function openQrForLibrary(idx) {
+      const item = library[idx];
+      if (!item) return;
+      const shareUrl = `${window.location.origin}${window.location.pathname}#${encodeURIComponent(item.title)}`;
+      openQrModal(shareUrl, item.title, `Scan to view saved resource "${item.title}".`);
+    }
+
+    function printQrCard() {
+      const printWindow = window.open('', '_blank');
+      if (!printWindow) {
+        showToast('Please allow pop-ups to print QR card.');
+        return;
+      }
+
+      const qrImgSrc = generateQrImageUrl(currentQrUrl);
+
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>QR Link Card - ${currentQrTitle}</title>
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com">
+          <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+          <style>
+            @page { size: A4; margin: 20mm; }
+            * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', Arial, sans-serif; }
+            body { display: flex; justify-content: center; align-items: center; min-height: 80vh; background: #fff; }
+            .card {
+              border: 3px solid #0f172a;
+              border-radius: 24px;
+              padding: 40px;
+              text-align: center;
+              max-width: 440px;
+              box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            }
+            .title { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 8px; }
+            .sub { font-size: 14px; color: #64748b; margin-bottom: 24px; }
+            .qr-box { background: #fff; padding: 16px; border: 2px dashed #cbd5e1; border-radius: 18px; display: inline-block; margin-bottom: 20px; }
+            .qr-box img { width: 220px; height: 220px; display: block; }
+            .instruct { font-size: 13px; font-weight: 700; color: #4338ca; }
+            .url-text { font-size: 11px; color: #94a3b8; word-break: break-all; margin-top: 8px; }
+          </style>
+        </head>
+        <body>
+          <div class="card">
+            <div class="title">${currentQrTitle}</div>
+            <div class="sub">EduGen AI Classroom Companion</div>
+            <div class="qr-box">
+              <img src="${qrImgSrc}" alt="QR Link Code" />
+            </div>
+            <div class="instruct">📷 Open camera on your smartphone or tablet to scan</div>
+            <div class="url-text">${currentQrUrl}</div>
+          </div>
+          <script>
+            window.onload = function() { window.print(); };
+          <\/script>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
+    }
 
     const templates = [
       {
@@ -817,6 +1195,9 @@
 
       document.getElementById('tab-title').textContent = titles[tabId][0];
       document.getElementById('tab-subtitle').textContent = titles[tabId][1];
+
+      // Auto close sidebar on mobile
+      toggleSidebar(false);
 
       if (tabId === 'templates') renderTemplates();
       if (tabId === 'library') renderLibrary();
@@ -897,6 +1278,7 @@
       }
 
       const dateStr = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+      const qrImgSrc = generateQrImageUrl(window.location.href);
 
       printWindow.document.write(`
         <!DOCTYPE html>
@@ -904,7 +1286,7 @@
         <head>
           <title>${title} - ${type}</title>
           <link rel="preconnect" href="https://fonts.googleapis.com">
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link rel="preconnect" href="https://fonts.gstatic.com">
           <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
           <style>
             @page {
@@ -942,6 +1324,19 @@
               font-weight: 600;
               margin-top: 4px;
             }
+            .header-right {
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              text-align: right;
+            }
+            .header-qr {
+              width: 54px;
+              height: 54px;
+              border: 1px solid #cbd5e1;
+              border-radius: 6px;
+              padding: 2px;
+            }
             .student-fields {
               display: grid;
               grid-template-columns: 2fr 1fr 1fr;
@@ -974,6 +1369,7 @@
               border-top: 1px solid #e2e8f0;
               display: flex;
               justify-content: space-between;
+              align-items: center;
               font-size: 11px;
               color: #64748b;
             }
@@ -993,8 +1389,12 @@
               <div class="title">${title || 'EduGen Worksheet'}</div>
               <div class="subtitle">${type} • ${details || 'Educational Teaching Material'}</div>
             </div>
-            <div style="text-align: right; font-size: 12px; color: #475569; font-weight: 600;">
-              Date: ${dateStr}
+            <div class="header-right">
+              <div>
+                <div style="font-size: 12px; color: #475569; font-weight: 600;">Date: ${dateStr}</div>
+                <div style="font-size: 10px; color: #94a3b8; margin-top: 2px;">Scan for digital link</div>
+              </div>
+              <img src="${qrImgSrc}" class="header-qr" alt="QR Link" />
             </div>
           </div>
 
@@ -1008,7 +1408,7 @@
 
           <div class="footer">
             <span>EduGen AI Studio — Teaching Materials</span>
-            <span>Printed on ${dateStr}</span>
+            <span>📱 Scan QR code on header to open mobile companion</span>
           </div>
 
           <script>
@@ -1031,13 +1431,16 @@
               <span class="badge ${t.type === 'worksheet' ? 'badge-worksheet' : ''}">${t.type}</span>
               <span style="font-size: 12px; color: var(--text-muted);">${t.level}</span>
             </div>
-            <h3 style="margin-top: 14px;">${t.title}</h3>
+            <h3 style="margin-top: 12px; font-size: 16px;">${t.title}</h3>
             <p style="color: var(--text-muted); font-size: 13px; margin-top: 8px; line-height: 1.5;">${t.desc}</p>
           </div>
           <div style="display:flex; gap:8px;">
             <button class="btn-primary" style="flex:1;" onclick="useTemplate(${index})">
               <span class="material-symbols-outlined" style="font-size:18px;">auto_awesome</span>
               Use Template
+            </button>
+            <button class="btn-action" onclick="openQrModal(window.location.href, '${t.title}', 'Scan to load template on your phone')" title="QR Link">
+              <span class="material-symbols-outlined" style="font-size:18px; color:var(--secondary);">qr_code_2</span>
             </button>
             <button class="btn-action" onclick="printTemplate(${index})" title="Print Preview">
               <span class="material-symbols-outlined" style="font-size:18px;">print</span>
@@ -1072,17 +1475,21 @@
 
       container.innerHTML = library.map((item, index) => `
         <div style="background: var(--surface-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 14px; box-shadow: var(--card-shadow);">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
             <div>
-              <strong style="font-size:16px;">${item.title}</strong>
+              <strong style="font-size:15.5px;">${item.title}</strong>
               <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">${item.type} • ${item.details} • ${item.date}</div>
             </div>
             <div style="display: flex; gap: 8px; align-items: center;">
+              <button class="btn-action" onclick="openQrForLibrary(${index})" title="QR Link">
+                <span class="material-symbols-outlined" style="font-size:18px; color:var(--secondary);">qr_code_2</span>
+                QR Link
+              </button>
               <button class="btn-action" onclick="printLibraryItem(${index})" title="Print Material">
                 <span class="material-symbols-outlined" style="font-size:18px;">print</span>
                 Print
               </button>
-              <button onclick="deleteFromLibrary(${index})" style="background:transparent; border:none; color:var(--accent); cursor:pointer; padding:6px;">
+              <button onclick="deleteFromLibrary(${index})" style="background:transparent; border:none; color:var(--accent); cursor:pointer; padding:6px;" aria-label="Delete Item">
                 <span class="material-symbols-outlined">delete</span>
               </button>
             </div>
