@@ -1,0 +1,7 @@
+{
+  "name": "EduGen AI Studio",
+  "description": "AI-powered lesson, worksheet, and presentation generator with glassmorphic UI and dynamic themes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
