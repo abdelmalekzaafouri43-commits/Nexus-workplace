@@ -3922,7 +3922,7 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
     async function testGeminiApiKeyWithLatency(apiKey, promptText) {
       const startTime = performance.now();
       const prompt = promptText || "Heartbeat ping check. Respond in 3 words: 'EduGen System Online'.";
-      const modelsToTry = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-2.5-flash', 'gemini-1.5-pro'];
+      const modelsToTry = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash-latest'];
       let lastError = '';
 
       for (const model of modelsToTry) {
@@ -3951,16 +3951,22 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
           } else {
             const errData = await res.json().catch(() => ({}));
             const googleMsg = errData.error?.message || res.statusText || `HTTP ${res.status}`;
-            lastError = `Google Server Error (${res.status}): ${googleMsg}`;
-            if (res.status === 400 || res.status === 403) {
-              return { success: false, error: lastError, latency: latency };
+            if (res.status === 400) {
+              return { success: false, error: `Invalid or Expired API Key (HTTP 400): ${googleMsg}`, latency: latency };
+            } else if (res.status === 403) {
+              return { success: false, error: `API Key Access Denied (HTTP 403): ${googleMsg}`, latency: latency };
+            } else if (res.status === 404) {
+              // Endpoint not found for this specific model, try next model in list
+              lastError = `Google Model Endpoint Error (${res.status}): ${googleMsg}`;
+              continue;
+            } else {
+              lastError = `Google Server Error (${res.status}): ${googleMsg}`;
             }
           }
         } catch (err) {
           const endTime = performance.now();
           const latency = Math.round(endTime - startTime);
           lastError = err.message || "Network error while connecting to Google Gemini API.";
-          return { success: false, error: lastError, latency: latency };
         }
       }
 
@@ -3975,7 +3981,7 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
         return { success: false, error: "Please enter or paste an API Key first." };
       }
 
-      const modelsToTry = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-2.5-flash', 'gemini-1.5-pro'];
+      const modelsToTry = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash-latest'];
       let lastError = '';
 
       for (const model of modelsToTry) {
@@ -4000,9 +4006,15 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
           } else {
             const errData = await res.json().catch(() => ({}));
             const googleMsg = errData.error?.message || res.statusText || `HTTP ${res.status}`;
-            lastError = `Google Server Error (${res.status}): ${googleMsg}`;
-            if (res.status === 400 || res.status === 403) {
-              break;
+            if (res.status === 400) {
+              return { success: false, error: `Invalid or Expired API Key (HTTP 400): ${googleMsg}` };
+            } else if (res.status === 403) {
+              return { success: false, error: `API Key Access Denied (HTTP 403): ${googleMsg}` };
+            } else if (res.status === 404) {
+              lastError = `Google Model Endpoint Error (${res.status}): ${googleMsg}`;
+              continue;
+            } else {
+              lastError = `Google Server Error (${res.status}): ${googleMsg}`;
             }
           }
         } catch (err) {
@@ -4019,7 +4031,7 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
         return { success: false, error: "No API Key configured. Click Settings to paste your Gemini API key." };
       }
 
-      const modelsToTry = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-2.5-flash', 'gemini-1.5-pro'];
+      const modelsToTry = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash-latest'];
       let lastError = '';
 
       for (const model of modelsToTry) {
@@ -4042,9 +4054,14 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
           } else {
             const errData = await res.json().catch(() => ({}));
             const googleMsg = errData.error?.message || res.statusText || `HTTP ${res.status}`;
-            lastError = `Google API Error (${res.status}): ${googleMsg}`;
             if (res.status === 400 || res.status === 403) {
+              lastError = `Google API Error (${res.status}): ${googleMsg}`;
               break;
+            } else if (res.status === 404) {
+              lastError = `Google API Error (${res.status}): ${googleMsg}`;
+              continue;
+            } else {
+              lastError = `Google API Error (${res.status}): ${googleMsg}`;
             }
           }
         } catch (err) {
