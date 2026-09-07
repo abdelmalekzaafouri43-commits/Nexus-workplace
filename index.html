@@ -2468,31 +2468,6 @@
     </div>
   </main>
 
-  <!-- API Settings Modal -->
-  <div id="api-settings-modal" class="modal-backdrop" onclick="closeApiModal(event)">
-    <div class="modal-card" onclick="event.stopPropagation()">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <strong style="font-size: 18px;">API Configuration</strong>
-        <button onclick="closeApiModal()" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer; padding: 4px;">
-          <span class="material-symbols-outlined" style="font-size: 22px;">close</span>
-        </button>
-      </div>
-      <p style="color: var(--text-muted); font-size: 13.5px; line-height: 1.5; margin-bottom: 16px;">
-        Enter your Google Gemini API Key to enable live AI responses. Your key is securely stored only in your browser's local storage and used directly to communicate with Google's API.
-      </p>
-      
-      <div class="input-group">
-        <label>GEMINI API KEY</label>
-        <input type="password" id="api-key-input" class="form-input" placeholder="AIzaSy..." />
-      </div>
-      
-      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-        <button class="btn-action" onclick="closeApiModal()">Cancel</button>
-        <button class="btn-primary" onclick="saveApiKey()">Save Key</button>
-      </div>
-    </div>
-  </div>
-
   <!-- QR Code Modal Dialog -->
   <div id="qr-modal" class="modal-backdrop" onclick="closeQrModal(event)">
     <div class="modal-card" onclick="event.stopPropagation()">
@@ -2589,28 +2564,60 @@
     </div>
   </div>
 
-  <!-- API Key Settings Modal -->
+  <!-- API Key Settings & Diagnostics Modal -->
   <div id="api-key-modal" class="modal-backdrop" onclick="closeApiKeyModal(event)">
-    <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-card modal-card-large" onclick="event.stopPropagation()">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1.5px solid var(--border); padding-bottom: 10px;">
         <div style="display: flex; align-items: center; gap: 10px;">
-          <span class="material-symbols-outlined" style="color: var(--secondary); font-size: 26px;">key</span>
+          <span class="material-symbols-outlined" style="color: var(--secondary); font-size: 28px;">key</span>
           <div>
-            <strong style="font-size: 18px;">API Key Settings</strong>
-            <div style="font-size: 12px; color: var(--text-muted);">Connect Gemini for live AI generation</div>
+            <strong style="font-size: 18px;">Google Gemini API Configuration & Diagnostics</strong>
+            <div style="font-size: 12px; color: var(--text-muted);">Test and verify your Google Gemini API key in real time</div>
           </div>
         </div>
         <button onclick="closeApiKeyModal()" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer; padding: 4px;">
           <span class="material-symbols-outlined">close</span>
         </button>
       </div>
-      <p style="color: var(--text-muted); font-size: 13px; line-height: 1.5; margin-bottom: 15px;">
-        This app uses the Google Gemini API to generate English materials and chat responses. Paste your API key below. It will be stored securely in your browser's local storage.
+
+      <p style="color: var(--text-muted); font-size: 13px; line-height: 1.5; margin-bottom: 14px;">
+        Paste your Google Gemini API key below. Use the live <strong>Test Connection</strong> tool to verify whether your key is communicating successfully with Google servers.
       </p>
-      <input type="password" id="gemini-api-key-input" placeholder="Enter GEMINI_API_KEY" class="form-input" style="margin-bottom: 15px; font-family: monospace;">
-      <div style="display: flex; justify-content: flex-end; gap: 10px;">
-        <button class="btn-action" onclick="closeApiKeyModal()">Cancel</button>
-        <button class="btn-primary" onclick="saveApiKey()">Save Key</button>
+
+      <div class="input-group" style="margin-bottom: 12px;">
+        <label style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <span>GOOGLE GEMINI API KEY</span>
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" style="color: var(--secondary); font-size: 12px; text-decoration: none; font-weight: 600;">
+            🔑 Get Free Key at Google AI Studio ↗
+          </a>
+        </label>
+        <div style="display: flex; gap: 8px;">
+          <input type="password" id="gemini-api-key-input" placeholder="AIzaSy..." class="form-input" style="font-family: monospace; font-size: 13.5px; flex: 1;" oninput="syncApiKeyInputs(this.value)" />
+          <button type="button" class="btn-action" onclick="toggleApiKeyVisibility()" title="Toggle key visibility" style="padding: 8px 12px;">
+            <span class="material-symbols-outlined" id="api-key-visibility-icon">visibility</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Test Results Diagnostic Output -->
+      <div id="api-key-test-output" style="display: none; padding: 12px 14px; border-radius: 8px; font-size: 12.5px; margin-bottom: 14px; line-height: 1.5; white-space: pre-wrap;"></div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn-action" style="border-color: var(--secondary); color: var(--secondary);" onclick="testCurrentApiKey()">
+            <span class="material-symbols-outlined" style="font-size: 18px;">network_check</span>
+            Test Connection
+          </button>
+          <button type="button" class="btn-action" style="color: var(--accent); border-color: rgba(244,63,94,0.3);" onclick="clearApiKey()">
+            <span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
+            Clear Key
+          </button>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn-action" onclick="closeApiKeyModal()">Close</button>
+          <button type="button" class="btn-primary" onclick="saveApiKey()">Save Key</button>
+        </div>
       </div>
     </div>
   </div>
@@ -3676,19 +3683,27 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
     let currentQrUrl = window.location.href;
     let currentQrTitle = "EduGen AI Teaching Studio";
 
-    // API Key Logic
+    // API Key Logic & Diagnostics
     function openApiKeyModal() {
-      const modal1 = document.getElementById('api-key-modal');
-      const modal2 = document.getElementById('api-settings-modal');
-      const input1 = document.getElementById('gemini-api-key-input');
-      const input2 = document.getElementById('api-key-input');
-      const storedKey = localStorage.getItem('GEMINI_API_KEY') || '';
+      const modal = document.getElementById('api-key-modal');
+      const input = document.getElementById('gemini-api-key-input');
+      const output = document.getElementById('api-key-test-output');
+      const storedKey = (localStorage.getItem('GEMINI_API_KEY') || '').trim();
 
-      if (input1) input1.value = storedKey;
-      if (input2) input2.value = storedKey;
+      if (input) input.value = storedKey;
+      if (output) {
+        if (storedKey) {
+          output.style.display = 'block';
+          output.style.background = 'rgba(6, 182, 212, 0.1)';
+          output.style.border = '1px solid rgba(6, 182, 212, 0.3)';
+          output.style.color = 'var(--secondary)';
+          output.innerHTML = '🔑 <strong>API Key Stored in Local Storage</strong>. Click <strong>Test Connection</strong> below to verify if your key communicates with Google Servers.';
+        } else {
+          output.style.display = 'none';
+        }
+      }
 
-      if (modal1) modal1.classList.add('open');
-      if (modal2) modal2.classList.add('open');
+      if (modal) modal.classList.add('open');
     }
 
     function openApiModal() {
@@ -3700,60 +3715,183 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
 
     function closeApiKeyModal(e) {
       if (e && e.target !== e.currentTarget && !e.target.closest('button')) return;
-      const modal1 = document.getElementById('api-key-modal');
-      const modal2 = document.getElementById('api-settings-modal');
-      if (modal1) modal1.classList.remove('open');
-      if (modal2) modal2.classList.remove('open');
+      const modal = document.getElementById('api-key-modal');
+      if (modal) modal.classList.remove('open');
     }
 
     function closeApiModal(e) {
       closeApiKeyModal(e);
     }
 
+    function toggleApiKeyVisibility() {
+      const input = document.getElementById('gemini-api-key-input');
+      const icon = document.getElementById('api-key-visibility-icon');
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        if (icon) icon.textContent = 'visibility_off';
+      } else {
+        input.type = 'password';
+        if (icon) icon.textContent = 'visibility';
+      }
+    }
+
+    function syncApiKeyInputs(val) {
+      const output = document.getElementById('api-key-test-output');
+      if (output) output.style.display = 'none';
+    }
+
+    async function testCurrentApiKey() {
+      const input = document.getElementById('gemini-api-key-input');
+      const output = document.getElementById('api-key-test-output');
+      if (!input || !output) return;
+
+      const keyToTest = input.value.trim();
+      if (!keyToTest) {
+        output.style.display = 'block';
+        output.style.background = 'rgba(244, 63, 94, 0.12)';
+        output.style.border = '1px solid rgba(244, 63, 94, 0.35)';
+        output.style.color = '#F43F5E';
+        output.innerHTML = '⚠️ Please paste an API Key above before testing.';
+        return;
+      }
+
+      output.style.display = 'block';
+      output.style.background = 'rgba(79, 70, 229, 0.12)';
+      output.style.border = '1px solid rgba(79, 70, 229, 0.35)';
+      output.style.color = '#818CF8';
+      output.innerHTML = '⏳ <strong>Testing connection with Google Gemini API...</strong> Please wait.';
+
+      const result = await testGeminiApiKey(keyToTest);
+
+      if (result.success) {
+        output.style.background = 'rgba(16, 185, 129, 0.12)';
+        output.style.border = '1px solid rgba(16, 185, 129, 0.35)';
+        output.style.color = '#10B981';
+        output.innerHTML = `✅ <strong>Success! Key communicates with Google Servers.</strong>\n• Active Model Endpoint: <code>${result.model}</code>\n• Response: "${result.message}"`;
+        localStorage.setItem('GEMINI_API_KEY', keyToTest);
+        showToast("API Key verified & saved!");
+      } else {
+        output.style.background = 'rgba(244, 63, 94, 0.12)';
+        output.style.border = '1px solid rgba(244, 63, 94, 0.35)';
+        output.style.color = '#F43F5E';
+        output.innerHTML = `❌ <strong>API Communication Failed</strong>\n\n${result.error}\n\n💡 <em>Troubleshooting Tips:</em>\n1. Ensure your API key has no extra spaces or hidden characters.\n2. Verify that Generative Language API is enabled on your project.\n3. Create or regenerate a key at <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color: #67E8F9;">aistudio.google.com</a>.`;
+      }
+    }
+
     function saveApiKey() {
-      const input1 = document.getElementById('gemini-api-key-input');
-      const input2 = document.getElementById('api-key-input');
-      const val1 = input1 ? input1.value.trim() : '';
-      const val2 = input2 ? input2.value.trim() : '';
-      const key = val1 || val2;
+      const input = document.getElementById('gemini-api-key-input');
+      const key = input ? input.value.trim() : '';
 
       if (key) {
         localStorage.setItem('GEMINI_API_KEY', key);
-        if (input1) input1.value = key;
-        if (input2) input2.value = key;
         showToast("API Key saved successfully!");
       } else {
         localStorage.removeItem('GEMINI_API_KEY');
-        if (input1) input1.value = '';
-        if (input2) input2.value = '';
         showToast("API Key removed.");
       }
       closeApiKeyModal();
     }
 
-    async function callGeminiApi(promptText) {
-      const apiKey = localStorage.getItem('GEMINI_API_KEY');
-      if (!apiKey) return null;
-      
-      try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: promptText }] }]
-          })
-        });
-        
-        if (!response.ok) throw new Error("API request failed");
-        
-        const data = await response.json();
-        return data.candidates[0].content.parts[0].text;
-      } catch (err) {
-        console.error("Gemini API Error:", err);
-        return null;
+    function clearApiKey() {
+      const input = document.getElementById('gemini-api-key-input');
+      const output = document.getElementById('api-key-test-output');
+      if (input) input.value = '';
+      localStorage.removeItem('GEMINI_API_KEY');
+      if (output) {
+        output.style.display = 'block';
+        output.style.background = 'rgba(244, 63, 94, 0.1)';
+        output.style.border = '1px solid rgba(244, 63, 94, 0.3)';
+        output.style.color = '#F43F5E';
+        output.innerHTML = '🗑️ API Key cleared from local storage.';
       }
+      showToast("API Key cleared.");
+    }
+
+    async function testGeminiApiKey(keyToTest) {
+      const apiKey = keyToTest || localStorage.getItem('GEMINI_API_KEY') || '';
+      if (!apiKey.trim()) {
+        return { success: false, error: "Please enter or paste an API Key first." };
+      }
+
+      const modelsToTry = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-2.5-flash', 'gemini-1.5-pro'];
+      let lastError = '';
+
+      for (const model of modelsToTry) {
+        try {
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey.trim()}`;
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: "Hello! Confirm connection in 5 words." }] }]
+            })
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Connected';
+            return {
+              success: true,
+              model: model,
+              message: reply.trim()
+            };
+          } else {
+            const errData = await res.json().catch(() => ({}));
+            const googleMsg = errData.error?.message || res.statusText || `HTTP ${res.status}`;
+            lastError = `Google Server Error (${res.status}): ${googleMsg}`;
+            if (res.status === 400 || res.status === 403) {
+              break;
+            }
+          }
+        } catch (err) {
+          lastError = err.message || "Network error. Check internet connection.";
+        }
+      }
+
+      return { success: false, error: lastError };
+    }
+
+    async function callGeminiApi(promptText) {
+      const apiKey = (localStorage.getItem('GEMINI_API_KEY') || '').trim();
+      if (!apiKey) {
+        return { success: false, error: "No API Key configured. Click Settings to paste your Gemini API key." };
+      }
+
+      const modelsToTry = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-2.5-flash', 'gemini-1.5-pro'];
+      let lastError = '';
+
+      for (const model of modelsToTry) {
+        try {
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: promptText }] }]
+            })
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (aiText) {
+              return { success: true, text: aiText, model: model };
+            }
+          } else {
+            const errData = await res.json().catch(() => ({}));
+            const googleMsg = errData.error?.message || res.statusText || `HTTP ${res.status}`;
+            lastError = `Google API Error (${res.status}): ${googleMsg}`;
+            if (res.status === 400 || res.status === 403) {
+              break;
+            }
+          }
+        } catch (err) {
+          lastError = err.message || "Network error while connecting to Google Gemini API.";
+        }
+      }
+
+      return { success: false, error: lastError };
     }
 
     // QR Code Logic
@@ -5270,38 +5408,29 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
       if (statusDot) statusDot.style.background = 'var(--secondary)';
       if (statusText) statusText.textContent = 'AI Agent is typing...';
 
-      const apiKey = localStorage.getItem('GEMINI_API_KEY');
-      
+      const apiKey = (localStorage.getItem('GEMINI_API_KEY') || '').trim();
+
+      if (!apiKey) {
+        setTimeout(() => {
+          appendChatMessage('ai', "⚠️ **AI Agent Disconnected**\n\nIt looks like no Gemini API key is configured. Click the **API Key icon in the top right header** to paste and test your key.");
+          if (statusDot) statusDot.style.background = '#10B981';
+          if (statusText) statusText.textContent = 'AI English Agent Online';
+        }, 300);
+        return;
+      }
+
+      const history = chatHistory.slice(0, 6).map(msg => `${msg.sender === 'user' ? 'User' : 'AI'}: ${msg.text}`).join('\n');
+      const systemPrompt = "You are an intelligent, friendly AI English Language Teaching & Learning Assistant. The user is chatting freely with you in English. Answer their questions accurately, provide clear explanations, generate practice exercises if requested, correct their English kindly, and converse naturally in English.\n\nConversation Context:\n" + history + "\n\nUser: " + text + "\n\nAI:";
+
       try {
-        if (!apiKey) {
-          setTimeout(() => {
-            appendChatMessage('ai', "⚠️ **AI Agent Disconnected**\n\nIt looks like the Gemini API is not connected. Click the **API Key Settings (key icon) in the top right header** and paste your Google Gemini API key to enable live AI responses.");
-            if (statusDot) statusDot.style.background = '#10B981';
-            if (statusText) statusText.textContent = 'AI English Agent Online';
-          }, 550);
-          return;
+        const result = await callGeminiApi(systemPrompt);
+        if (result.success) {
+          appendChatMessage('ai', result.text);
+        } else {
+          appendChatMessage('ai', `⚠️ **Gemini API Error**\n\n${result.error}\n\n👉 Click the **Key icon in the header** to test your keys and diagnose Google API communication.`);
         }
-
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-        
-        const history = chatHistory.slice(0, 6).map(msg => `${msg.sender === 'user' ? 'User' : 'AI'}: ${msg.text}`).join('\n');
-        const systemPrompt = "You are an intelligent, friendly AI English Language Teaching & Learning Assistant. The user is chatting freely with you in English. Answer their questions accurately, provide clear explanations, generate practice exercises if requested, correct their English kindly, and converse naturally in English.\n\nConversation Context:\n" + history + "\n\nUser: " + text + "\n\nAI:";
-
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: systemPrompt }] }]
-          })
-        });
-
-        if (!response.ok) throw new Error("API Request Failed");
-        const data = await response.json();
-        const aiText = data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0] ? data.candidates[0].content.parts[0].text : "Sorry, I couldn't generate a response.";
-        
-        appendChatMessage('ai', aiText);
       } catch (e) {
-        appendChatMessage('ai', "⚠️ Error communicating with Gemini API. Please check your API key in Settings.");
+        appendChatMessage('ai', `⚠️ **Error communicating with Gemini API**: ${e.message || 'Connection failed'}`);
       } finally {
         if (statusDot) statusDot.style.background = '#10B981';
         if (statusText) statusText.textContent = 'AI English Agent Online';
