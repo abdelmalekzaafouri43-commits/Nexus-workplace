@@ -21,10 +21,14 @@ fun EduGenTheme(
                 tertiary = SapphireAccent,
                 background = SapphireBackground,
                 surface = SapphireSurface,
+                surfaceVariant = Color(0xFF1E293B),
+                outline = DarkBorder,
+                outlineVariant = Color(0x1FFFFFFF),
                 onPrimary = TextWhite,
                 onSecondary = TextWhite,
                 onBackground = TextWhite,
-                onSurface = TextWhite
+                onSurface = TextWhite,
+                onSurfaceVariant = TextMuted
             )
             AppThemeMode.EMERALD -> darkColorScheme(
                 primary = EmeraldPrimary,
@@ -32,10 +36,14 @@ fun EduGenTheme(
                 tertiary = EmeraldAccent,
                 background = EmeraldBackground,
                 surface = EmeraldSurface,
+                surfaceVariant = Color(0xFF064E3B),
+                outline = DarkBorder,
+                outlineVariant = Color(0x1FFFFFFF),
                 onPrimary = TextWhite,
                 onSecondary = TextWhite,
                 onBackground = TextWhite,
-                onSurface = TextWhite
+                onSurface = TextWhite,
+                onSurfaceVariant = TextMuted
             )
             AppThemeMode.AMETHYST -> darkColorScheme(
                 primary = AmethystPrimary,
@@ -43,10 +51,14 @@ fun EduGenTheme(
                 tertiary = AmethystAccent,
                 background = AmethystBackground,
                 surface = AmethystSurface,
+                surfaceVariant = Color(0xFF3B0764),
+                outline = DarkBorder,
+                outlineVariant = Color(0x1FFFFFFF),
                 onPrimary = TextWhite,
                 onSecondary = TextWhite,
                 onBackground = TextWhite,
-                onSurface = TextWhite
+                onSurface = TextWhite,
+                onSurfaceVariant = TextMuted
             )
         }
     } else {
@@ -55,34 +67,46 @@ fun EduGenTheme(
                 primary = SapphirePrimary,
                 secondary = SapphireSecondary,
                 tertiary = Color(0xFF0284C7),
-                background = Color(0xFFF8FAFC),
-                surface = Color(0xFFFFFFFF),
+                background = LightBackground,
+                surface = LightSurface,
+                surfaceVariant = Color(0xFFF8FAFC),
+                outline = LightBorder,
+                outlineVariant = LightBorderStrong,
                 onPrimary = Color.White,
                 onSecondary = Color.White,
-                onBackground = Color(0xFF0F172A),
-                onSurface = Color(0xFF0F172A)
+                onBackground = LightTextMain,
+                onSurface = LightTextMain,
+                onSurfaceVariant = LightTextMuted
             )
             AppThemeMode.EMERALD -> lightColorScheme(
                 primary = EmeraldPrimary,
                 secondary = EmeraldSecondary,
                 tertiary = Color(0xFF047857),
                 background = Color(0xFFF0FDF4),
-                surface = Color(0xFFFFFFFF),
+                surface = LightSurface,
+                surfaceVariant = Color(0xFFF8FAFC),
+                outline = Color(0xFFA7F3D0),
+                outlineVariant = Color(0xFF6EE7B7),
                 onPrimary = Color.White,
                 onSecondary = Color.White,
                 onBackground = Color(0xFF022C22),
-                onSurface = Color(0xFF022C22)
+                onSurface = Color(0xFF022C22),
+                onSurfaceVariant = Color(0xFF065F46)
             )
             AppThemeMode.AMETHYST -> lightColorScheme(
                 primary = AmethystPrimary,
                 secondary = AmethystSecondary,
                 tertiary = Color(0xFF6D28D9),
-                background = Color(0xFFFBF5FF),
-                surface = Color(0xFFFFFFFF),
+                background = Color(0xFFFAF5FF),
+                surface = LightSurface,
+                surfaceVariant = Color(0xFFF8FAFC),
+                outline = Color(0xFFE9D5FF),
+                outlineVariant = Color(0xFFD8B4FE),
                 onPrimary = Color.White,
                 onSecondary = Color.White,
                 onBackground = Color(0xFF2E1065),
-                onSurface = Color(0xFF2E1065)
+                onSurface = Color(0xFF2E1065),
+                onSurfaceVariant = Color(0xFF581C87)
             )
         }
     }
@@ -93,4 +117,5 @@ fun EduGenTheme(
         content = content
     )
 }
+
 

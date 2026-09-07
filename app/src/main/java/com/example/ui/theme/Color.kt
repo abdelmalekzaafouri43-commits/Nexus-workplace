@@ -23,5 +23,17 @@ val AmethystPrimary = Color(0xFF7C3AED)
 val AmethystSecondary = Color(0xFF581C87)
 val AmethystAccent = Color(0xFFC084FC)
 
+// High-contrast Light Mode Palette
+val LightBackground = Color(0xFFF1F5F9)
+val LightSurface = Color(0xFFFFFFFF)
+val LightSurfaceCard = Color(0xFFFFFFFF)
+val LightBorder = Color(0xFFCBD5E1)
+val LightBorderStrong = Color(0xFF94A3B8)
+val LightTextMain = Color(0xFF0F172A)
+val LightTextMuted = Color(0xFF475569)
+val LightTextSubtle = Color(0xFF64748B)
+
+// Dark Palette Common
+val DarkBorder = Color(0x33FFFFFF)
 val TextWhite = Color(0xFFF8FAFC)
 val TextMuted = Color(0xFF94A3B8)

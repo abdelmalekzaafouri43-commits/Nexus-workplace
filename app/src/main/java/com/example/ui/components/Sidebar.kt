@@ -235,7 +235,8 @@ fun SidebarItem(
     accentColor: Color,
     onClick: () -> Unit
 ) {
-    val backgroundColor = if (isSelected) accentColor.copy(alpha = 0.15f) else Color.Transparent
+    val backgroundColor = if (isSelected) accentColor.copy(alpha = 0.12f) else Color.Transparent
+    val borderColor = if (isSelected) accentColor.copy(alpha = 0.35f) else Color.Transparent
     val contentColor = if (isSelected) accentColor else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
 
     Row(
@@ -244,6 +245,11 @@ fun SidebarItem(
             .padding(vertical = 4.dp)
             .clip(RoundedCornerShape(12.dp))
             .background(backgroundColor)
+            .border(
+                width = if (isSelected) 1.5.dp else 0.dp,
+                color = borderColor,
+                shape = RoundedCornerShape(12.dp)
+            )
             .clickable(onClick = onClick)
             .padding(horizontal = 14.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -285,8 +291,8 @@ fun ThemeButton(
                 .clip(CircleShape)
                 .background(color)
                 .border(
-                    width = if (isSelected) 2.dp else 0.dp,
-                    color = Color.White,
+                    width = if (isSelected) 2.5.dp else 1.dp,
+                    color = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
                     shape = CircleShape
                 )
         )
@@ -295,7 +301,8 @@ fun ThemeButton(
             text = name,
             style = MaterialTheme.typography.labelSmall.copy(
                 fontSize = 10.sp,
-                color = if (isSelected) Color.White else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                color = if (isSelected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
             )
         )
     }
