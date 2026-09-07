@@ -2489,8 +2489,8 @@
         <video id="camera-video-stream" autoplay playsinline muted style="width: 100%; height: 100%; object-fit: cover;"></video>
         
         <!-- Viewfinder Reticle Overlay -->
-        <div id="camera-scanner-reticle" style="position: absolute; inset: 24px; border: 2px dashed #10B981; border-radius: 16px; box-shadow: 0 0 0 9999px rgba(0,0,0,0.55); pointer-events: none; display: flex; align-items: center; justify-content: center;">
-          <span class="material-symbols-outlined" style="color: rgba(255,255,255,0.7); font-size: 48px;">center_focus_weak</span>
+        <div id="camera-scanner-reticle" style="position: absolute; inset: 24px; border: 3px dashed #10B981; border-radius: 20px; box-shadow: 0 0 0 9999px rgba(0,0,0,0.55), 0 0 20px 5px rgba(16,185,129,0.4), inset 0 0 15px 2px rgba(16,185,129,0.3); pointer-events: none; display: flex; align-items: center; justify-content: center; transition: box-shadow 0.3s ease;">
+          <span class="material-symbols-outlined" style="color: rgba(255,255,255,0.9); font-size: 48px; filter: drop-shadow(0 0 4px rgba(16,185,129,0.8));">center_focus_weak</span>
         </div>
 
         <div id="camera-status-msg" style="position: absolute; bottom: 12px; background: rgba(15,23,42,0.85); color: #FFF; padding: 6px 14px; border-radius: 20px; font-size: 12px; backdrop-filter: blur(4px);">
@@ -4178,13 +4178,16 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
       const cleanTopic = topic.trim() || 'English Language Mastery';
       const rawPrompt = prompt.trim();
 
-      // Word bank preparation
+      // STRICT ALIGNMENT: Word bank preparation based ONLY on the user's prompt/topic.
       let wordBank = parsed.customWords.length > 0 ? parsed.customWords : [];
-      if (wordBank.length < 6) {
-        const fallbackWords = ["analyze", "essential", "demonstrate", "perspective", "implement", "significance", "evaluate", "context", "effective", "distinction"];
-        fallbackWords.forEach(w => {
-          if (!wordBank.includes(w) && wordBank.length < 8) wordBank.push(w);
-        });
+      if (wordBank.length === 0) {
+        // If no explicit words were provided, extract meaningful terms from the topic itself
+        const topicWords = cleanTopic.split(/\s+/).filter(w => w.length > 3 && !['about', 'with', 'this', 'that', 'then'].includes(w.toLowerCase()));
+        if (topicWords.length > 0) {
+           wordBank = topicWords;
+        } else {
+           wordBank = [cleanTopic];
+        }
       }
 
       // Section A: Concept Diagnostic
@@ -4210,41 +4213,41 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
       // Section B: Core Practice Exercises
       let secBItems = [];
       let answerKeyB = [];
-      const totalItems = parsed.requestedCount ? Math.min(Math.max(parsed.requestedCount, 4), 12) : 7;
+      const totalItems = parsed.requestedCount ? Math.min(Math.max(parsed.requestedCount, 4), 12) : 6;
 
       for (let i = 1; i <= totalItems; i++) {
-        const targetWord = wordBank[(i - 1) % wordBank.length] || 'target';
+        const targetWord = wordBank[(i - 1) % wordBank.length];
 
-        if ((parsed.wantsMcq && i % 2 === 0) || (i === 6)) {
-          // MCQ item
+        if (parsed.wantsMcq && (i % 2 === 0)) {
+          // MCQ item strictly about the topic/word
           secBItems.push({
             type: 'mcq',
             num: i,
-            text: `Choose the correct form of [${targetWord}] to complete the sentence regarding ${cleanTopic}: "The team __________ (${targetWord}) the official instructions before starting."`,
+            text: `Choose the correct form to complete the sentence regarding ${cleanTopic}: "The student carefully __________ (${targetWord}) the rules."`,
             options: [
               `(A) ${targetWord}s`,
-              `(B) ${targetWord}ed / has ${targetWord}ed`,
+              `(B) ${targetWord}ed`,
               `(C) was ${targetWord}ing`,
               `(D) will ${targetWord}`
             ]
           });
-          answerKeyB.push(`${i}. (B) ${targetWord}ed / has ${targetWord}ed`);
-        } else if ((parsed.wantsErrorCorr && i % 3 === 0) || (i === 7)) {
+          answerKeyB.push(`${i}. (B) ${targetWord}ed`);
+        } else if (parsed.wantsErrorCorr && (i % 3 === 0)) {
           // Error correction item
           secBItems.push({
             type: 'error',
             num: i,
-            text: `[Error Correction] Identify and correct the error in this sentence: "They was not ${targetWord}ing properly during yesterday's task."`
+            text: `[Error Correction] Identify and correct the error in this sentence: "They was not ${targetWord}ing properly during yesterday's task about ${cleanTopic}."`
           });
           answerKeyB.push(`${i}. Error: 'was not' -> Correction: 'were not ${targetWord}ing'`);
         } else {
-          // Gap fill item
+          // Gap fill item strictly about the topic/word
           secBItems.push({
             type: 'blank',
             num: i,
-            text: `Complete the sentence using the correct form of [${targetWord}]: "When applying ${cleanTopic}, learners must ____________________ (${targetWord}) the key steps attentively."`
+            text: `Complete the sentence using the correct form of [${targetWord}]: "When learning about ${cleanTopic}, you must ____________________ (${targetWord}) the instructions."`
           });
-          answerKeyB.push(`${i}. ${targetWord} / ${targetWord}ed / ${targetWord}s`);
+          answerKeyB.push(`${i}. ${targetWord} / ${targetWord}ed`);
         }
       }
 

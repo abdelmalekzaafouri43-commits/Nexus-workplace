@@ -344,11 +344,37 @@ class MainViewModel : ViewModel() {
         }
         _isGenerating.value = true
         CoroutineScope(Dispatchers.Main).launch {
-            val apiPrompt = "Create a professional English teaching resource for teachers and learners based on: $prompt. Include clear pedagogical structure, exercises, vocabulary notes, and teacher answer key."
+            val isPpt = prompt.lowercase().contains("pitch") || prompt.lowercase().contains("deck") || prompt.lowercase().contains("presentation") || prompt.lowercase().contains("ppt")
+            
+            val apiPrompt = if (isPpt) {
+                """
+                Act as a top-tier instructional designer. Your absolute priority is to ensure strict alignment between the requested prompt and the generated presentation.
+                Requested Prompt: $prompt
+                Rule: Create EXACTLY what is asked. Do not add surprise topics.
+                Output in Markdown slide format.
+                """.trimIndent()
+            } else {
+                """
+                Act as a top-tier instructional designer and an ultra-rigorous AI tutor.
+                Your absolute priority is to ensure strict alignment between the requested prompt and the generated worksheet.
+                
+                Requested Prompt: $prompt
+                
+                PEDAGOGICAL RULES (STRICT STRICT STRICT):
+                1. PRE-CHECK: You must only test/cover the exact concepts mentioned in the prompt. Do NOT add surprise topics, extra skills, or unrelated vocabulary.
+                2. STRUCTURE: Output the worksheet using exactly this structure:
+                   - Learning Objectives: Clear list of targeted skills (max 3).
+                   - Instructions: Short, direct, unambiguous explanations of what the student must do.
+                   - Exercise Body: Numbered questions/problems targeting ONLY the requested concepts.
+                   - Teacher Answer Key: Precise evaluation criteria based ONLY on the given instructions.
+                
+                Output the worksheet in Markdown format.
+                """.trimIndent()
+            }
+            
             val contentResult = callGeminiApi(apiPrompt) ?: generateContextualTeachingContent(prompt)
 
             _isGenerating.value = false
-            val isPpt = prompt.lowercase().contains("pitch") || prompt.lowercase().contains("deck") || prompt.lowercase().contains("presentation") || prompt.lowercase().contains("ppt")
             val type = if (isPpt) ItemType.POWERPOINT else ItemType.WORKSHEET
             val newItem = LibraryItem(
                 title = prompt.take(45) + if (prompt.length > 45) "..." else "",
@@ -372,10 +398,27 @@ class MainViewModel : ViewModel() {
         _isGenerating.value = true
         CoroutineScope(Dispatchers.Main).launch {
             val illDesc = if (illustrationPrompt.isNotBlank()) illustrationPrompt else "$topic educational concept"
-            val apiPrompt = "Create a printable A4 English teaching worksheet about $topic for level $grade, focusing on $type with $questionCount exercises. Include: " +
-                    (if (includeAnswerKey) "Teacher Answer Key, " else "") +
-                    (if (includeVocabulary) "Vocabulary Glossary, " else "") +
-                    "practice tasks and exercises, incorporating custom illustration theme: $illDesc."
+            val apiPrompt = """
+                Act as a top-tier instructional designer and an ultra-rigorous AI tutor. 
+                Your absolute priority is to ensure strict alignment between the requested topic and the generated worksheet.
+                
+                Topic/Concepts to test: $topic
+                Grade Level: $grade
+                Focus: $type ($questionCount exercises)
+                Custom Illustration Theme: $illDesc
+                
+                PEDAGOGICAL RULES (STRICT STRICT STRICT):
+                1. PRE-CHECK: You must only test the exact concepts mentioned in the Topic. Do NOT add surprise topics or extra skills. If the topic lists A, B, C, test exactly A, B, and C.
+                2. STRUCTURE: You must output the worksheet using exactly this structure:
+                   - Learning Objectives: Clear list of targeted skills (max 3).
+                   - Instructions: Short, direct, unambiguous explanations of what the student must do.
+                   - Exercise Body: Numbered questions/problems targeting ONLY the requested concepts.
+                   - Teacher Answer Key: Precise evaluation criteria based ONLY on the given instructions.
+                ${if (includeVocabulary) "3. Include a Vocabulary Glossary." else ""}
+                
+                Output the worksheet in Markdown format.
+            """.trimIndent()
+
             val baseContent = callGeminiApi(apiPrompt) ?: generateContextualTeachingContent(topic, grade, type)
 
             val contentResult = if (baseContent.startsWith("🎨")) baseContent else "🎨 [AI Generated Illustration: \"$illDesc\"]\n\n$baseContent"
@@ -427,7 +470,37 @@ class MainViewModel : ViewModel() {
     fun useTemplate(title: String, type: ItemType, level: String, format: String, description: String, illPrompt: String, content: String) {
         _isGenerating.value = true
         CoroutineScope(Dispatchers.Main).launch {
-            val apiPrompt = "Expand and enhance this English teaching template for topic \"$title\" (Level: $level, Type: $type). Description: $description. Include exercises, practice tasks, teacher answer key, and illustration theme: $illPrompt."
+            val apiPrompt = if (type == ItemType.WORKSHEET) {
+                """
+                Act as a top-tier instructional designer and an ultra-rigorous AI tutor.
+                Your absolute priority is to ensure strict alignment between the requested template topic and the generated worksheet.
+                
+                Topic/Template: "$title"
+                Level: $level
+                Description: $description
+                Custom Illustration Theme: $illPrompt
+                Base Content: $content
+                
+                PEDAGOGICAL RULES (STRICT STRICT STRICT):
+                1. PRE-CHECK: You must only test/cover the exact concepts mentioned in the Topic/Description. Do NOT add surprise topics or extra skills.
+                2. STRUCTURE: Output the worksheet using exactly this structure:
+                   - Learning Objectives: Clear list of targeted skills (max 3).
+                   - Instructions: Short, direct, unambiguous explanations of what the student must do.
+                   - Exercise Body: Numbered questions/problems targeting ONLY the requested concepts based on the template.
+                   - Teacher Answer Key: Precise evaluation criteria based ONLY on the given instructions.
+                
+                Output the worksheet in Markdown format.
+                """.trimIndent()
+            } else {
+                """
+                Act as a top-tier instructional designer. Your absolute priority is to ensure strict alignment between the requested template and the generated presentation.
+                Topic: "$title" (Level: $level)
+                Description: $description
+                Rule: Create EXACTLY what is asked. Do not add surprise topics.
+                Expand the following Base Content into a Markdown presentation format:
+                $content
+                """.trimIndent()
+            }
             val expandedContent = callGeminiApi(apiPrompt) ?: content
 
             _isGenerating.value = false
