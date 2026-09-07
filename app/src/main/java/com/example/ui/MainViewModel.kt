@@ -23,6 +23,13 @@ import org.json.JSONObject
 
 class MainViewModel : ViewModel() {
 
+    private val _userApiKey = MutableStateFlow("")
+    val userApiKey: StateFlow<String> = _userApiKey.asStateFlow()
+    
+    fun setUserApiKey(key: String) {
+        _userApiKey.value = key
+    }
+
     private val _currentTab = MutableStateFlow("Dashboard")
     val currentTab: StateFlow<String> = _currentTab.asStateFlow()
 
@@ -130,7 +137,10 @@ class MainViewModel : ViewModel() {
     private suspend fun callGeminiApi(promptText: String): String? {
         return withContext(Dispatchers.IO) {
             try {
-                val apiKey = try { BuildConfig.GEMINI_API_KEY } catch (e: Exception) { "" }
+                var apiKey = _userApiKey.value
+                if (apiKey.isBlank()) {
+                    apiKey = try { BuildConfig.GEMINI_API_KEY } catch (e: Exception) { "" }
+                }
                 if (apiKey.isBlank()) return@withContext null
 
                 val client = OkHttpClient.Builder()
@@ -363,6 +373,7 @@ class MainViewModel : ViewModel() {
         _isGenerating.value = true
         CoroutineScope(Dispatchers.Main).launch {
             val illDesc = if (illustrationPrompt.isNotBlank()) illustrationPrompt else "$topic educational concept"
+            val imageUrl = "https://image.pollinations.ai/prompt/${java.net.URLEncoder.encode(illDesc, "UTF-8")}?width=800&height=250&nologo=true"
             val apiPrompt = """
                 Act as a top-tier instructional designer and an ultra-rigorous AI tutor. 
                 Your absolute priority is to ensure strict alignment between the requested topic and the generated worksheet.
@@ -386,14 +397,15 @@ class MainViewModel : ViewModel() {
 
             val baseContent = callGeminiApi(apiPrompt) ?: generateContextualTeachingContent(topic, grade, type)
 
-            val contentResult = if (baseContent.startsWith("🎨")) baseContent else "🎨 [AI Generated Illustration: \"$illDesc\"]\n\n$baseContent"
+            val contentResult = baseContent
 
             _isGenerating.value = false
             val newItem = LibraryItem(
                 title = "$topic ($grade)",
                 type = ItemType.WORKSHEET,
                 details = "$grade • $type • A4 .$format",
-                contentPreview = contentResult
+                contentPreview = contentResult,
+                imageUrl = imageUrl
             )
             _libraryItems.value = listOf(newItem) + _libraryItems.value
             showToast("A4 Worksheet generated with custom AI illustration!")
@@ -409,6 +421,7 @@ class MainViewModel : ViewModel() {
         _isGenerating.value = true
         CoroutineScope(Dispatchers.Main).launch {
             val illDesc = if (illustrationPrompt.isNotBlank()) illustrationPrompt else "$topic presentation banner"
+            val imageUrl = "https://image.pollinations.ai/prompt/${java.net.URLEncoder.encode(illDesc, "UTF-8")}?width=800&height=400&nologo=true"
             val apiPrompt = "Create an English slide presentation about $topic with $slides slides in $style style. " +
                     (if (includeSpeakerNotes) "Include detailed speaker notes for every slide. " else "") +
                     (if (includeInteractiveQnA) "Include interactive student Q&A and discussion prompts. " else "") +
@@ -417,14 +430,15 @@ class MainViewModel : ViewModel() {
                     (if (includeInteractiveQnA) "Slide 4: Q&A & Student Discussion Session\n" else "") +
                     (if (includeSpeakerNotes) "\n[Speaker Notes Included for Instructor]" else "")
 
-            val contentResult = "🎨 [AI Generated Presentation Illustration: \"$illDesc\"]\n\n$baseContent"
+            val contentResult = baseContent
 
             _isGenerating.value = false
             val newItem = LibraryItem(
                 title = topic,
                 type = ItemType.POWERPOINT,
                 details = "$slides Slides • $style • .$format",
-                contentPreview = contentResult
+                contentPreview = contentResult,
+                imageUrl = imageUrl
             )
             _libraryItems.value = listOf(newItem) + _libraryItems.value
             showToast("Presentation generated with custom AI illustration!")

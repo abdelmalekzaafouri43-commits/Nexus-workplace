@@ -8,7 +8,8 @@ data class LibraryItem(
     val type: ItemType,
     val details: String,
     val timestamp: Long = System.currentTimeMillis(),
-    val contentPreview: String
+    val contentPreview: String,
+    val imageUrl: String? = null
 )
 
 enum class ItemType {

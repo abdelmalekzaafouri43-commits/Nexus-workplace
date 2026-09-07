@@ -10,6 +10,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,6 +29,8 @@ fun Sidebar(
     currentTab: String,
     currentTheme: AppThemeMode,
     isDarkMode: Boolean,
+    userApiKey: String = "",
+    onSetApiKey: (String) -> Unit = {},
     onTabSelected: (String) -> Unit,
     onThemeSelected: (AppThemeMode) -> Unit,
     onToggleDarkMode: () -> Unit,
@@ -32,6 +38,8 @@ fun Sidebar(
 ) {
     val primaryColor = MaterialTheme.colorScheme.primary
     val accentColor = MaterialTheme.colorScheme.tertiary
+    
+    var showApiDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -139,6 +147,50 @@ fun Sidebar(
                 isSelected = currentTab == "My Library",
                 accentColor = accentColor,
                 onClick = { onTabSelected("My Library") }
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+            Divider(color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f), modifier = Modifier.padding(vertical = 12.dp))
+
+            SidebarItem(
+                icon = Icons.Default.Key,
+                label = "API Settings",
+                isSelected = false,
+                accentColor = accentColor,
+                onClick = { showApiDialog = true }
+            )
+        }
+
+        if (showApiDialog) {
+            var tempKey by remember { mutableStateOf(userApiKey) }
+            AlertDialog(
+                onDismissRequest = { showApiDialog = false },
+                title = { Text("API Configuration") },
+                text = {
+                    Column {
+                        Text("Enter your Google Gemini API Key to enable live AI responses. Your key is securely stored in memory during this session.", style = MaterialTheme.typography.bodySmall)
+                        Spacer(modifier = Modifier.height(8.dp))
+                        OutlinedTextField(
+                            value = tempKey,
+                            onValueChange = { tempKey = it },
+                            label = { Text("GEMINI API KEY") },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = {
+                        onSetApiKey(tempKey)
+                        showApiDialog = false
+                    }) {
+                        Text("Save")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showApiDialog = false }) {
+                        Text("Cancel")
+                    }
+                }
             )
         }
 

@@ -18,11 +18,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.LibraryItem
+import coil.compose.AsyncImage
 
 @Composable
 fun A4PreviewDialog(
@@ -132,7 +134,21 @@ fun A4PreviewDialog(
 
                     Divider(color = Color.LightGray, thickness = 1.dp)
 
-                    Spacer(modifier = Modifier.height(4.dp))
+                    if (item.imageUrl != null) {
+                        Spacer(modifier = Modifier.height(12.dp))
+                        AsyncImage(
+                            model = item.imageUrl,
+                            contentDescription = "Header Illustration",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(140.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp)),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
 
                     Text(
                         text = item.contentPreview,

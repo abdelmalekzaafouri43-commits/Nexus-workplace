@@ -149,10 +149,13 @@ fun MainScreen(viewModel: MainViewModel) {
                         .align(Alignment.CenterStart)
                         .clickable(enabled = false) {}
                 ) {
+                    val userApiKey by viewModel.userApiKey.collectAsState()
                     Sidebar(
                         currentTab = currentTab,
                         currentTheme = themeMode,
                         isDarkMode = isDarkMode,
+                        userApiKey = userApiKey,
+                        onSetApiKey = { key -> viewModel.setUserApiKey(key) },
                         onTabSelected = { tab -> viewModel.setTab(tab) },
                         onThemeSelected = { theme -> viewModel.setTheme(theme) },
                         onToggleDarkMode = { viewModel.toggleDarkMode() },
