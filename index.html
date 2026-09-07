@@ -3727,6 +3727,195 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
       return { category: 'custom_dynamic', display: cleaned };
     }
 
+    // Dynamic Prompt Intelligence Parser & Synthesizer
+    function parsePromptInstructions(rawTopic, rawPrompt) {
+      const combined = `${rawTopic} ${rawPrompt}`;
+      const lower = combined.toLowerCase();
+
+      // 1. Extract Target Words / Phrases
+      let customWords = [];
+      const quotedMatches = combined.match(/"([^"]+)"|'([^']+)'/g);
+      if (quotedMatches) {
+        quotedMatches.forEach(m => {
+          const w = m.replace(/['"]/g, '').trim();
+          if (w && w.length > 1 && !['a', 'an', 'the', 'in', 'on', 'at', 'of', 'and', 'or', 'for', 'with', 'by'].includes(w.toLowerCase())) {
+            customWords.push(w);
+          }
+        });
+      }
+
+      const listMatch = combined.match(/(?:words|verbs|vocabulary|terms|target|keywords|phrasal verbs|idioms|phrases)\s*[:=\-]\s*([^\.\n]+)/i);
+      if (listMatch && listMatch[1]) {
+        const items = listMatch[1].split(/[,;\/&]/).map(s => s.trim()).filter(s => s.length > 1);
+        customWords = customWords.concat(items);
+      }
+
+      customWords = Array.from(new Set(customWords));
+
+      // 2. Extract Requested Item Counts
+      let requestedCount = null;
+      const countMatch = lower.match(/(\d+)\s*(?:questions|exercises|items|tasks|sentences|mcqs|gap\s*fills|blanks)/);
+      if (countMatch && countMatch[1]) {
+        requestedCount = parseInt(countMatch[1], 10);
+      }
+
+      // 3. Extract Specific Exercise Preferences
+      const wantsMcq = lower.includes('multiple choice') || lower.includes('mcq') || lower.includes('options') || lower.includes('choice');
+      const wantsGapFill = lower.includes('gap fill') || lower.includes('fill in') || lower.includes('blank') || lower.includes('cloze');
+      const wantsRewrite = lower.includes('rewrite') || lower.includes('transform') || lower.includes('convert');
+      const wantsErrorCorr = lower.includes('error') || lower.includes('correct') || lower.includes('mistake');
+      const wantsReading = lower.includes('reading') || lower.includes('passage') || lower.includes('text') || lower.includes('story') || lower.includes('article');
+      const wantsWriting = lower.includes('essay') || lower.includes('writing') || lower.includes('prompt') || lower.includes('paragraph') || lower.includes('composition');
+
+      // 4. Scenario Context Detection
+      let scenarioName = '';
+      if (lower.includes('business') || lower.includes('corporate') || lower.includes('office') || lower.includes('workplace') || lower.includes('email')) {
+        scenarioName = 'Corporate Workplace & Business Email';
+      } else if (lower.includes('travel') || lower.includes('airport') || lower.includes('hotel') || lower.includes('flight') || lower.includes('tourism')) {
+        scenarioName = 'International Travel & Hospitality';
+      } else if (lower.includes('detective') || lower.includes('crime') || lower.includes('mystery') || lower.includes('police')) {
+        scenarioName = 'Detective Investigation & Mystery Scenario';
+      } else if (lower.includes('space') || lower.includes('mars') || lower.includes('planet') || lower.includes('astronaut')) {
+        scenarioName = 'Space Exploration & Planetary Discovery';
+      } else if (lower.includes('health') || lower.includes('medical') || lower.includes('hospital') || lower.includes('doctor')) {
+        scenarioName = 'Medical Healthcare & Clinical Care';
+      } else if (lower.includes('nature') || lower.includes('environment') || lower.includes('climate') || lower.includes('wildlife')) {
+        scenarioName = 'Environmental Science & Wildlife Conservation';
+      } else if (lower.includes('sport') || lower.includes('football') || lower.includes('match') || lower.includes('olympic')) {
+        scenarioName = 'Athletic Sports & Match Competition';
+      }
+
+      return {
+        customWords,
+        requestedCount,
+        wantsMcq,
+        wantsGapFill,
+        wantsRewrite,
+        wantsErrorCorr,
+        wantsReading,
+        wantsWriting,
+        scenarioName,
+        hasCustomPrompt: rawPrompt.trim().length > 3
+      };
+    }
+
+    function synthesizePromptDrivenWorksheet(topic, prompt, grade, school, config) {
+      const parsed = parsePromptInstructions(topic, prompt);
+      const cleanTopic = topic.trim() || 'English Language Mastery';
+      const rawPrompt = prompt.trim();
+
+      // Word bank preparation
+      let wordBank = parsed.customWords.length > 0 ? parsed.customWords : [];
+      if (wordBank.length < 6) {
+        const fallbackWords = ["analyze", "essential", "demonstrate", "perspective", "implement", "significance", "evaluate", "context", "effective", "distinction"];
+        fallbackWords.forEach(w => {
+          if (!wordBank.includes(w) && wordBank.length < 8) wordBank.push(w);
+        });
+      }
+
+      // Section A: Concept Diagnostic
+      let secA = {
+        title: `Section A: Concept Diagnostic & Core Rules (${cleanTopic})`,
+        marks: "10 Marks",
+        instructions: "Read each question carefully and write complete analytical answers.",
+        items: [
+          { q: `Explain the fundamental grammar or vocabulary rules governing '${cleanTopic}'.`, lineCount: 2 },
+          { q: `Identify two common usage errors students make with '${cleanTopic}' and explain how to correct them.`, lineCount: 2 }
+        ]
+      };
+
+      if (rawPrompt.toLowerCase().includes('negative')) {
+        secA.items.push({ q: `Explain the negative sentence structure for '${cleanTopic}' with two original examples.`, lineCount: 2 });
+      }
+
+      // Section B: Core Practice Exercises
+      let secBItems = [];
+      let answerKeyB = [];
+      const totalItems = parsed.requestedCount ? Math.min(Math.max(parsed.requestedCount, 4), 12) : 7;
+
+      for (let i = 1; i <= totalItems; i++) {
+        const targetWord = wordBank[(i - 1) % wordBank.length] || 'target';
+
+        if ((parsed.wantsMcq && i % 2 === 0) || (i === 6)) {
+          // MCQ item
+          secBItems.push({
+            type: 'mcq',
+            num: i,
+            text: `Choose the correct form of [${targetWord}] to complete the sentence regarding ${cleanTopic}: "The team __________ (${targetWord}) the official instructions before starting."`,
+            options: [
+              `(A) ${targetWord}s`,
+              `(B) ${targetWord}ed / has ${targetWord}ed`,
+              `(C) was ${targetWord}ing`,
+              `(D) will ${targetWord}`
+            ]
+          });
+          answerKeyB.push(`${i}. (B) ${targetWord}ed / has ${targetWord}ed`);
+        } else if ((parsed.wantsErrorCorr && i % 3 === 0) || (i === 7)) {
+          // Error correction item
+          secBItems.push({
+            type: 'error',
+            num: i,
+            text: `[Error Correction] Identify and correct the error in this sentence: "They was not ${targetWord}ing properly during yesterday's task."`
+          });
+          answerKeyB.push(`${i}. Error: 'was not' -> Correction: 'were not ${targetWord}ing'`);
+        } else {
+          // Gap fill item
+          secBItems.push({
+            type: 'blank',
+            num: i,
+            text: `Complete the sentence using the correct form of [${targetWord}]: "When applying ${cleanTopic}, learners must ____________________ (${targetWord}) the key steps attentively."`
+          });
+          answerKeyB.push(`${i}. ${targetWord} / ${targetWord}ed / ${targetWord}s`);
+        }
+      }
+
+      let secB = {
+        title: "Section B: Targeted Practice & Application",
+        marks: "20 Marks",
+        instructions: `Complete each task using the appropriate target language [${cleanTopic}].`,
+        items: secBItems
+      };
+
+      // Section C: Contextual Passage & Applied Tasks
+      const scenarioTitle = parsed.scenarioName || `${cleanTopic} Case Study`;
+      const passageText = `In real-world communication regarding ${cleanTopic}, professionals and students rely on accurate usage to express complex ideas. During a recent project focusing on ${parsed.scenarioName || cleanTopic}, participants applied key concepts such as ${wordBank.slice(0, 3).join(', ')} to solve practical challenges. Educators noted that consistent practice with ${cleanTopic} leads to higher fluency and stronger critical thinking.`;
+
+      let secCItems = [
+        { num: 1, text: `According to the passage, why is mastering '${cleanTopic}' important for real-world communication?` },
+        { num: 2, text: `Identify how the terms [${wordBank.slice(0, 2).join(' and ')}] contribute to the project scenario.` },
+        { num: 3, text: `Rewrite this informal statement formally: "They did a good job using ${cleanTopic} yesterday."` }
+      ];
+
+      let secC = {
+        title: `Section C: Contextual Reading & Scenario (${scenarioTitle})`,
+        marks: "15 Marks",
+        instructions: "Read the scenario passage carefully and answer the comprehension and analysis questions.",
+        passage: passageText,
+        items: secCItems
+      };
+
+      // Section D: Communication Writing Challenge
+      let secDPrompt = rawPrompt ? 
+        `Prompt-Driven Challenge: "${rawPrompt}". Write a 4-sentence coherent paragraph addressing this prompt, incorporating at least 3 target words [${wordBank.slice(0, 4).join(', ')}].` :
+        `Write a 4-sentence reflection on '${cleanTopic}'. Explain why it is important, provide one concrete example, and use at least two words from the reference word bank.`;
+
+      let secD = {
+        title: "Section D: Real-World Communication Challenge",
+        marks: "5 Marks",
+        promptText: secDPrompt
+      };
+
+      // Comprehensive Answer Key
+      let answerKey = [
+        `Section A: Evaluates complete explanation of '${cleanTopic}' rules and correct identification of common learner errors.`,
+        `Section B: ${answerKeyB.join(' | ')}`,
+        `Section C: 1. It enables clear expression of complex ideas and builds fluency. | 2. Correct contextual usage of ${wordBank.slice(0, 2).join(', ')}. | 3. "They demonstrated exemplary proficiency in applying ${cleanTopic} during yesterday's project."`,
+        `Section D: Award 5 marks for directly satisfying prompt instructions, accurate grammar morphology, and proper inclusion of target words.`
+      ];
+
+      return { wordBank, secA, secB, secC, secD, answerKey, parsed };
+    }
+
     // Real Educational Task Synthesizer
     function buildRealA4Worksheet(config) {
       const {
@@ -3744,6 +3933,7 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
 
       const profile = extractTopicProfile(topic, prompt, grade);
       const displayTitle = topic || profile.display;
+      const parsedPrompt = parsePromptInstructions(topic, prompt);
 
       let wordBank = [];
       let secA = { title: "Section A: Concept Diagnostic & Grammar Rules", marks: "10 Marks", instructions: "Read each question carefully and write your answers on the provided lines.", items: [] };
@@ -3752,7 +3942,17 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
       let secD = { title: "Section D: Real-World Communication Challenge", marks: "5 Marks", promptText: "" };
       let answerKey = [];
 
-      switch (profile.category) {
+      // If user provided a specific prompt directive, generate prompt-driven content
+      if (parsedPrompt.hasCustomPrompt || profile.category === 'custom_dynamic') {
+        const customResult = synthesizePromptDrivenWorksheet(topic, prompt, grade, school, config);
+        wordBank = customResult.wordBank;
+        secA = customResult.secA;
+        secB = customResult.secB;
+        secC = customResult.secC;
+        secD = customResult.secD;
+        answerKey = customResult.answerKey;
+      } else {
+        switch (profile.category) {
         case 'grammar_present_perfect_past_simple':
           wordBank = ["since", "for", "already", "yet", "just", "ever", "last night", "in 2021", "never", "ago"];
           secA.items = [
@@ -4068,6 +4268,7 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
             `Section D: Award 5 marks for clear personal engagement, well-structured sentences, domain-appropriate vocabulary, and logical project planning.`
           ];
           break;
+      }
       }
 
       // Build Formatted HTML representation for A4 Preview & Print
@@ -4625,9 +4826,14 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
         htmlSheet: htmlSheet
       };
 
+      const parsedInfo = parsePromptInstructions(topic, prompt);
+      const promptBadge = parsedInfo.hasCustomPrompt ? 
+        ` • ✨ AI Prompt Intelligence Active (${parsedInfo.customWords.length > 0 ? parsedInfo.customWords.length + ' Target Words Integrated' : 'Prompt Directives Satisfied'})` : 
+        ' • Real Tasks';
+
       document.getElementById('ws-result').classList.remove('hidden');
       document.getElementById('ws-result-title').textContent = topic;
-      document.getElementById('ws-result-subtitle').textContent = `${grade} • ${marks} • ${timeAllowed} • Real Tasks`;
+      document.getElementById('ws-result-subtitle').textContent = `${grade} • ${marks} • ${timeAllowed}${promptBadge}`;
 
       document.getElementById('ws-formatted-preview').innerHTML = htmlSheet;
       document.getElementById('ws-output').textContent = markdownContent;
