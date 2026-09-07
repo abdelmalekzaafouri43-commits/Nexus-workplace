@@ -10,6 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <script src="logo_raw.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     :root {
       --primary: #4F46E5;
@@ -2232,9 +2235,13 @@
                 <span class="material-symbols-outlined" style="font-size: 18px; color: var(--secondary);">qr_code_2</span>
                 QR Link
               </button>
+              <button class="btn-action" onclick="exportGeneratedToPdf('lp')" title="Direct PDF Export via jsPDF">
+                <span class="material-symbols-outlined" style="font-size: 18px; color: var(--accent);">picture_as_pdf</span>
+                Export PDF
+              </button>
               <button class="btn-primary" style="padding: 8px 16px; font-size: 13px;" onclick="printGenerated('lp')" title="Print or Save as PDF">
                 <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
-                Print Plan / PDF
+                Print Plan
               </button>
             </div>
           </div>
@@ -2348,9 +2355,13 @@
                 <span class="material-symbols-outlined" style="font-size: 18px; color: var(--secondary);">qr_code_2</span>
                 QR Link
               </button>
+              <button class="btn-action" onclick="exportGeneratedToPdf('ws')" title="Export directly to PDF">
+                <span class="material-symbols-outlined" style="font-size: 18px; color: var(--accent);">picture_as_pdf</span>
+                Export PDF
+              </button>
               <button class="btn-action" onclick="printGenerated('ws')" title="Print or Save as PDF">
                 <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
-                Print A4 / PDF
+                Print A4
               </button>
             </div>
           </div>
@@ -2419,9 +2430,13 @@
                 <span class="material-symbols-outlined" style="font-size: 18px; color: var(--secondary);">qr_code_2</span>
                 QR Link
               </button>
+              <button class="btn-action" onclick="exportGeneratedToPdf('ppt')" title="Export directly to PDF">
+                <span class="material-symbols-outlined" style="font-size: 18px; color: var(--accent);">picture_as_pdf</span>
+                Export PDF
+              </button>
               <button class="btn-action" onclick="printGenerated('ppt')">
                 <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
-                Print Slides / PDF
+                Print Slides
               </button>
             </div>
           </div>
@@ -2653,13 +2668,17 @@
         </div>
       </div>
 
-      <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 14px;">
+      <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 14px; flex-wrap: wrap;">
         <button type="button" class="btn-action" onclick="closePrintBrandingModal()">
           Close
         </button>
+        <button type="button" class="btn-action" style="padding: 10px 18px; font-size: 13.5px;" onclick="applyAndExportPdfFromModal()">
+          <span class="material-symbols-outlined" style="font-size: 18px; color: var(--accent);">picture_as_pdf</span>
+          Export Direct PDF
+        </button>
         <button type="button" class="btn-primary" style="padding: 10px 20px; font-size: 13.5px;" onclick="applyAndPrintFromModal()">
           <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
-          Confirm & Print / Save PDF
+          Confirm & Print
         </button>
       </div>
     </div>
@@ -3659,26 +3678,54 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
 
     // API Key Logic
     function openApiKeyModal() {
-      const modal = document.getElementById('api-key-modal');
-      const input = document.getElementById('gemini-api-key-input');
-      if (modal) modal.classList.add('open');
-      if (input) input.value = localStorage.getItem('GEMINI_API_KEY') || '';
+      const modal1 = document.getElementById('api-key-modal');
+      const modal2 = document.getElementById('api-settings-modal');
+      const input1 = document.getElementById('gemini-api-key-input');
+      const input2 = document.getElementById('api-key-input');
+      const storedKey = localStorage.getItem('GEMINI_API_KEY') || '';
+
+      if (input1) input1.value = storedKey;
+      if (input2) input2.value = storedKey;
+
+      if (modal1) modal1.classList.add('open');
+      if (modal2) modal2.classList.add('open');
+    }
+
+    function openApiModal() {
+      openApiKeyModal();
+      if (typeof toggleSidebar === 'function') {
+        toggleSidebar(false);
+      }
     }
 
     function closeApiKeyModal(e) {
-      if (e && e.target !== e.currentTarget) return;
-      const modal = document.getElementById('api-key-modal');
-      if (modal) modal.classList.remove('open');
+      if (e && e.target !== e.currentTarget && !e.target.closest('button')) return;
+      const modal1 = document.getElementById('api-key-modal');
+      const modal2 = document.getElementById('api-settings-modal');
+      if (modal1) modal1.classList.remove('open');
+      if (modal2) modal2.classList.remove('open');
+    }
+
+    function closeApiModal(e) {
+      closeApiKeyModal(e);
     }
 
     function saveApiKey() {
-      const input = document.getElementById('gemini-api-key-input');
-      const key = input.value.trim();
+      const input1 = document.getElementById('gemini-api-key-input');
+      const input2 = document.getElementById('api-key-input');
+      const val1 = input1 ? input1.value.trim() : '';
+      const val2 = input2 ? input2.value.trim() : '';
+      const key = val1 || val2;
+
       if (key) {
         localStorage.setItem('GEMINI_API_KEY', key);
+        if (input1) input1.value = key;
+        if (input2) input2.value = key;
         showToast("API Key saved successfully!");
       } else {
         localStorage.removeItem('GEMINI_API_KEY');
+        if (input1) input1.value = '';
+        if (input2) input2.value = '';
         showToast("API Key removed.");
       }
       closeApiKeyModal();
@@ -3730,33 +3777,6 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
       img.src = generateQrImageUrl(url);
 
       document.getElementById('qr-modal').classList.add('open');
-    }
-
-    function openApiModal() {
-      const modal = document.getElementById('api-settings-modal');
-      const input = document.getElementById('api-key-input');
-      input.value = localStorage.getItem('GEMINI_API_KEY') || '';
-      if (modal) modal.classList.add('open');
-      toggleSidebar(false);
-    }
-    
-    function closeApiModal(e) {
-      if (e && e.target !== e.currentTarget && !e.target.closest('button')) return;
-      const modal = document.getElementById('api-settings-modal');
-      if (modal) modal.classList.remove('open');
-    }
-    
-    function saveApiKey() {
-      const input = document.getElementById('api-key-input');
-      const key = input.value.trim();
-      if (key) {
-        localStorage.setItem('GEMINI_API_KEY', key);
-        showToast('API Key saved successfully!');
-      } else {
-        localStorage.removeItem('GEMINI_API_KEY');
-        showToast('API Key removed.');
-      }
-      closeApiModal();
     }
 
     function closeQrModal(e) {
@@ -5489,10 +5509,171 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
       printContent(item.title, item.type, item.details, item.content, item.htmlSheet);
     }
 
+    function exportGeneratedToPdf(typeKey) {
+      const item = lastGenerated[typeKey];
+      if (!item || (!item.content && !item.htmlSheet)) {
+        showToast("Please generate content first before exporting to PDF.");
+        return;
+      }
+      exportToPdfContent(item.title, item.type, item.details, item.content, item.htmlSheet);
+    }
+
     function printLibraryItem(idx) {
       const item = library[idx];
       if (!item) return;
       printContent(item.title, item.type, item.details, item.content, item.htmlSheet);
+    }
+
+    function exportLibraryItemToPdf(idx) {
+      const item = library[idx];
+      if (!item) return;
+      exportToPdfContent(item.title, item.type, item.details, item.content, item.htmlSheet);
+    }
+
+    function exportTemplateToPdf(idx) {
+      const t = templates[idx];
+      if (!t) return;
+      if (t.type === 'lessonplan' && t.lpConfig) {
+        const res = buildRealLessonPlan(t.lpConfig);
+        exportToPdfContent(t.title, 'Lesson Plan', t.level, res.markdownContent, res.htmlSheet);
+      } else if (t.config) {
+        const res = buildRealA4Worksheet(t.config);
+        exportToPdfContent(t.title, 'A4 Worksheet', t.level, res.markdownContent, res.htmlSheet);
+      } else {
+        exportToPdfContent(t.title, t.type === 'worksheet' ? 'A4 Worksheet' : 'Presentation', t.level, t.content);
+      }
+    }
+
+    function applyAndExportPdfFromModal() {
+      closePrintBrandingModal();
+      exportGeneratedToPdf(activePrintTarget);
+    }
+
+    function exportToPdfContent(title, type, details, rawText, htmlSheet) {
+      showToast("Generating PDF document with jsPDF...");
+
+      const qrImgSrc = generateQrImageUrl(window.location.href);
+      const logoImgSrc = getActiveLogoSrc();
+      const sigImgSrc = getActiveSigSrc();
+
+      const container = document.createElement('div');
+      container.id = 'pdf-export-stage';
+      container.style.position = 'absolute';
+      container.style.left = '-9999px';
+      container.style.top = '0';
+      container.style.width = '794px';
+      container.style.padding = '32px 38px';
+      container.style.background = '#ffffff';
+      container.style.color = '#0f172a';
+      container.style.fontFamily = "'Plus Jakarta Sans', Arial, sans-serif";
+      container.style.fontSize = '12px';
+      container.style.lineHeight = '1.5';
+      container.style.boxSizing = 'border-box';
+
+      container.innerHTML = `
+        <style>
+          #pdf-export-stage * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', Arial, sans-serif; }
+          #pdf-export-stage .a4-header-top { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2.5px solid #0f172a; padding-bottom: 12px; margin-bottom: 14px; }
+          #pdf-export-stage .a4-school-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; color: #475569; }
+          #pdf-export-stage .a4-sheet-title { font-size: 20px; font-weight: 800; color: #0f172a; margin-top: 2px; }
+          #pdf-export-stage .a4-meta-pills { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+          #pdf-export-stage .a4-pill { font-size: 10.5px; font-weight: 700; background: #f1f5f9; color: #334155; padding: 2px 7px; border-radius: 4px; border: 1px solid #cbd5e1; }
+          #pdf-export-stage .header-qr { width: 52px; height: 52px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 2px; }
+          #pdf-export-stage .a4-student-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 10px; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 8px 12px; margin-bottom: 16px; font-size: 12px; font-weight: 600; color: #334155; }
+          #pdf-export-stage .a4-dotted-blank { border-bottom: 1.5px dotted #64748b; display: inline-block; min-width: 80px; margin-left: 4px; }
+          #pdf-export-stage .a4-section { margin-bottom: 16px; }
+          #pdf-export-stage .a4-section-header { background: #0f172a; color: #ffffff; padding: 5px 10px; border-radius: 4px; font-size: 12px; font-weight: 800; letter-spacing: 0.3px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+          #pdf-export-stage .a4-instructions { font-size: 11.5px; font-style: italic; color: #475569; margin-bottom: 8px; }
+          #pdf-export-stage .a4-wordbank { background: #f8fafc; border: 1px dashed #94a3b8; border-radius: 6px; padding: 8px 12px; margin-bottom: 10px; font-size: 11.5px; font-weight: 700; color: #1e293b; text-align: center; }
+          #pdf-export-stage .a4-task-item { margin-bottom: 8px; font-size: 12.5px; color: #1e293b; line-height: 1.6; }
+          #pdf-export-stage .a4-task-num { font-weight: 800; color: #0f172a; }
+          #pdf-export-stage .a4-mcq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; margin: 4px 0 8px 16px; font-size: 12px; }
+          #pdf-export-stage .a4-passage-box { background: #f8fafc; border-left: 3.5px solid #4338ca; padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 12px; line-height: 1.6; margin-bottom: 10px; }
+          #pdf-export-stage .a4-answer-line { border-bottom: 1.5px dotted #94a3b8; height: 20px; margin-top: 4px; margin-bottom: 4px; width: 100%; }
+          #pdf-export-stage .a4-key-box { background: #fef3c7; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 14px; margin-top: 20px; color: #92400e; font-size: 12px; }
+          #pdf-export-stage .lp-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+          #pdf-export-stage .lp-info-box { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 10px; font-size: 11px; }
+          #pdf-export-stage .lp-info-box strong { color: #0f172a; display: block; margin-bottom: 2px; font-size: 10.5px; text-transform: uppercase; }
+          #pdf-export-stage .lp-table-wrapper { width: 100%; margin-bottom: 14px; }
+          #pdf-export-stage .lp-table { width: 100%; border-collapse: collapse; font-size: 10.5px; text-align: left; }
+          #pdf-export-stage .lp-table th { background: #0f172a; color: #ffffff; padding: 6px 8px; font-weight: 800; border: 1px solid #0f172a; }
+          #pdf-export-stage .lp-table td { padding: 6px 8px; border: 1px solid #cbd5e1; vertical-align: top; line-height: 1.4; }
+          #pdf-export-stage .lp-table tr:nth-child(even) td { background: #f8fafc; }
+          #pdf-export-stage .lp-stage-name { font-weight: 800; color: #0f172a; display: block; }
+          #pdf-export-stage .lp-stage-aim { color: #64748b; font-size: 9.5px; font-style: italic; }
+          #pdf-export-stage .lp-pattern-badge { display: inline-block; padding: 1px 4px; background: #e2e8f0; border-radius: 3px; font-weight: 700; font-size: 9px; }
+          #pdf-export-stage .lp-materials-box { background: #f0fdf4; border: 1px solid #86efac; border-radius: 6px; padding: 10px 12px; margin-bottom: 12px; font-size: 11px; }
+          #pdf-export-stage .lp-script-box { background: #f8fafc; border-left: 3.5px solid #0891b2; padding: 8px 12px; border-radius: 0 6px 6px 0; font-size: 11px; line-height: 1.5; margin-bottom: 12px; }
+          #pdf-export-stage .lp-script-speaker { font-weight: 800; color: #0891b2; }
+          #pdf-export-stage .lp-ccq-item { background: #eff6ff; border-left: 3px solid #3b82f6; padding: 6px 8px; margin-bottom: 6px; border-radius: 0 4px 4px 0; font-size: 10.5px; }
+          #pdf-export-stage .raw-content-view { white-space: pre-wrap; font-size: 12.5px; line-height: 1.7; }
+        </style>
+        ${htmlSheet || `
+          <div class="a4-header-top">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              ${logoImgSrc ? `<img src="${logoImgSrc}" style="width: 48px; height: 48px; object-fit: contain; border-radius: 4px;" alt="School Logo" />` : ''}
+              <div>
+                <div class="a4-school-title">EduGen Teaching Materials</div>
+                <div class="a4-sheet-title">${title}</div>
+                <div class="a4-meta-pills">
+                  <span class="a4-pill">${type}</span>
+                  <span class="a4-pill">${details}</span>
+                </div>
+              </div>
+            </div>
+            <img src="${qrImgSrc}" class="header-qr" alt="QR Link" />
+          </div>
+          <div class="a4-student-grid">
+            <div>Student Name: <span class="a4-dotted-blank" style="width: 140px;"></span></div>
+            <div>Class: <span class="a4-dotted-blank" style="width: 60px;"></span></div>
+            <div>Date: <span class="a4-dotted-blank" style="width: 70px;"></span></div>
+            <div>Score: <span class="a4-dotted-blank" style="width: 45px;"> / 50</span></div>
+          </div>
+          <div class="raw-content-view">${rawText}</div>
+        `}
+        <div style="margin-top: 24px; padding-top: 10px; border-top: 1.5px solid #CBD5E1; display: flex; justify-content: space-between; align-items: flex-end; font-size: 10.5px; color: #475569;">
+          <div>
+            <div style="font-weight: 800; color: #0F172A; font-size: 11px;">${brandConfig.teacherName || 'Mr. Zaafouri Abdelmalek'}</div>
+            <div>${brandConfig.teacherTitle || 'Senior English Language Educator • CELTA Certified'}</div>
+            <div style="font-size: 9.5px; color: #64748B; margin-top: 2px;">Prepared with EduGen AI Platform • All rights reserved 2026</div>
+          </div>
+          <div style="text-align: center;">
+            ${sigImgSrc ? `<img src="${sigImgSrc}" style="max-height: 38px; max-width: 140px; object-fit: contain; display: block; margin-bottom: 2px;" alt="Teacher Signature" />` : ''}
+            <div style="border-top: 1px solid #475569; font-size: 9px; font-weight: 700; color: #475569; text-transform: uppercase; padding-top: 2px; min-width: 120px;">Teacher Endorsement Signature</div>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(container);
+
+      const sanitizeFileName = (title || 'EduGen-Material').replace(/[^a-zA-Z0-9_\-]/g, '_');
+      const opt = {
+        margin: [10, 10, 10, 10],
+        filename: `${sanitizeFileName}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, logging: false },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      const hasHtml2Pdf = typeof html2pdf !== 'undefined';
+
+      if (hasHtml2Pdf) {
+        setTimeout(() => {
+          html2pdf().set(opt).from(container).save().then(() => {
+            if (document.body.contains(container)) document.body.removeChild(container);
+            showToast(`PDF exported successfully: ${sanitizeFileName}.pdf`);
+          }).catch(err => {
+            console.error("PDF export error:", err);
+            if (document.body.contains(container)) document.body.removeChild(container);
+            showToast("PDF generation encountered an error. Opening print fallback...");
+            printContent(title, type, details, rawText, htmlSheet);
+          });
+        }, 300);
+      } else {
+        if (document.body.contains(container)) document.body.removeChild(container);
+        showToast("PDF exporter loading... opening print dialog.");
+        printContent(title, type, details, rawText, htmlSheet);
+      }
     }
 
     function printContent(title, type, details, rawText, htmlSheet) {
@@ -5777,6 +5958,9 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
               <button class="btn-action" onclick="openQrModal(window.location.href, '${t.title}', 'Scan to load template on your phone')" title="QR Link">
                 <span class="material-symbols-outlined" style="font-size:18px; color:var(--secondary);">qr_code_2</span>
               </button>
+              <button class="btn-action" onclick="exportTemplateToPdf(${index})" title="Export PDF File">
+                <span class="material-symbols-outlined" style="font-size:18px; color:var(--accent);">picture_as_pdf</span>
+              </button>
               <button class="btn-action" onclick="printTemplate(${index})" title="Print Preview">
                 <span class="material-symbols-outlined" style="font-size:18px;">print</span>
               </button>
@@ -5848,6 +6032,10 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
               <button class="btn-action" onclick="openQrForLibrary(${index})" title="QR Link">
                 <span class="material-symbols-outlined" style="font-size:18px; color:var(--secondary);">qr_code_2</span>
                 QR Link
+              </button>
+              <button class="btn-action" onclick="exportLibraryItemToPdf(${index})" title="Export Direct PDF File">
+                <span class="material-symbols-outlined" style="font-size:18px; color:var(--accent);">picture_as_pdf</span>
+                Export PDF
               </button>
               <button class="btn-action" onclick="printLibraryItem(${index})" title="Print Material">
                 <span class="material-symbols-outlined" style="font-size:18px;">print</span>
