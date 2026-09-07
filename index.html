@@ -1354,6 +1354,156 @@
       opacity: 1;
     }
 
+    /* Free-form AI Chat Interface */
+    .chat-card {
+      background: var(--surface-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      height: 75vh;
+      min-height: 520px;
+      box-shadow: var(--card-shadow);
+    }
+    .chat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+    .chat-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .status-dot-pulse {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 8px #10B981;
+    }
+    .chat-stream-box {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .chat-msg-row {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      animation: fadeInMsg 0.25s ease-out;
+    }
+    @keyframes fadeInMsg {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .chat-msg-row.user {
+      justify-content: flex-end;
+    }
+    .chat-msg-row.ai {
+      justify-content: flex-start;
+    }
+    .chat-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px var(--btn-shadow);
+    }
+    .chat-bubble {
+      max-width: 84%;
+      padding: 14px 18px;
+      border-radius: 18px;
+      font-size: 13.5px;
+      line-height: 1.6;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+    .chat-msg-row.user .chat-bubble {
+      background: var(--primary);
+      color: #FFFFFF;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0 4px 16px var(--btn-shadow);
+    }
+    .chat-msg-row.ai .chat-bubble {
+      background: var(--surface);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+      box-shadow: var(--card-shadow);
+    }
+    .chat-bubble-actions {
+      margin-top: 8px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .chat-input-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 8px 12px;
+      transition: border-color 0.2s;
+    }
+    .chat-input-row:focus-within {
+      border-color: var(--primary);
+      background: var(--input-focus-bg);
+    }
+    .chat-textarea {
+      flex: 1;
+      border: none !important;
+      background: transparent !important;
+      color: var(--text-main);
+      resize: none;
+      padding: 6px 4px;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.5;
+      outline: none !important;
+      max-height: 120px;
+      min-height: 38px;
+    }
+    .chat-send-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #FFFFFF;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform 0.15s, background 0.2s;
+    }
+    .chat-send-btn:hover {
+      transform: scale(1.05);
+    }
+    .chat-send-btn:active {
+      transform: scale(0.95);
+    }
+
     /* Responsive Design Media Queries */
     @media (max-width: 900px) {
       aside {
@@ -1424,7 +1574,7 @@
         </div>
         <div>
           <div class="brand-title">EduGen AI</div>
-          <div class="brand-sub">Teaching Studio</div>
+          <div class="brand-sub" style="color: var(--secondary); font-weight: 600;">Mr.Zaafouri Abdelmalek</div>
         </div>
       </div>
       <button class="aside-close-btn" onclick="toggleSidebar(false)" aria-label="Close Sidebar">
@@ -1433,8 +1583,8 @@
     </div>
 
     <button class="nav-btn active" onclick="switchTab('dashboard', this)">
-      <span class="material-symbols-outlined">dashboard</span>
-      Dashboard
+      <span class="material-symbols-outlined">chat</span>
+      AI English Chat
     </button>
     <button class="nav-btn" onclick="switchTab('lessonplan', this)">
       <span class="material-symbols-outlined">menu_book</span>
@@ -1456,6 +1606,11 @@
       <span class="material-symbols-outlined">folder</span>
       My Library
     </button>
+
+    <div style="margin-top: auto; padding: 14px 10px; border-top: 1px solid var(--border); text-align: center; font-size: 11.5px; color: var(--text-muted);">
+      <strong style="color: var(--text-main); font-size: 12px;">Mr.Zaafouri Abdelmalek</strong>
+      <div style="font-size: 10.5px; margin-top: 2px;">All rights reserved 2026</div>
+    </div>
   </aside>
 
   <!-- Main Content Area -->
@@ -1466,8 +1621,8 @@
           <span class="material-symbols-outlined">menu</span>
         </button>
         <div>
-          <h1 class="page-title" id="tab-title">Dashboard</h1>
-          <p class="page-subtitle" id="tab-subtitle">Overview & prompt-driven educational generator</p>
+          <h1 class="page-title" id="tab-title">AI English Agent Chat</h1>
+          <p class="page-subtitle" id="tab-subtitle">Chat freely in English with AI for learning, grammar & materials</p>
         </div>
       </div>
 
@@ -1502,34 +1657,34 @@
     </header>
 
     <div class="content-area">
-      <!-- DASHBOARD TAB -->
+      <!-- AI ENGLISH AGENT CHAT TAB -->
       <section id="view-dashboard">
-        <div class="card">
-          <label>Quick AI Generation Prompt</label>
-          <div style="position: relative; margin-top: 8px;">
-            <textarea id="dash-prompt" rows="3" placeholder="e.g. Create a B2 Lesson Plan on Climate Change focusing on Reading & Speaking with audio script, CCQs, and debate activity..."></textarea>
+        <div class="chat-card">
+          <div class="chat-header">
+            <div class="chat-status-pill">
+              <span class="status-dot-pulse" id="chat-status-dot"></span>
+              <span id="chat-status-text">AI English Agent Online</span>
+            </div>
+            <button class="btn-action" onclick="clearWebChat()" style="font-size: 12px; padding: 5px 10px;">
+              <span class="material-symbols-outlined" style="font-size: 16px;">delete_sweep</span>
+              Clear Chat
+            </button>
           </div>
-          <button class="btn-primary" style="margin-top: 14px;" onclick="generateFromDashboard()">
-            <span class="material-symbols-outlined">auto_awesome</span>
-            Instant AI Generate
-          </button>
-        </div>
 
-        <div class="grid">
-          <div class="card">
-            <h3 style="font-size: 17px;">📋 Lesson Plan Generator</h3>
-            <p style="color: var(--text-muted); font-size: 13.5px; margin: 8px 0 16px;">Create CELTA/Cambridge standard lesson plans covering Reading, Listening, Language Analysis, Writing, and Speaking.</p>
-            <button class="btn-primary" onclick="switchTabById('lessonplan')">Launch Lesson Planner</button>
+          <div class="chat-stream-box" id="chat-stream">
+            <div class="chat-msg-row ai">
+              <div class="chat-avatar">
+                <span class="material-symbols-outlined" style="font-size: 20px;">auto_awesome</span>
+              </div>
+              <div class="chat-bubble">Hello! I am your AI English Agent. You can chat freely with me in English about anything — ask grammar questions, practice conversation, request custom exercises or worksheets, check your writing, or explore any topic. How can I help you today?</div>
+            </div>
           </div>
-          <div class="card">
-            <h3 style="font-size: 17px;">📝 A4 Worksheet Generator</h3>
-            <p style="color: var(--text-muted); font-size: 13.5px; margin: 8px 0 16px;">Generate printable English grammar, reading, and vocabulary exercises with real tasks.</p>
-            <button class="btn-primary" onclick="switchTabById('worksheet')">Launch Worksheet Maker</button>
-          </div>
-          <div class="card">
-            <h3 style="font-size: 17px;">📽️ PowerPoint Generator</h3>
-            <p style="color: var(--text-muted); font-size: 13.5px; margin: 8px 0 16px;">Create classroom presentations with speaker notes and custom AI illustrations.</p>
-            <button class="btn-primary" onclick="switchTabById('presentation')">Launch Slide Maker</button>
+
+          <div class="chat-input-row">
+            <textarea id="chat-input" class="chat-textarea" rows="1" placeholder="Chat freely in English with AI agent..." onkeydown="handleChatKeyDown(event)"></textarea>
+            <button class="chat-send-btn" id="chat-send-btn" onclick="sendWebChatMessage()" aria-label="Send Message">
+              <span class="material-symbols-outlined">send</span>
+            </button>
           </div>
         </div>
       </section>
@@ -1557,14 +1712,6 @@
           <div class="form-group">
             <label>Custom Teacher Directives & Prompt Requirements</label>
             <textarea id="lp-prompt" rows="3" placeholder="e.g. Include 4 pre-taught blocked vocabulary items with CCQs, authentic 220-word reading passage or 2-speaker audio dialogue, step-by-step stage procedure table, pair speaking task, and delayed feedback rubric."></textarea>
-            <div class="prompt-pills-row">
-              <span style="font-size: 11px; color: var(--text-muted); align-self: center; margin-right: 4px;">Quick Presets:</span>
-              <button type="button" class="prompt-pill" onclick="setLpPreset('Renewable Energy & Climate Action', 'reading', 'B1 Intermediate', '60 Minutes', 'Pre-teach 4 environmental terms with CCQs, 200-word reading text, skimming/scanning comprehension check, and pair solution pitch.')">Reading & Language: Climate (B1)</button>
-              <button type="button" class="prompt-pill" onclick="setLpPreset('Artificial Intelligence & Modern Careers', 'listening', 'B2 Upper-Intermediate', '60 Minutes', 'Complete 2-speaker audio podcast transcript, listening for gist & specific nuance, functional language for agreeing/disagreeing, and pair debate.')">Listening & Speaking: AI Careers (B2)</button>
-              <button type="button" class="prompt-pill" onclick="setLpPreset('Travel Mishaps & Narrative Tenses', 'language', 'B1 Intermediate', '45 Minutes', 'PPP framework for Past Simple vs Past Continuous vs Past Perfect, timeline diagrams, CCQs, and communicative storytelling.')">Language Focus: Narrative Tenses (B1)</button>
-              <button type="button" class="prompt-pill" onclick="setLpPreset('Opinion Essay on Remote Work Culture', 'writing', 'B2 Upper-Intermediate', '90 Minutes', 'Model opinion essay analysis, linking words for concession and addition, paragraph drafting scaffold, and peer review rubric.')">Writing: Opinion Essay (B2)</button>
-              <button type="button" class="prompt-pill" onclick="setLpPreset('Global Tourism & Overtourism Dilemma', 'integrated', 'C1 Advanced', '90 Minutes', 'Integrated 4-skills plan with short article extract, audio interview transcript, advanced idiomatic collocations, and simulated municipal council debate.')">Integrated 4-Skills: Overtourism (C1)</button>
-            </div>
           </div>
 
           <div class="row">
@@ -1679,13 +1826,6 @@
           <div class="form-group">
             <label>Custom Task Instructions & Prompt Directives (Forces AI to generate exact real tasks)</label>
             <textarea id="ws-prompt" rows="3" placeholder="e.g. Generate 5 fill-in-the-blank sentences using 'already/just/yet', 4 multiple choice questions with 4 options, a short 140-word reading passage about renewable energy with 3 comprehension questions, 3 error-correction sentences, and full teacher answer key."></textarea>
-            <div class="prompt-pills-row">
-              <span style="font-size: 11px; color: var(--text-muted); align-self: center; margin-right: 4px;">Quick Themes:</span>
-              <button type="button" class="prompt-pill" onclick="setWsPreset('Present Perfect vs Past Simple', 'B1 Intermediate', '5 gap-fill sentences with past participles, 4 multiple choice questions, 3 error-correction sentences, and a short reading dialogue with answer key.')">Present Perfect vs Past Simple</button>
-              <button type="button" class="prompt-pill" onclick="setWsPreset('First & Second Conditionals', 'B2 Upper-Intermediate', '4 realistic scenario sentences, 4 multiple choice questions on hypothetical vs real outcomes, rewrite tasks, and answer key.')">1st & 2nd Conditionals</button>
-              <button type="button" class="prompt-pill" onclick="setWsPreset('Business Email Phrasal Verbs', 'B2 Upper-Intermediate', 'Match 6 formal phrasal verbs, rewrite 4 informal email sentences into professional corporate tone, and reading passage.')">Business Phrasal Verbs</button>
-              <button type="button" class="prompt-pill" onclick="setWsPreset('Passive Voice in Science & News', 'B1 Intermediate', 'Convert 5 active sentences into passive voice, fill in blanks with passive forms, and headline analysis.')">Passive Voice</button>
-            </div>
           </div>
 
           <div class="row">
@@ -3791,7 +3931,7 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
       if (currentView) currentView.classList.remove('hidden');
 
       const titles = {
-        dashboard: ["Dashboard", "Overview & prompt-driven educational generator"],
+        dashboard: ["AI English Agent Chat", "Chat freely in English with AI for learning, grammar & materials"],
         lessonplan: ["Lesson Plan Generator", "Create CELTA/Cambridge standard lesson plans for Reading, Listening, Language, Writing & Speaking"],
         worksheet: ["Worksheet Generator", "Create customized A4 printable English worksheets with real tasks"],
         presentation: ["PowerPoint Generator", "Design interactive slide decks for classroom projection"],
@@ -3821,6 +3961,131 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
       toast.innerHTML = `<span class="material-symbols-outlined" style="color:var(--secondary)">check_circle</span> ${msg}`;
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // AI Free-form Chat Manager
+    let chatHistory = [
+      {
+        sender: 'ai',
+        text: 'Hello! I am your AI English Agent. You can chat freely with me in English about anything — ask grammar questions, practice conversation, request custom exercises or worksheets, check your writing, or explore any topic. How can I help you today?'
+      }
+    ];
+
+    function handleChatKeyDown(event) {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendWebChatMessage();
+      }
+    }
+
+    function sendWebChatMessage() {
+      const input = document.getElementById('chat-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      input.value = '';
+      appendChatMessage('user', text);
+
+      const statusDot = document.getElementById('chat-status-dot');
+      const statusText = document.getElementById('chat-status-text');
+      if (statusDot) statusDot.style.background = 'var(--secondary)';
+      if (statusText) statusText.textContent = 'AI Agent is typing...';
+
+      // Simulate real-time response generation
+      setTimeout(() => {
+        const response = generateSmartWebChatResponse(text);
+        appendChatMessage('ai', response);
+        if (statusDot) statusDot.style.background = '#10B981';
+        if (statusText) statusText.textContent = 'AI English Agent Online';
+      }, 550);
+    }
+
+    function appendChatMessage(sender, text) {
+      chatHistory.push({ sender, text });
+      const stream = document.getElementById('chat-stream');
+      if (!stream) return;
+
+      const isUser = sender === 'user';
+      const row = document.createElement('div');
+      row.className = `chat-msg-row ${isUser ? 'user' : 'ai'}`;
+
+      if (!isUser) {
+        const avatar = document.createElement('div');
+        avatar.className = 'chat-avatar';
+        avatar.innerHTML = '<span class="material-symbols-outlined" style="font-size: 20px;">auto_awesome</span>';
+        row.appendChild(avatar);
+      }
+
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-bubble';
+      bubble.textContent = text;
+
+      // If AI generated worksheet or structured tasks, add Save to Library button
+      if (!isUser && (text.includes('SECTION') || text.includes('EXERCISE') || text.length > 250)) {
+        const actionWrap = document.createElement('div');
+        actionWrap.className = 'chat-bubble-actions';
+        actionWrap.innerHTML = `
+          <button class="btn-action" style="font-size: 11px; padding: 4px 8px; margin-top: 6px;" onclick="saveChatToLibrary(${chatHistory.length - 1})">
+            <span class="material-symbols-outlined" style="font-size: 14px; color: var(--secondary);">bookmark_add</span>
+            Save as Worksheet
+          </button>
+        `;
+        bubble.appendChild(actionWrap);
+      }
+
+      row.appendChild(bubble);
+      stream.appendChild(row);
+      stream.scrollTop = stream.scrollHeight;
+    }
+
+    function saveChatToLibrary(index) {
+      const msg = chatHistory[index];
+      if (!msg) return;
+      const firstLine = msg.text.split('\n')[0].substring(0, 40) || 'English Learning Notes';
+      saveToLibrary(firstLine, 'A4 Worksheet', 'Saved from AI Chat', msg.text);
+      showToast(`Saved "${firstLine}" to My Library!`);
+    }
+
+    function clearWebChat() {
+      chatHistory = [
+        {
+          sender: 'ai',
+          text: 'Chat cleared! What would you like to talk about or create in English next?'
+        }
+      ];
+      const stream = document.getElementById('chat-stream');
+      if (stream) {
+        stream.innerHTML = `
+          <div class="chat-msg-row ai">
+            <div class="chat-avatar">
+              <span class="material-symbols-outlined" style="font-size: 20px;">auto_awesome</span>
+            </div>
+            <div class="chat-bubble">Chat cleared! What would you like to talk about or create in English next?</div>
+          </div>
+        `;
+      }
+      showToast('Chat conversation reset.');
+    }
+
+    function generateSmartWebChatResponse(query) {
+      const q = query.trim().toLowerCase();
+      if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('good morning')) {
+        return "Hello! Great to connect with you. I am your AI English Agent. You can ask me anything about grammar rules, request custom worksheets or quiz questions, practice real-time English conversation, or ask for writing corrections. What topic would you like to explore today?";
+      }
+      if (q.includes('present perfect') || q.includes('past simple')) {
+        return "Here is a clear breakdown of Present Perfect vs. Past Simple:\n\n1. Past Simple is used for actions completed at a specific past time.\n   • Structure: Subject + Verb-ed (or irregular V2)\n   • Example: \"I visited London in 2022.\"\n\n2. Present Perfect connects the past with the present (experiences, unfinished periods, past actions with current relevance).\n   • Structure: Subject + have/has + Past Participle (V3)\n   • Example: \"I have visited London three times in my life.\"\n\n💡 Quick Rule: If you mention a specific time (yesterday, last week, 2019), always use the Past Simple!";
+      }
+      if (q.includes('difference between') || q.includes('explain') || q.includes('what is') || q.includes('how do i')) {
+        return `Here is an explanation of "${query.trim()}":\n\n• Core Meaning: In modern English, understanding context, nuance, and collocation is essential for natural communication.\n• Usage Example: "The teacher provided clear guidance on how to master this structure effectively."\n• Common Pitfall: Learners often translate literally from their native tongue. Focus on natural English collocations!\n\nWould you like me to generate a 5-question practice quiz on this?`;
+      }
+      if (q.includes('quiz') || q.includes('worksheet') || q.includes('exercise') || q.includes('test')) {
+        const res = buildRealA4Worksheet({ topic: query, grade: 'B1 Intermediate', type: 'Comprehensive Multi-Section Mastery' });
+        return res.markdownContent;
+      }
+      if (q.includes('correct') || q.includes('check') || q.includes('feedback') || q.includes('mistake')) {
+        return `Here is my feedback on your English text:\n\n✅ Polished Version: "${query.replace(/correct this:?/i, '').trim()}"\n\n📝 Analysis & Suggestions:\n• Grammatical structure is clear and communicative.\n• Consider using elevated transition words (such as "furthermore", "consequently", or "in particular") to enhance stylistic flow.\n\nKeep up the great writing! Let me know if you want another sentence reviewed.`;
+      }
+      return `Regarding "${query}":\n\nI am here to help you communicate effectively in English. Whether you want to:\n1. Practice an authentic dialogue or interview scenario\n2. Generate targeted grammar and vocabulary exercises\n3. Analyze sentence structure and pronunciation tips\n\nTell me more about what you would like to practice or create next!`;
     }
 
     function generateFromDashboard() {
@@ -4184,7 +4449,7 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
             <div class="raw-content-view">${rawText}</div>
           `}
           <div class="footer">
-            <span>EduGen AI Studio — A4 Classroom Material & Lesson Plan</span>
+            <span>Prepared by Mr.Zaafouri Abdelmalek — All rights reserved 2026</span>
             <span>📱 Scan QR code on header for digital mobile companion</span>
           </div>
           <script>

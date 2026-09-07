@@ -28,6 +28,7 @@ fun MainScreen(viewModel: MainViewModel) {
     val libraryItems by viewModel.libraryItems.collectAsState()
     val toastMessage by viewModel.toastMessage.collectAsState()
     val previewItem by viewModel.previewItem.collectAsState()
+    val chatMessages by viewModel.chatMessages.collectAsState()
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -89,19 +90,12 @@ fun MainScreen(viewModel: MainViewModel) {
                     .padding(innerPadding)
             ) {
                 when (currentTab) {
-                    "Dashboard" -> DashboardScreen(
-                        promptText = promptText,
+                    "AI English Chat", "Dashboard" -> ChatScreen(
+                        messages = chatMessages,
                         isGenerating = isGenerating,
-                        libraryItems = libraryItems,
-                        onPromptChange = { viewModel.setPromptText(it) },
-                        onSubmitPrompt = {
-                            viewModel.generateFromPrompt { item -> }
-                        },
-                        onQuickAction = { prompt ->
-                            viewModel.setPromptText(prompt)
-                            viewModel.generateFromPrompt {}
-                        },
-                        onNavigate = { tab -> viewModel.setTab(tab) }
+                        onSendMessage = { text -> viewModel.sendChatMessage(text) },
+                        onClearChat = { viewModel.clearChat() },
+                        onSaveToLibrary = { item -> viewModel.saveItem(item) }
                     )
                     "Worksheet Generator" -> WorksheetScreen(
                         isGenerating = isGenerating,

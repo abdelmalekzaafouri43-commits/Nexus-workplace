@@ -18,3 +18,14 @@ enum class ItemType {
 enum class AppThemeMode {
     SAPPHIRE, EMERALD, AMETHYST
 }
+
+data class ChatMessage(
+    val id: String = UUID.randomUUID().toString(),
+    val sender: MessageSender,
+    val text: String,
+    val timestamp: Long = System.currentTimeMillis()
+)
+
+enum class MessageSender {
+    USER, AI
+}

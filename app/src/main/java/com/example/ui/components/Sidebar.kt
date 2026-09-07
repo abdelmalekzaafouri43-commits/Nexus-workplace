@@ -66,13 +66,23 @@ fun Sidebar(
                         )
                     }
                     Spacer(modifier = Modifier.width(12.dp))
-                    Text(
-                        text = "EduGen AI",
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurface
+                    Column {
+                        Text(
+                            text = "EduGen AI",
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
                         )
-                    )
+                        Text(
+                            text = "by Mr.Zaafouri Abdelmalek",
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                fontSize = 11.sp,
+                                color = accentColor,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        )
+                    }
                 }
                 IconButton(onClick = onClose) {
                     Icon(
@@ -96,11 +106,11 @@ fun Sidebar(
             Spacer(modifier = Modifier.height(12.dp))
 
             SidebarItem(
-                icon = Icons.Default.Dashboard,
-                label = "Dashboard",
-                isSelected = currentTab == "Dashboard",
+                icon = Icons.Default.Chat,
+                label = "AI English Chat",
+                isSelected = currentTab == "AI English Chat" || currentTab == "Dashboard",
                 accentColor = accentColor,
-                onClick = { onTabSelected("Dashboard") }
+                onClick = { onTabSelected("AI English Chat") }
             )
             SidebarItem(
                 icon = Icons.Default.Assignment,
@@ -189,6 +199,29 @@ fun Sidebar(
                     )
                 }
             }
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Mr.Zaafouri Abdelmalek",
+                style = MaterialTheme.typography.bodySmall.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.85f)
+                )
+            )
+            Spacer(modifier = Modifier.height(2.dp))
+            Text(
+                text = "All rights reserved 2026",
+                style = MaterialTheme.typography.labelSmall.copy(
+                    fontSize = 11.sp,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                )
+            )
         }
 
     }

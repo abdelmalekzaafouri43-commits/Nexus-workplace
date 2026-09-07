@@ -3,8 +3,10 @@ package com.example.ui
 import androidx.lifecycle.ViewModel
 import com.example.BuildConfig
 import com.example.data.AppThemeMode
+import com.example.data.ChatMessage
 import com.example.data.ItemType
 import com.example.data.LibraryItem
+import com.example.data.MessageSender
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -44,6 +46,16 @@ class MainViewModel : ViewModel() {
 
     private val _previewItem = MutableStateFlow<LibraryItem?>(null)
     val previewItem: StateFlow<LibraryItem?> = _previewItem.asStateFlow()
+
+    private val _chatMessages = MutableStateFlow<List<ChatMessage>>(
+        listOf(
+            ChatMessage(
+                sender = MessageSender.AI,
+                text = "Hello! I am your AI English Agent. You can chat freely with me in English about anything — ask grammar questions, practice conversation, request custom exercises or worksheets, check your writing, or explore any topic. How can I help you today?"
+            )
+        )
+    )
+    val chatMessages: StateFlow<List<ChatMessage>> = _chatMessages.asStateFlow()
 
     private val _libraryItems = MutableStateFlow(
         listOf(
@@ -246,6 +258,82 @@ class MainViewModel : ViewModel() {
         content.append("• Section D: Grade based on syntactic accuracy, rich domain vocabulary, and coherent communicative reasoning.\n")
         
         return content.toString()
+    }
+
+    private fun generateSmartChatResponse(query: String): String {
+        val q = query.trim().lowercase()
+        return when {
+            q.contains("hello") || q.contains("hi") || q.contains("hey") || q.contains("good morning") || q.contains("good afternoon") -> {
+                "Hello! Great to connect with you. I am your AI English Agent. You can ask me anything about grammar rules, request custom worksheets or quiz questions, practice real-time English conversation, or ask for writing corrections. What topic would you like to explore today?"
+            }
+            q.contains("present perfect") || q.contains("past simple") -> {
+                "Here is a clear breakdown of **Present Perfect vs. Past Simple**:\n\n" +
+                "1. **Past Simple** is used for actions finished at a specific point in the past.\n" +
+                "   • *Structure:* Subject + Verb-ed (or irregular V2)\n" +
+                "   • *Example:* \"I **visited** London in 2022.\"\n\n" +
+                "2. **Present Perfect** is used for life experiences, unfinished periods, or past actions with current relevance.\n" +
+                "   • *Structure:* Subject + have/has + Past Participle (V3)\n" +
+                "   • *Example:* \"I **have visited** London three times in my life.\"\n\n" +
+                "💡 *Quick Rule:* If you mention a specific time (yesterday, last week, 2019), always use the Past Simple!"
+            }
+            q.contains("difference between") || q.contains("explain") || q.contains("what is") || q.contains("how do i") -> {
+                "Here is an explanation of **${query.trim()}**:\n\n" +
+                "• **Core Meaning:** In modern English, understanding context and collocation is key to natural communication.\n" +
+                "• **Usage Example:** \"The instructor provided clear guidance on how to master this structure effectively.\"\n" +
+                "• **Common Pitfall:** Learners often translate literally from their native tongue. Focus on fixed English phrase patterns!\n\n" +
+                "Would you like me to generate a 5-question practice quiz on this?"
+            }
+            q.contains("quiz") || q.contains("worksheet") || q.contains("exercise") || q.contains("test") -> {
+                generateContextualTeachingContent(query)
+            }
+            q.contains("correct") || q.contains("check") || q.contains("feedback") || q.contains("mistake") -> {
+                "Here is my feedback on your English text:\n\n" +
+                "✅ **Polished Version:** \"${query.replace("(?i)correct this:?".toRegex(), "").trim()}\"\n\n" +
+                "📝 **Analysis & Suggestions:**\n" +
+                "• Grammatical structure is clear and communicative.\n" +
+                "• Consider using elevated vocabulary and transition words (such as *furthermore*, *consequently*, or *in particular*) to enhance nuance.\n\n" +
+                "Keep up the great writing! Let me know if you want another sentence reviewed."
+            }
+            else -> {
+                "Regarding **\"$query\"**:\n\n" +
+                "I am here to help you communicate effectively in English. Whether you want to:\n" +
+                "1. Practice an authentic dialogue or interview scenario\n" +
+                "2. Generate targeted grammar and vocabulary exercises\n" +
+                "3. Analyze sentence structure and pronunciation tips\n\n" +
+                "Tell me more about what you would like to practice or create next!"
+            }
+        }
+    }
+
+    fun sendChatMessage(text: String) {
+        val clean = text.trim()
+        if (clean.isEmpty()) return
+
+        val userMsg = ChatMessage(sender = MessageSender.USER, text = clean)
+        _chatMessages.value = _chatMessages.value + userMsg
+        _isGenerating.value = true
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val history = _chatMessages.value.takeLast(6).joinToString("\n") {
+                "${if (it.sender == MessageSender.USER) "User" else "AI"}: ${it.text}"
+            }
+            val prompt = "You are an intelligent, friendly AI English Language Teaching & Learning Assistant. The user is chatting freely with you in English. Answer their questions accurately, provide clear explanations, generate practice exercises if requested, correct their English kindly, and converse naturally in English.\n\nConversation Context:\n$history\n\nUser: $clean\n\nAI:"
+
+            val aiResponse = callGeminiApi(prompt) ?: generateSmartChatResponse(clean)
+
+            _chatMessages.value = _chatMessages.value + ChatMessage(sender = MessageSender.AI, text = aiResponse)
+            _isGenerating.value = false
+        }
+    }
+
+    fun clearChat() {
+        _chatMessages.value = listOf(
+            ChatMessage(
+                sender = MessageSender.AI,
+                text = "Chat cleared! What would you like to talk about or create in English next?"
+            )
+        )
+        showToast("Chat conversation reset")
     }
 
     fun generateFromPrompt(onComplete: (LibraryItem) -> Unit) {
