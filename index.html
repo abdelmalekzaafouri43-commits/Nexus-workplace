@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script src="logo_raw.js"></script>
   <style>
     :root {
       --primary: #4F46E5;
@@ -1526,6 +1527,155 @@
       transform: scale(0.95);
     }
 
+    /* Branding & Teacher Signature Customization */
+    .branding-toggle-card {
+      background: var(--surface-card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      transition: all 0.25s ease;
+    }
+    .branding-header-btn {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      cursor: pointer;
+      padding: 0;
+      text-align: left;
+    }
+    .branding-body {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1.5px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .branding-sub-card {
+      background: var(--input-bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+    }
+    .branding-sub-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .branding-option-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .branding-pill-btn {
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .branding-pill-btn:hover {
+      border-color: var(--primary);
+      color: var(--text-main);
+    }
+    .branding-pill-btn.active {
+      background: var(--primary);
+      color: #FFFFFF;
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px var(--btn-shadow);
+    }
+    .branding-upload-box {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      background: var(--surface);
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .branding-upload-box:hover {
+      border-color: var(--primary);
+      background: var(--nav-hover);
+    }
+    .branding-preview-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 10px;
+      padding: 10px 12px;
+      background: var(--surface);
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+    }
+    .branding-thumb-img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      padding: 2px;
+    }
+    .sig-canvas-wrapper {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 8px;
+      position: relative;
+    }
+    .sig-canvas {
+      display: block;
+      width: 100%;
+      height: 110px;
+      cursor: crosshair;
+      touch-action: none;
+    }
+    .sig-canvas-tools {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 10px;
+      background: #F1F5F9;
+      border-top: 1px solid #CBD5E1;
+    }
+    .modal-card-large {
+      max-width: 680px;
+      width: 94%;
+      max-height: 90vh;
+      overflow-y: auto;
+      text-align: left;
+    }
+    .print-preview-sheet-frame {
+      background: #FFFFFF;
+      border: 1.5px solid #CBD5E1;
+      border-radius: 8px;
+      padding: 16px;
+      color: #0F172A;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      margin: 14px 0;
+      font-size: 12px;
+    }
+
     /* Responsive Design Media Queries */
     @media (max-width: 900px) {
       aside {
@@ -1797,6 +1947,158 @@
             </label>
           </div>
 
+          <!-- Branding & Signature Customization Block -->
+          <div class="branding-toggle-card">
+            <button type="button" class="branding-header-btn" onclick="toggleBrandingAccordion()">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span class="material-symbols-outlined" style="color: var(--secondary); font-size: 22px;">verified_user</span>
+                <div>
+                  <div style="font-weight: 700; font-size: 14.5px;">Custom School Header Logo & Teacher Signature Branding</div>
+                  <div style="font-size: 12px; color: var(--text-muted);">Configure placeholder AI branding, upload custom logo, or attach digital signature for printing</div>
+                </div>
+              </div>
+              <span id="branding-toggle-chevron" class="material-symbols-outlined" style="transition: transform 0.2s;">expand_more</span>
+            </button>
+
+            <div id="branding-accordion-body" class="branding-body">
+              <div class="row">
+                <!-- School Logo Column -->
+                <div class="branding-sub-card">
+                  <div class="branding-sub-title">
+                    <span class="material-symbols-outlined" style="color: var(--primary);">school</span>
+                    School Header Logo
+                  </div>
+
+                  <div style="margin-bottom: 10px;">
+                    <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; cursor: pointer;">
+                      <input type="checkbox" id="brand-include-logo" checked onchange="updateBrandingState()" style="accent-color: var(--primary);" />
+                      Include Logo on Printed Document Header
+                    </label>
+                  </div>
+
+                  <div class="branding-option-pills" id="logo-source-pills">
+                    <button type="button" class="branding-pill-btn active" id="logo-btn-ai" onclick="selectLogoSource('ai')">
+                      <span class="material-symbols-outlined" style="font-size: 16px;">auto_awesome</span>
+                      AI Academy Crest (Default)
+                    </button>
+                    <button type="button" class="branding-pill-btn" id="logo-btn-upload" onclick="selectLogoSource('upload')">
+                      <span class="material-symbols-outlined" style="font-size: 16px;">upload_file</span>
+                      Upload School Logo
+                    </button>
+                    <button type="button" class="branding-pill-btn" id="logo-btn-none" onclick="selectLogoSource('none')">
+                      <span class="material-symbols-outlined" style="font-size: 16px;">block</span>
+                      No Logo
+                    </button>
+                  </div>
+
+                  <!-- Upload Dropzone -->
+                  <div id="logo-upload-section" class="hidden">
+                    <div class="branding-upload-box" onclick="document.getElementById('school-logo-file-input').click()">
+                      <span class="material-symbols-outlined" style="font-size: 28px; color: var(--secondary);">cloud_upload</span>
+                      <div style="font-size: 12.5px; font-weight: 600; margin-top: 4px;">Click to upload School Header Logo</div>
+                      <div style="font-size: 11px; color: var(--text-muted);">PNG, JPG, SVG or WebP (Recommended: Square or Horizontal)</div>
+                      <input type="file" id="school-logo-file-input" accept="image/*" style="display: none;" onchange="handleSchoolLogoFile(event)" />
+                    </div>
+                  </div>
+
+                  <!-- Logo Preview Row -->
+                  <div class="branding-preview-row" id="logo-preview-row">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <img id="school-logo-preview-img" src="" class="branding-thumb-img" alt="Logo Preview" />
+                      <div>
+                        <div style="font-size: 12px; font-weight: 700;" id="school-logo-label">AI Academic Crest</div>
+                        <div style="font-size: 10.5px; color: var(--text-muted);" id="school-logo-sub">Ready for print header</div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn-action" style="padding: 4px 8px; font-size: 11px;" onclick="resetSchoolLogo()">
+                      Reset to AI Default
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Teacher Signature Column -->
+                <div class="branding-sub-card">
+                  <div class="branding-sub-title">
+                    <span class="material-symbols-outlined" style="color: var(--secondary);">draw</span>
+                    Teacher Signature & Verification
+                  </div>
+
+                  <div style="margin-bottom: 10px;">
+                    <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; cursor: pointer;">
+                      <input type="checkbox" id="brand-include-sig" checked onchange="updateBrandingState()" style="accent-color: var(--primary);" />
+                      Include Teacher Signature Block on Printout
+                    </label>
+                  </div>
+
+                  <div class="branding-option-pills" id="sig-source-pills">
+                    <button type="button" class="branding-pill-btn active" id="sig-btn-ai" onclick="selectSigSource('ai')">
+                      <span class="material-symbols-outlined" style="font-size: 16px;">auto_awesome</span>
+                      AI Signature Stamp
+                    </button>
+                    <button type="button" class="branding-pill-btn" id="sig-btn-upload" onclick="selectSigSource('upload')">
+                      <span class="material-symbols-outlined" style="font-size: 16px;">upload_file</span>
+                      Upload Signature Image
+                    </button>
+                    <button type="button" class="branding-pill-btn" id="sig-btn-draw" onclick="selectSigSource('draw')">
+                      <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>
+                      Draw on Pad
+                    </button>
+                  </div>
+
+                  <!-- Upload Signature -->
+                  <div id="sig-upload-section" class="hidden">
+                    <div class="branding-upload-box" onclick="document.getElementById('teacher-sig-file-input').click()">
+                      <span class="material-symbols-outlined" style="font-size: 28px; color: var(--primary);">signature</span>
+                      <div style="font-size: 12.5px; font-weight: 600; margin-top: 4px;">Click to upload Signature Image</div>
+                      <div style="font-size: 11px; color: var(--text-muted);">PNG (transparent) or JPG scan</div>
+                      <input type="file" id="teacher-sig-file-input" accept="image/*" style="display: none;" onchange="handleTeacherSigFile(event)" />
+                    </div>
+                  </div>
+
+                  <!-- Draw Signature Canvas -->
+                  <div id="sig-draw-section" class="hidden">
+                    <div class="sig-canvas-wrapper">
+                      <canvas id="sig-canvas" class="sig-canvas" width="340" height="100"></canvas>
+                      <div class="sig-canvas-tools">
+                        <span style="font-size: 11px; color: #475569; font-weight: 600;">Sign with finger or stylus</span>
+                        <div style="display: flex; gap: 6px;">
+                          <button type="button" class="btn-action" style="padding: 2px 8px; font-size: 11px;" onclick="clearSignatureCanvas()">Clear</button>
+                          <button type="button" class="btn-action" style="padding: 2px 8px; font-size: 11px; background: #0F172A; color: #FFF;" onclick="saveDrawnSignature()">Apply Signature</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Signature Preview -->
+                  <div class="branding-preview-row" id="sig-preview-row">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <img id="teacher-sig-preview-img" src="" class="branding-thumb-img" style="width: 72px; height: 38px;" alt="Signature Preview" />
+                      <div>
+                        <div style="font-size: 12px; font-weight: 700;" id="teacher-sig-label">AI Handwritten Signature</div>
+                        <div style="font-size: 10.5px; color: var(--text-muted);" id="teacher-sig-sub">Navy Fountain Pen Ink</div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn-action" style="padding: 4px 8px; font-size: 11px;" onclick="resetTeacherSignature()">
+                      Reset to Default
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Teacher Credentials Row -->
+              <div class="row" style="margin-top: 4px;">
+                <div class="form-group">
+                  <label>Teacher / Educator Full Name</label>
+                  <input type="text" id="brand-teacher-name" value="Mr. Zaafouri Abdelmalek" placeholder="e.g. Mr. Zaafouri Abdelmalek" oninput="updateBrandingState()" />
+                </div>
+                <div class="form-group">
+                  <label>Professional Designation & Certification</label>
+                  <input type="text" id="brand-teacher-title" value="Senior English Language Educator • CELTA Certified" placeholder="e.g. Senior TEFL Practitioner" oninput="updateBrandingState()" />
+                </div>
+              </div>
+            </div>
+          </div>
+
           <button class="btn-primary" onclick="generateLessonPlan()">
             <span class="material-symbols-outlined">auto_awesome</span>
             Generate Comprehensive Lesson Plan
@@ -1809,12 +2111,16 @@
               <h3 style="font-size: 17px;" id="lp-result-title">Generated Lesson Plan</h3>
               <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;" id="lp-result-subtitle">CELTA/Cambridge Standard Teaching Plan & Procedures</div>
             </div>
-            <div style="display: flex; gap: 8px;">
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn-action" onclick="openPrintBrandingModal('lp')" title="Customize logo & signature before printing">
+                <span class="material-symbols-outlined" style="font-size: 18px; color: var(--primary);">tune</span>
+                Print Options
+              </button>
               <button class="btn-action" onclick="openQrForContent('lp')" title="Get QR link for this lesson plan">
                 <span class="material-symbols-outlined" style="font-size: 18px; color: var(--secondary);">qr_code_2</span>
                 QR Link
               </button>
-              <button class="btn-action" onclick="printGenerated('lp')" title="Print or Save as PDF">
+              <button class="btn-primary" style="padding: 8px 16px; font-size: 13px;" onclick="printGenerated('lp')" title="Print or Save as PDF">
                 <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
                 Print Plan / PDF
               </button>
@@ -2014,8 +2320,17 @@
       <!-- LIBRARY TAB -->
       <section id="view-library" class="hidden">
         <div class="card">
-          <h3 style="font-size: 17px;">Saved Teaching Materials</h3>
-          <div id="library-list" style="margin-top: 16px;"></div>
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+            <div>
+              <h3 style="font-size: 17px; margin: 0;">Saved Teaching Materials</h3>
+              <div style="font-size: 12px; color: var(--text-muted);">Access, print, share, or import student submissions</div>
+            </div>
+            <button class="btn-primary" style="padding: 8px 16px; font-size: 13px;" onclick="openCameraQrScanner()">
+              <span class="material-symbols-outlined" style="font-size: 18px;">qr_code_scanner</span>
+              Scan Camera QR Code
+            </button>
+          </div>
+          <div id="library-list"></div>
         </div>
       </section>
     </div>
@@ -2052,9 +2367,131 @@
           <span class="material-symbols-outlined" style="font-size: 18px;">content_copy</span>
           Copy Link
         </button>
-        <button class="btn-primary" style="justify-content: center; padding: 10px; font-size: 13px;" onclick="printQrCard()">
+        <button class="btn-primary" style="justify-content: center; padding: 10px; font-size: 13px;" onclick="openCameraQrScanner()">
+          <span class="material-symbols-outlined" style="font-size: 18px;">qr_code_scanner</span>
+          Open Camera Scanner
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Camera QR Code Scanner Modal -->
+  <div id="camera-scanner-modal" class="modal-backdrop" onclick="closeCameraScannerModal(event)">
+    <div class="modal-card modal-card-large" onclick="event.stopPropagation()">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1.5px solid var(--border); padding-bottom: 10px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span class="material-symbols-outlined" style="color: var(--secondary); font-size: 26px;">qr_code_scanner</span>
+          <div>
+            <strong style="font-size: 18px;">Scan Student QR Code or Resource</strong>
+            <div style="font-size: 12px; color: var(--text-muted);">Use device camera to instantly scan & import student work into My Library</div>
+          </div>
+        </div>
+        <button onclick="closeCameraScannerModal()" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer; padding: 4px;">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <!-- Live Video / Scanner Viewport -->
+      <div style="position: relative; width: 100%; height: 260px; background: #000; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; border: 2px solid var(--border);">
+        <video id="camera-video-stream" autoplay playsinline muted style="width: 100%; height: 100%; object-fit: cover;"></video>
+        
+        <!-- Viewfinder Reticle Overlay -->
+        <div id="camera-scanner-reticle" style="position: absolute; inset: 24px; border: 2px dashed #10B981; border-radius: 16px; box-shadow: 0 0 0 9999px rgba(0,0,0,0.55); pointer-events: none; display: flex; align-items: center; justify-content: center;">
+          <span class="material-symbols-outlined" style="color: rgba(255,255,255,0.7); font-size: 48px;">center_focus_weak</span>
+        </div>
+
+        <div id="camera-status-msg" style="position: absolute; bottom: 12px; background: rgba(15,23,42,0.85); color: #FFF; padding: 6px 14px; border-radius: 20px; font-size: 12px; backdrop-filter: blur(4px);">
+          Align QR code inside reticle to scan
+        </div>
+      </div>
+
+      <!-- Interactive Quick Import & File Upload Actions -->
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button type="button" class="btn-primary" style="flex: 1; font-size: 13px;" onclick="simulateSampleQrScan('student')">
+            <span class="material-symbols-outlined" style="font-size: 18px;">assignment_returned</span>
+            Simulate Scan: Student Essay Submission
+          </button>
+          <button type="button" class="btn-action" style="flex: 1; font-size: 13px;" onclick="simulateSampleQrScan('shared')">
+            <span class="material-symbols-outlined" style="font-size: 18px; color: var(--secondary);">share</span>
+            Simulate Scan: Shared CELTA Worksheet
+          </button>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <button type="button" class="btn-action" style="flex: 1;" onclick="document.getElementById('qr-image-file-input').click()">
+            <span class="material-symbols-outlined" style="font-size: 18px;">upload_file</span>
+            Upload QR Image File
+          </button>
+          <input type="file" id="qr-image-file-input" accept="image/*" style="display: none;" onchange="handleQrImageFileUpload(event)" />
+          <button type="button" class="btn-action" onclick="closeCameraScannerModal()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Print Branding & Customization Modal -->
+  <div id="print-branding-modal" class="modal-backdrop" onclick="closePrintBrandingModal(event)">
+    <div class="modal-card modal-card-large" onclick="event.stopPropagation()">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1.5px solid var(--border); padding-bottom: 10px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="material-symbols-outlined" style="color: var(--primary); font-size: 26px;">print_connect</span>
+          <div>
+            <strong style="font-size: 18px;">Print & Branding Customization</strong>
+            <div style="font-size: 12px; color: var(--text-muted);">Adjust School Header Logo and Teacher Signature before exporting or printing</div>
+          </div>
+        </div>
+        <button onclick="closePrintBrandingModal()" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer; padding: 4px;">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <!-- Live Header & Signature Preview Frame -->
+      <div class="print-preview-sheet-frame">
+        <div style="font-size: 11px; font-weight: 800; color: #64748B; letter-spacing: 0.5px; margin-bottom: 6px; text-transform: uppercase;">
+          Live Document Print Header Preview
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0F172A; padding-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <img id="modal-preview-logo" src="" alt="School Logo" style="width: 44px; height: 44px; object-fit: contain; border-radius: 4px;" />
+            <div>
+              <div id="modal-preview-school-name" style="font-size: 11.5px; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 1px;">International Language Academy</div>
+              <div id="modal-preview-title" style="font-size: 16px; font-weight: 800; color: #0F172A;">Lesson Plan / Teaching Materials</div>
+              <div style="font-size: 10px; font-weight: 700; color: #4338CA; margin-top: 2px;">Cambridge CELTA Certified Framework • Academic Year 2026</div>
+            </div>
+          </div>
+          <div style="text-align: right; font-size: 10px; color: #64748B;">
+            <div style="font-weight: 700; color: #0F172A;">A4 Print Sheet</div>
+            <div>QR Digital Sync Ready</div>
+          </div>
+        </div>
+
+        <div style="font-size: 11px; font-weight: 800; color: #64748B; letter-spacing: 0.5px; margin: 12px 0 6px; text-transform: uppercase;">
+          Teacher Endorsement & Signature Preview
+        </div>
+        <div style="background: #F8FAFC; border: 1.5px solid #CBD5E1; border-radius: 6px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 10px; font-weight: 800; color: #4338CA; text-transform: uppercase;">Curriculum Verified & Approved</div>
+            <div id="modal-preview-teacher-name" style="font-size: 14px; font-weight: 800; color: #0F172A;">Mr. Zaafouri Abdelmalek</div>
+            <div id="modal-preview-teacher-title" style="font-size: 11px; color: #475569;">Senior English Language Educator • CELTA Certified</div>
+            <div style="font-size: 9.5px; color: #64748B; margin-top: 2px;">All rights reserved 2026</div>
+          </div>
+          <div style="text-align: center;">
+            <img id="modal-preview-sig" src="" alt="Teacher Signature" style="max-height: 40px; max-width: 140px; object-fit: contain; margin-bottom: 2px;" />
+            <div style="border-top: 1px solid #475569; font-size: 9px; font-weight: 700; color: #475569; text-transform: uppercase; padding-top: 2px;">Authorized Signature</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 14px;">
+        <button type="button" class="btn-action" onclick="closePrintBrandingModal()">
+          Close
+        </button>
+        <button type="button" class="btn-primary" style="padding: 10px 20px; font-size: 13.5px;" onclick="applyAndPrintFromModal()">
           <span class="material-symbols-outlined" style="font-size: 18px;">print</span>
-          Print QR Card
+          Confirm & Print / Save PDF
         </button>
       </div>
     </div>
@@ -4247,6 +4684,8 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
       }
 
       const qrImgSrc = generateQrImageUrl(window.location.href);
+      const logoImgSrc = getActiveLogoSrc();
+      const sigImgSrc = getActiveSigSrc();
 
       printWindow.document.write(`
         <!DOCTYPE html>
@@ -4452,12 +4891,15 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
         <body>
           ${htmlSheet || `
             <div class="a4-header-top">
-              <div>
-                <div class="a4-school-title">EduGen Teaching Materials</div>
-                <div class="a4-sheet-title">${title}</div>
-                <div class="a4-meta-pills">
-                  <span class="a4-pill">${type}</span>
-                  <span class="a4-pill">${details}</span>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                ${logoImgSrc ? `<img src="${logoImgSrc}" style="width: 48px; height: 48px; object-fit: contain; border-radius: 4px;" alt="School Logo" />` : ''}
+                <div>
+                  <div class="a4-school-title">EduGen Teaching Materials</div>
+                  <div class="a4-sheet-title">${title}</div>
+                  <div class="a4-meta-pills">
+                    <span class="a4-pill">${type}</span>
+                    <span class="a4-pill">${details}</span>
+                  </div>
                 </div>
               </div>
               <img src="${qrImgSrc}" class="header-qr" alt="QR Link" />
@@ -4470,9 +4912,16 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
             </div>
             <div class="raw-content-view">${rawText}</div>
           `}
-          <div class="footer">
-            <span>Prepared by Mr.Zaafouri Abdelmalek — All rights reserved 2026</span>
-            <span>📱 Scan QR code on header for digital mobile companion</span>
+          <div style="margin-top: 24px; padding-top: 10px; border-top: 1.5px solid #CBD5E1; display: flex; justify-content: space-between; align-items: flex-end; font-size: 10.5px; color: #475569;">
+            <div>
+              <div style="font-weight: 800; color: #0F172A; font-size: 11px;">${brandConfig.teacherName || 'Mr. Zaafouri Abdelmalek'}</div>
+              <div>${brandConfig.teacherTitle || 'Senior English Language Educator • CELTA Certified'}</div>
+              <div style="font-size: 9.5px; color: #64748B; margin-top: 2px;">Prepared with EduGen AI Platform • All rights reserved 2026</div>
+            </div>
+            <div style="text-align: center;">
+              ${sigImgSrc ? `<img src="${sigImgSrc}" style="max-height: 38px; max-width: 140px; object-fit: contain; display: block; margin-bottom: 2px;" alt="Teacher Signature" />` : ''}
+              <div style="border-top: 1px solid #475569; font-size: 9px; font-weight: 700; color: #475569; text-transform: uppercase; padding-top: 2px; min-width: 120px;">Teacher Endorsement Signature</div>
+            </div>
           </div>
           <script>
             window.onload = function() { window.print(); };
@@ -4640,6 +5089,343 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
 
     // Initial load
     renderTemplates();
+    updateBrandingState();
+
+    // Branding & Teacher Signature State
+    let brandConfig = {
+      includeLogo: true,
+      includeSig: true,
+      logoSource: 'ai', // 'ai', 'upload', 'none'
+      sigSource: 'ai',  // 'ai', 'upload', 'draw'
+      customLogoB64: null,
+      customSigB64: null,
+      drawnSigB64: null,
+      teacherName: 'Mr. Zaafouri Abdelmalek',
+      teacherTitle: 'Senior English Language Educator • CELTA Certified'
+    };
+
+    function toggleBrandingAccordion() {
+      const body = document.getElementById('branding-accordion-body');
+      const chevron = document.getElementById('branding-toggle-chevron');
+      if (!body) return;
+      if (body.style.display === 'none' || body.classList.contains('hidden')) {
+        body.style.display = 'flex';
+        body.classList.remove('hidden');
+        if (chevron) chevron.style.transform = 'rotate(180deg)';
+      } else {
+        body.style.display = 'none';
+        body.classList.add('hidden');
+        if (chevron) chevron.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    function selectLogoSource(src) {
+      brandConfig.logoSource = src;
+      ['logo-btn-ai', 'logo-btn-upload', 'logo-btn-none'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.classList.remove('active');
+      });
+      const activeBtn = document.getElementById(`logo-btn-${src}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const uploadSec = document.getElementById('logo-upload-section');
+      if (uploadSec) {
+        if (src === 'upload') uploadSec.classList.remove('hidden');
+        else uploadSec.classList.add('hidden');
+      }
+
+      updateBrandingState();
+    }
+
+    function selectSigSource(src) {
+      brandConfig.sigSource = src;
+      ['sig-btn-ai', 'sig-btn-upload', 'sig-btn-draw'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.classList.remove('active');
+      });
+      const activeBtn = document.getElementById(`sig-btn-${src}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const uploadSec = document.getElementById('sig-upload-section');
+      const drawSec = document.getElementById('sig-draw-section');
+
+      if (uploadSec) {
+        if (src === 'upload') uploadSec.classList.remove('hidden');
+        else uploadSec.classList.add('hidden');
+      }
+
+      if (drawSec) {
+        if (src === 'draw') {
+          drawSec.classList.remove('hidden');
+          initSignatureCanvas();
+        } else {
+          drawSec.classList.add('hidden');
+        }
+      }
+
+      updateBrandingState();
+    }
+
+    function handleSchoolLogoFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        brandConfig.customLogoB64 = evt.target.result;
+        selectLogoSource('upload');
+        showToast('School Logo image uploaded!');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleTeacherSigFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        brandConfig.customSigB64 = evt.target.result;
+        selectSigSource('upload');
+        showToast('Teacher Signature image uploaded!');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function resetSchoolLogo() {
+      brandConfig.customLogoB64 = null;
+      selectLogoSource('ai');
+      showToast('School logo reset to AI default.');
+    }
+
+    function resetTeacherSignature() {
+      brandConfig.customSigB64 = null;
+      brandConfig.drawnSigB64 = null;
+      selectSigSource('ai');
+      showToast('Teacher signature reset to AI default.');
+    }
+
+    // Signature Canvas Drawing Engine
+    let sigCanvas, sigCtx, isDrawingSig = false;
+
+    function initSignatureCanvas() {
+      sigCanvas = document.getElementById('sig-canvas');
+      if (!sigCanvas) return;
+      sigCtx = sigCanvas.getContext('2d');
+      sigCtx.lineWidth = 2.5;
+      sigCtx.lineCap = 'round';
+      sigCtx.strokeStyle = '#0F172A';
+
+      // Mouse events
+      sigCanvas.onmousedown = (e) => {
+        isDrawingSig = true;
+        sigCtx.beginPath();
+        const rect = sigCanvas.getBoundingClientRect();
+        sigCtx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+      };
+      sigCanvas.onmousemove = (e) => {
+        if (!isDrawingSig) return;
+        const rect = sigCanvas.getBoundingClientRect();
+        sigCtx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+        sigCtx.stroke();
+      };
+      sigCanvas.onmouseup = () => { isDrawingSig = false; };
+      sigCanvas.onmouseleave = () => { isDrawingSig = false; };
+
+      // Touch events
+      sigCanvas.ontouchstart = (e) => {
+        isDrawingSig = true;
+        sigCtx.beginPath();
+        const rect = sigCanvas.getBoundingClientRect();
+        const touch = e.touches[0];
+        sigCtx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+      };
+      sigCanvas.ontouchmove = (e) => {
+        if (!isDrawingSig) return;
+        e.preventDefault();
+        const rect = sigCanvas.getBoundingClientRect();
+        const touch = e.touches[0];
+        sigCtx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+        sigCtx.stroke();
+      };
+      sigCanvas.ontouchend = () => { isDrawingSig = false; };
+    }
+
+    function clearSignatureCanvas() {
+      if (sigCanvas && sigCtx) {
+        sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+      }
+    }
+
+    function saveDrawnSignature() {
+      if (!sigCanvas) return;
+      brandConfig.drawnSigB64 = sigCanvas.toDataURL('image/png');
+      updateBrandingState();
+      showToast('Drawn signature applied!');
+    }
+
+    function getActiveLogoSrc() {
+      if (!brandConfig.includeLogo || brandConfig.logoSource === 'none') return '';
+      if (brandConfig.logoSource === 'upload' && brandConfig.customLogoB64) return brandConfig.customLogoB64;
+      return typeof DEFAULT_SCHOOL_LOGO !== 'undefined' ? DEFAULT_SCHOOL_LOGO : '';
+    }
+
+    function getActiveSigSrc() {
+      if (!brandConfig.includeSig) return '';
+      if (brandConfig.sigSource === 'upload' && brandConfig.customSigB64) return brandConfig.customSigB64;
+      if (brandConfig.sigSource === 'draw' && brandConfig.drawnSigB64) return brandConfig.drawnSigB64;
+      return typeof DEFAULT_TEACHER_SIGNATURE !== 'undefined' ? DEFAULT_TEACHER_SIGNATURE : '';
+    }
+
+    function updateBrandingState() {
+      const incLogoEl = document.getElementById('brand-include-logo');
+      const incSigEl = document.getElementById('brand-include-sig');
+      const teacherNameEl = document.getElementById('brand-teacher-name');
+      const teacherTitleEl = document.getElementById('brand-teacher-title');
+
+      if (incLogoEl) brandConfig.includeLogo = incLogoEl.checked;
+      if (incSigEl) brandConfig.includeSig = incSigEl.checked;
+      if (teacherNameEl) brandConfig.teacherName = teacherNameEl.value.trim() || 'Mr. Zaafouri Abdelmalek';
+      if (teacherTitleEl) brandConfig.teacherTitle = teacherTitleEl.value.trim() || 'Senior English Language Educator';
+
+      const logoImg = document.getElementById('school-logo-preview-img');
+      const logoLabel = document.getElementById('school-logo-label');
+      const activeLogo = getActiveLogoSrc();
+
+      if (logoImg) {
+        if (activeLogo) {
+          logoImg.src = activeLogo;
+          logoImg.style.display = 'block';
+        } else {
+          logoImg.style.display = 'none';
+        }
+      }
+      if (logoLabel) {
+        logoLabel.textContent = brandConfig.logoSource === 'upload' ? 'Custom Uploaded Logo' : (brandConfig.logoSource === 'none' ? 'No Logo Selected' : 'AI Academic Crest');
+      }
+
+      const sigImg = document.getElementById('teacher-sig-preview-img');
+      const sigLabel = document.getElementById('teacher-sig-label');
+      const activeSig = getActiveSigSrc();
+
+      if (sigImg) {
+        if (activeSig) {
+          sigImg.src = activeSig;
+          sigImg.style.display = 'block';
+        } else {
+          sigImg.style.display = 'none';
+        }
+      }
+      if (sigLabel) {
+        sigLabel.textContent = brandConfig.sigSource === 'upload' ? 'Custom Uploaded Signature' : (brandConfig.sigSource === 'draw' ? 'Hand-Drawn Digital Signature' : 'AI Handwritten Signature');
+      }
+
+      // Update Modal Live Preview Frame
+      const modalLogo = document.getElementById('modal-preview-logo');
+      const modalSig = document.getElementById('modal-preview-sig');
+      const modalTeacherName = document.getElementById('modal-preview-teacher-name');
+      const modalTeacherTitle = document.getElementById('modal-preview-teacher-title');
+
+      if (modalLogo) {
+        if (activeLogo) { modalLogo.src = activeLogo; modalLogo.style.display = 'block'; }
+        else { modalLogo.style.display = 'none'; }
+      }
+      if (modalSig) {
+        if (activeSig) { modalSig.src = activeSig; modalSig.style.display = 'block'; }
+        else { modalSig.style.display = 'none'; }
+      }
+      if (modalTeacherName) modalTeacherName.textContent = brandConfig.teacherName;
+      if (modalTeacherTitle) modalTeacherTitle.textContent = brandConfig.teacherTitle;
+    }
+
+    let activePrintTarget = 'lp';
+
+    function openPrintBrandingModal(typeKey) {
+      activePrintTarget = typeKey || 'lp';
+      updateBrandingState();
+      const modal = document.getElementById('print-branding-modal');
+      if (modal) modal.classList.add('open');
+    }
+
+    function closePrintBrandingModal(e) {
+      if (e && e.target !== e.currentTarget && !e.target.closest('button')) return;
+      const modal = document.getElementById('print-branding-modal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function applyAndPrintFromModal() {
+      closePrintBrandingModal();
+      printGenerated(activePrintTarget);
+    }
+
+    // Camera QR Code Scanner Engine
+    let cameraStream = null;
+
+    function openCameraQrScanner() {
+      closeQrModal();
+      const modal = document.getElementById('camera-scanner-modal');
+      if (modal) modal.classList.add('open');
+
+      const video = document.getElementById('camera-video-stream');
+      const statusMsg = document.getElementById('camera-status-msg');
+
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+          .then(stream => {
+            cameraStream = stream;
+            if (video) video.srcObject = stream;
+            if (statusMsg) statusMsg.textContent = "Camera active • Align QR code to import";
+          })
+          .catch(err => {
+            if (statusMsg) statusMsg.textContent = "Camera access restricted. Use Simulate or Upload Image buttons below.";
+          });
+      } else {
+        if (statusMsg) statusMsg.textContent = "Camera hardware not detected. Use options below.";
+      }
+    }
+
+    function closeCameraScannerModal(e) {
+      if (e && e.target !== e.currentTarget && !e.target.closest('button')) return;
+      if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
+      }
+      const modal = document.getElementById('camera-scanner-modal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function simulateSampleQrScan(type) {
+      if (type === 'student') {
+        const studentWork = {
+          title: "Student Submission: Formal Essay on AI Ethics",
+          type: "Student Submission",
+          details: "Grade: B2 Upper-Intermediate • Score: 46/50",
+          content: `STUDENT WORK SUBMISSION:\nStudent: Sarah Jenkins\nClass: Grade 11 Advanced English\n\nTopic: The Impact of Artificial Intelligence on Future Employment\n\nIn recent years, artificial intelligence has reshaped industries worldwide...`,
+          htmlSheet: `<div style="padding:16px; font-family:sans-serif;"><h3>Student Work: Sarah Jenkins</h3><p>Score: 46/50 • Verified by CELTA Evaluator</p></div>`
+        };
+        saveToLibrary(studentWork.title, studentWork.type, studentWork.details, studentWork.content, studentWork.htmlSheet);
+        showToast("QR Code Scanned! Student submission imported into My Library.");
+      } else {
+        const sharedResource = {
+          title: "Shared CELTA Grammar Task: Conditionals & Wish",
+          type: "A4 Worksheet",
+          details: "B2 • 50 Marks • Shared by Department Lead",
+          content: `SHARED ACADEMIC RESOURCE:\nSection A: Complete conditional structures...\n1. If I (know) ________ your schedule, I would have met you.`,
+          htmlSheet: `<div style="padding:16px; font-family:sans-serif;"><h3>Shared CELTA Grammar Task</h3></div>`
+        };
+        saveToLibrary(sharedResource.title, sharedResource.type, sharedResource.details, sharedResource.content, sharedResource.htmlSheet);
+        showToast("QR Code Scanned! Shared resource imported into My Library.");
+      }
+      closeCameraScannerModal();
+      switchTabById('library');
+    }
+
+    function handleQrImageFileUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      showToast(`Processing QR image file "${file.name}"...`);
+      setTimeout(() => {
+        simulateSampleQrScan('student');
+      }, 600);
+    }
   </script>
 </body>
 </html>
