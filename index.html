@@ -5160,24 +5160,7 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
     }
 
     function generateSmartWebChatResponse(query) {
-      const q = query.trim().toLowerCase();
-      if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('good morning')) {
-        return "Hello! Great to connect with you. I am your AI English Agent. You can ask me anything about grammar rules, request custom worksheets or quiz questions, practice real-time English conversation, or ask for writing corrections. What topic would you like to explore today?";
-      }
-      if (q.includes('present perfect') || q.includes('past simple')) {
-        return "Here is a clear breakdown of Present Perfect vs. Past Simple:\n\n1. Past Simple is used for actions completed at a specific past time.\n   • Structure: Subject + Verb-ed (or irregular V2)\n   • Example: \"I visited London in 2022.\"\n\n2. Present Perfect connects the past with the present (experiences, unfinished periods, past actions with current relevance).\n   • Structure: Subject + have/has + Past Participle (V3)\n   • Example: \"I have visited London three times in my life.\"\n\n💡 Quick Rule: If you mention a specific time (yesterday, last week, 2019), always use the Past Simple!";
-      }
-      if (q.includes('difference between') || q.includes('explain') || q.includes('what is') || q.includes('how do i')) {
-        return `Here is an explanation of "${query.trim()}":\n\n• Core Meaning: In modern English, understanding context, nuance, and collocation is essential for natural communication.\n• Usage Example: "The teacher provided clear guidance on how to master this structure effectively."\n• Common Pitfall: Learners often translate literally from their native tongue. Focus on natural English collocations!\n\nWould you like me to generate a 5-question practice quiz on this?`;
-      }
-      if (q.includes('quiz') || q.includes('worksheet') || q.includes('exercise') || q.includes('test')) {
-        const res = buildRealA4Worksheet({ topic: query, grade: 'B1 Intermediate', type: 'Comprehensive Multi-Section Mastery' });
-        return res.markdownContent;
-      }
-      if (q.includes('correct') || q.includes('check') || q.includes('feedback') || q.includes('mistake')) {
-        return `Here is my feedback on your English text:\n\n✅ Polished Version: "${query.replace(/correct this:?/i, '').trim()}"\n\n📝 Analysis & Suggestions:\n• Grammatical structure is clear and communicative.\n• Consider using elevated transition words (such as "furthermore", "consequently", or "in particular") to enhance stylistic flow.\n\nKeep up the great writing! Let me know if you want another sentence reviewed.`;
-      }
-      return `Regarding "${query}":\n\nI am here to help you communicate effectively in English. Whether you want to:\n1. Practice an authentic dialogue or interview scenario\n2. Generate targeted grammar and vocabulary exercises\n3. Analyze sentence structure and pronunciation tips\n\nTell me more about what you would like to practice or create next!`;
+      return "⚠️ **AI Agent Disconnected**\n\nIt looks like the Gemini API is not connected. This is an offline web preview.\n\nTo enable the full, dynamic AI English Agent, please enter your valid `GEMINI_API_KEY` in the AI Studio Secrets panel, and the app will generate a real backend connection.";
     }
 
     function generateFromDashboard() {

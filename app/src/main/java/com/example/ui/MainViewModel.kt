@@ -261,48 +261,13 @@ class MainViewModel : ViewModel() {
     }
 
     private fun generateSmartChatResponse(query: String): String {
-        val q = query.trim().lowercase()
-        return when {
-            q.contains("hello") || q.contains("hi") || q.contains("hey") || q.contains("good morning") || q.contains("good afternoon") -> {
-                "Hello! Great to connect with you. I am your AI English Agent. You can ask me anything about grammar rules, request custom worksheets or quiz questions, practice real-time English conversation, or ask for writing corrections. What topic would you like to explore today?"
-            }
-            q.contains("present perfect") || q.contains("past simple") -> {
-                "Here is a clear breakdown of **Present Perfect vs. Past Simple**:\n\n" +
-                "1. **Past Simple** is used for actions finished at a specific point in the past.\n" +
-                "   • *Structure:* Subject + Verb-ed (or irregular V2)\n" +
-                "   • *Example:* \"I **visited** London in 2022.\"\n\n" +
-                "2. **Present Perfect** is used for life experiences, unfinished periods, or past actions with current relevance.\n" +
-                "   • *Structure:* Subject + have/has + Past Participle (V3)\n" +
-                "   • *Example:* \"I **have visited** London three times in my life.\"\n\n" +
-                "💡 *Quick Rule:* If you mention a specific time (yesterday, last week, 2019), always use the Past Simple!"
-            }
-            q.contains("difference between") || q.contains("explain") || q.contains("what is") || q.contains("how do i") -> {
-                "Here is an explanation of **${query.trim()}**:\n\n" +
-                "• **Core Meaning:** In modern English, understanding context and collocation is key to natural communication.\n" +
-                "• **Usage Example:** \"The instructor provided clear guidance on how to master this structure effectively.\"\n" +
-                "• **Common Pitfall:** Learners often translate literally from their native tongue. Focus on fixed English phrase patterns!\n\n" +
-                "Would you like me to generate a 5-question practice quiz on this?"
-            }
-            q.contains("quiz") || q.contains("worksheet") || q.contains("exercise") || q.contains("test") -> {
-                generateContextualTeachingContent(query)
-            }
-            q.contains("correct") || q.contains("check") || q.contains("feedback") || q.contains("mistake") -> {
-                "Here is my feedback on your English text:\n\n" +
-                "✅ **Polished Version:** \"${query.replace("(?i)correct this:?".toRegex(), "").trim()}\"\n\n" +
-                "📝 **Analysis & Suggestions:**\n" +
-                "• Grammatical structure is clear and communicative.\n" +
-                "• Consider using elevated vocabulary and transition words (such as *furthermore*, *consequently*, or *in particular*) to enhance nuance.\n\n" +
-                "Keep up the great writing! Let me know if you want another sentence reviewed."
-            }
-            else -> {
-                "Regarding **\"$query\"**:\n\n" +
-                "I am here to help you communicate effectively in English. Whether you want to:\n" +
-                "1. Practice an authentic dialogue or interview scenario\n" +
-                "2. Generate targeted grammar and vocabulary exercises\n" +
-                "3. Analyze sentence structure and pronunciation tips\n\n" +
-                "Tell me more about what you would like to practice or create next!"
-            }
-        }
+        return "⚠️ **AI Agent Disconnected**\n\n" +
+               "It looks like the Gemini API is not connected, so I am currently using a limited offline fallback mode.\n\n" +
+               "**To enable the full, dynamic AI English Agent:**\n" +
+               "1. Open the **Secrets** panel in the AI Studio editor.\n" +
+               "2. Add a new secret named `GEMINI_API_KEY` and paste your valid Google Gemini API key.\n" +
+               "3. The app will securely rebuild.\n\n" +
+               "Once connected, I will be able to answer any question, generate custom exercises, and chat freely!"
     }
 
     fun sendChatMessage(text: String) {
