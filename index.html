@@ -1246,6 +1246,70 @@
       font-size: 13px;
     }
 
+    .a4-rule-box {
+      background: #EFF6FF;
+      border: 1.5px solid #3B82F6;
+      border-left: 5px solid #1D4ED8;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 18px;
+      color: #1E3A8A;
+      font-size: 12.5px;
+    }
+
+    .a4-rule-title {
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.3px;
+      color: #1E40AF;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .a4-rule-formula {
+      background: #DBEAFE;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 12px;
+      color: #1E3A8A;
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .a4-rule-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+
+    .a4-rule-table th {
+      background: #2563EB;
+      color: #FFFFFF;
+      padding: 6px 8px;
+      text-align: left;
+      font-weight: 700;
+    }
+
+    .a4-rule-table td {
+      padding: 5px 8px;
+      border: 1px solid #BFDBFE;
+      color: #1E293B;
+      background: #FFFFFF;
+    }
+
+    .a4-rule-tip {
+      font-size: 11.5px;
+      font-style: italic;
+      color: #1D4ED8;
+      margin-top: 6px;
+    }
+
     .prompt-pills-row {
       display: flex;
       flex-wrap: wrap;
@@ -3799,6 +3863,287 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
       };
     }
 
+    function getPupilRuleBoxHTML(category, topicDisplay, wordBank = []) {
+      const lower = topicDisplay.toLowerCase();
+      
+      if (category === 'grammar_comparatives_superlatives' || lower.includes('comparative') || lower.includes('superlative') || lower.includes('better') || lower.includes('biggest')) {
+        return `
+          <div class="a4-rule-box">
+            <div class="a4-rule-title">
+              <span class="material-symbols-outlined" style="font-size:16px;">school</span>
+              PUPIL GRAMMAR RULE SUMMARY: COMPARATIVES & SUPERLATIVES
+            </div>
+            <div class="a4-rule-formula">
+              • COMPARATIVE (Comparing 2 items): Adjective + <strong>-er</strong> + THAN (or <strong>MORE</strong> + Adjective + THAN)<br>
+              • SUPERLATIVE (Comparing 3+ items): THE + Adjective + <strong>-est</strong> (or THE <strong>MOST</strong> + Adjective)
+            </div>
+            <table class="a4-rule-table">
+              <thead>
+                <tr>
+                  <th>Adjective Rule Category</th>
+                  <th>Base Form</th>
+                  <th>Comparative (2 Items)</th>
+                  <th>Superlative (3+ Items)</th>
+                  <th>Spelling Rule Pattern</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Short (1 syllable)</strong></td>
+                  <td>short</td>
+                  <td><strong>shorter</strong> (than)</td>
+                  <td>the <strong>shortest</strong></td>
+                  <td>Add <strong>-er</strong> / <strong>-est</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Consonant-Vowel-Consonant</strong></td>
+                  <td>big</td>
+                  <td><strong>bigger</strong> (than)</td>
+                  <td>the <strong>biggest</strong></td>
+                  <td><strong>Double last letter</strong> + -er / -est</td>
+                </tr>
+                <tr>
+                  <td><strong>Ends in -y</strong></td>
+                  <td>happy</td>
+                  <td><strong>happier</strong> (than)</td>
+                  <td>the <strong>happiest</strong></td>
+                  <td>Change <strong>-y to -i</strong> + -er / -est</td>
+                </tr>
+                <tr>
+                  <td><strong>Long (2+ syllables)</strong></td>
+                  <td>famous</td>
+                  <td><strong>more famous</strong> (than)</td>
+                  <td>the <strong>most famous</strong></td>
+                  <td>Use <strong>more</strong> / <strong>the most</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Irregular Forms</strong></td>
+                  <td>good<br>bad</td>
+                  <td><strong>better</strong> (than)<br><strong>worse</strong> (than)</td>
+                  <td>the <strong>best</strong><br>the <strong>worst</strong></td>
+                  <td><strong>Special forms</strong> (Must memorize!)</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="a4-rule-tip">
+              💡 <strong>Pupil Grammar Tip:</strong> Use <i>comparative</i> when comparing TWO things (e.g., "A train is <u>faster than</u> a bus"). Use <i>superlative</i> when comparing THREE OR MORE things (e.g., "The plane is <u>the fastest</u> of all").
+            </div>
+          </div>
+        `;
+      }
+
+      if (category === 'grammar_present_perfect_past_simple' || lower.includes('present perfect')) {
+        return `
+          <div class="a4-rule-box">
+            <div class="a4-rule-title">
+              <span class="material-symbols-outlined" style="font-size:16px;">school</span>
+              PUPIL GRAMMAR RULE SUMMARY: PRESENT PERFECT vs PAST SIMPLE
+            </div>
+            <div class="a4-rule-formula">
+              • PRESENT PERFECT (Unfinished time / Life experience): Subject + HAVE / HAS + Past Participle (V3)<br>
+              • PAST SIMPLE (Finished time / Specific past moment): Subject + Past Form (V2)
+            </div>
+            <table class="a4-rule-table">
+              <thead>
+                <tr>
+                  <th>Grammar Tense</th>
+                  <th>Structure Formula</th>
+                  <th>Time Marker Words</th>
+                  <th>Pupil Example Sentence</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Present Perfect</strong></td>
+                  <td>have / has + V3</td>
+                  <td>since, for, already, yet, ever, never, just</td>
+                  <td>I <strong>have lived</strong> here <em>since 2020</em>. / She <strong>has already finished</strong> her task.</td>
+                </tr>
+                <tr>
+                  <td><strong>Past Simple</strong></td>
+                  <td>Verb + -ed (or irregular V2)</td>
+                  <td>yesterday, last night, in 2021, 3 days ago</td>
+                  <td>I <strong>visited</strong> London <em>last summer</em>. / They <strong>left</strong> <em>an hour ago</em>.</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="a4-rule-tip">
+              💡 <strong>Pupil Grammar Tip:</strong> If the time is FINISHED (e.g., <i>yesterday, last year</i>), use <strong>Past Simple</strong>. If the time is STILL CONTINUING or connected to NOW (e.g., <i>for 5 years, since Monday</i>), use <strong>Present Perfect</strong>.
+            </div>
+          </div>
+        `;
+      }
+
+      if (category === 'grammar_conditionals' || lower.includes('conditional')) {
+        return `
+          <div class="a4-rule-box">
+            <div class="a4-rule-title">
+              <span class="material-symbols-outlined" style="font-size:16px;">school</span>
+              PUPIL GRAMMAR RULE SUMMARY: ENGLISH CONDITIONALS
+            </div>
+            <div class="a4-rule-formula">
+              • 1st Conditional (Real future likelihood): IF + Present Simple, WILL + Base Verb<br>
+              • 2nd Conditional (Hypothetical / Imaginary): IF + Past Simple, WOULD + Base Verb
+            </div>
+            <table class="a4-rule-table">
+              <thead>
+                <tr>
+                  <th>Conditional Type</th>
+                  <th>If Clause</th>
+                  <th>Main Result Clause</th>
+                  <th>Pupil Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1st Conditional (Real)</strong></td>
+                  <td>If + Present Simple</td>
+                  <td>will + Base Verb</td>
+                  <td>If it <strong>rains</strong> tomorrow, we <strong>will stay</strong> inside.</td>
+                </tr>
+                <tr>
+                  <td><strong>2nd Conditional (Imaginary)</strong></td>
+                  <td>If + Past Simple</td>
+                  <td>would + Base Verb</td>
+                  <td>If I <strong>won</strong> a million dollars, I <strong>would travel</strong> the world.</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="a4-rule-tip">
+              💡 <strong>Pupil Grammar Tip:</strong> In 2nd Conditional, use "If I <u>were</u> you..." (subjunctive) when giving advice!
+            </div>
+          </div>
+        `;
+      }
+
+      if (category === 'grammar_passive_voice' || lower.includes('passive')) {
+        return `
+          <div class="a4-rule-box">
+            <div class="a4-rule-title">
+              <span class="material-symbols-outlined" style="font-size:16px;">school</span>
+              PUPIL GRAMMAR RULE SUMMARY: PASSIVE VOICE
+            </div>
+            <div class="a4-rule-formula">
+              • PASSIVE VOICE FORMULA: Subject + TO BE (am/is/are/was/were) + Past Participle (V3) [+ by Agent]
+            </div>
+            <table class="a4-rule-table">
+              <thead>
+                <tr>
+                  <th>Tense</th>
+                  <th>Active Voice Sentence</th>
+                  <th>Passive Voice Transformation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Present Simple</strong></td>
+                  <td>Chefs <u>prepare</u> fresh meals daily.</td>
+                  <td>Fresh meals <strong>are prepared</strong> daily by chefs.</td>
+                </tr>
+                <tr>
+                  <td><strong>Past Simple</strong></td>
+                  <td>Alexander Fleming <u>discovered</u> penicillin.</td>
+                  <td>Penicillin <strong>was discovered</strong> by Alexander Fleming.</td>
+                </tr>
+                <tr>
+                  <td><strong>Future Simple</strong></td>
+                  <td>They <u>will complete</u> the project.</td>
+                  <td>The project <strong>will be completed</strong> soon.</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="a4-rule-tip">
+              💡 <strong>Pupil Grammar Tip:</strong> Active voice focuses on WHO does the action. Passive voice focuses on WHAT happens to the object!
+            </div>
+          </div>
+        `;
+      }
+
+      if (category === 'grammar_modal_verbs' || lower.includes('modal')) {
+        return `
+          <div class="a4-rule-box">
+            <div class="a4-rule-title">
+              <span class="material-symbols-outlined" style="font-size:16px;">school</span>
+              PUPIL GRAMMAR RULE SUMMARY: MODAL VERBS
+            </div>
+            <div class="a4-rule-formula">
+              • Obligation: MUST / HAVE TO &nbsp;|&nbsp; Prohibition: MUSTN'T &nbsp;|&nbsp; Optional: DON'T HAVE TO &nbsp;|&nbsp; Advice: SHOULD
+            </div>
+            <table class="a4-rule-table">
+              <thead>
+                <tr>
+                  <th>Modal Verb</th>
+                  <th>Meaning / Function</th>
+                  <th>Pupil Example Sentence</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>MUST / HAVE TO</strong></td>
+                  <td>Strict rule or strong necessity</td>
+                  <td>You <strong>must wear</strong> a seatbelt in the car.</td>
+                </tr>
+                <tr>
+                  <td><strong>MUSTN'T</strong></td>
+                  <td>Forbidden / Against the rule</td>
+                  <td>You <strong>mustn't use</strong> your phone during exams.</td>
+                </tr>
+                <tr>
+                  <td><strong>DON'T HAVE TO</strong></td>
+                  <td>Not necessary (Optional)</td>
+                  <td>You <strong>don't have to pay</strong>; museum entry is free today.</td>
+                </tr>
+                <tr>
+                  <td><strong>SHOULD</strong></td>
+                  <td>Good advice or recommendation</td>
+                  <td>You <strong>should eat</strong> more fresh fruit daily.</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="a4-rule-tip">
+              💡 <strong>Pupil Grammar Tip:</strong> "Mustn't" means DO NOT DO IT (forbidden!). "Don't have to" means you CAN do it if you want, but it is not required.
+            </div>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="a4-rule-box">
+          <div class="a4-rule-title">
+            <span class="material-symbols-outlined" style="font-size:16px;">school</span>
+            PUPIL ENGLISH RULE SUMMARY: ${topicDisplay.toUpperCase()}
+          </div>
+          <div class="a4-rule-formula">
+            • KEY RULE FOCUS: Master the spelling, sentence structure, and vocabulary patterns for '${topicDisplay}'
+          </div>
+          <table class="a4-rule-table">
+            <thead>
+              <tr>
+                <th>Learning Target</th>
+                <th>Core Rule / Pattern</th>
+                <th>Pupil Example Usage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Grammar & Usage</strong></td>
+                <td>Apply target patterns accurately in sentences</td>
+                <td>Notice how target words function in complete thoughts.</td>
+              </tr>
+              <tr>
+                <td><strong>Target Terms</strong></td>
+                <td>${wordBank.length > 0 ? wordBank.slice(0, 4).join(', ') : 'Vocabulary & Expressions'}</td>
+                <td>Use these terms in correct grammatical position.</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="a4-rule-tip">
+            💡 <strong>Pupil Tip:</strong> Read each question carefully, check your spelling, and ensure your sentences make clear grammatical sense!
+          </div>
+        </div>
+      `;
+    }
+
     function synthesizePromptDrivenWorksheet(topic, prompt, grade, school, config) {
       const parsed = parsePromptInstructions(topic, prompt);
       const cleanTopic = topic.trim() || 'English Language Mastery';
@@ -3814,11 +4159,16 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
       }
 
       // Section A: Concept Diagnostic
+      const isCompSuper = (cleanTopic + ' ' + rawPrompt).toLowerCase().includes('comparative') || (cleanTopic + ' ' + rawPrompt).toLowerCase().includes('superlative') || rawPrompt.toLowerCase().includes('better') || rawPrompt.toLowerCase().includes('biggest');
+      
       let secA = {
         title: `Section A: Concept Diagnostic & Core Rules (${cleanTopic})`,
         marks: "10 Marks",
-        instructions: "Read each question carefully and write complete analytical answers.",
-        items: [
+        instructions: "Read each rule question carefully and write complete pupil answers.",
+        items: isCompSuper ? [
+          { q: "Fill in the missing rule forms for baseline words:\n• short -> _______________ -> the _______________\n• big -> _______________ -> the _______________\n• good -> _______________ -> the _______________", lineCount: 2 },
+          { q: "State the rule for when to add '-er / -est' versus when to use 'more / most' before an adjective.", lineCount: 2 }
+        ] : [
           { q: `Explain the fundamental grammar or vocabulary rules governing '${cleanTopic}'.`, lineCount: 2 },
           { q: `Identify two common usage errors students make with '${cleanTopic}' and explain how to correct them.`, lineCount: 2 }
         ]
@@ -4107,6 +4457,40 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
           ];
           break;
 
+        case 'grammar_comparatives_superlatives':
+          wordBank = ["shorter", "shortest", "bigger", "biggest", "happier", "happiest", "more famous", "most famous", "better", "best", "worse", "worst"];
+          secA.title = "Section A: Concept Diagnostic & Comparison Rules (Comparatives & Superlatives)";
+          secA.instructions = "Complete the comparison rule table for pupils and explain when to use comparative versus superlative forms.";
+          secA.items = [
+            { q: "Fill in the missing rule forms for these baseline adjectives:\n• short -> _______________ -> the _______________\n• big -> _______________ -> the _______________\n• happy -> _______________ -> the _______________\n• famous -> _______________ -> the _______________\n• good -> _______________ -> the _______________", lineCount: 3 },
+            { q: "Explain the rule difference between comparing 2 items (Comparative with 'than') and comparing 3 or more items (Superlative with 'the').", lineCount: 2 }
+          ];
+          secB.items = [
+            { type: 'blank', num: 1, text: "An elephant is ____________________ (big) than a lion, but the blue whale is the ____________________ (big) animal on Earth." },
+            { type: 'blank', num: 2, text: "This grammar exercise is much ____________________ (easy) than yesterday's complex test." },
+            { type: 'blank', num: 3, text: "Sarah received 100% on her final project; she earned the ____________________ (good) mark in our whole school." },
+            { type: 'blank', num: 4, text: "Traveling by high-speed train is ____________________ (comfortable) than traveling by bus." },
+            { type: 'blank', num: 5, text: "Which city is ____________________ (famous): London or Tokyo?" },
+            { type: 'mcq', num: 6, text: "Mount Everest is __________ mountain in the entire world.", options: ["(A) higher than", "(B) the highest", "(C) more high", "(D) as high"] },
+            { type: 'mcq', num: 7, text: "Her English pronunciation is getting __________ every week.", options: ["(A) gooder", "(B) better", "(C) best", "(D) the best"] }
+          ];
+          secC.instructions = "Read the passage about world records in nature, then complete the comparative & superlative tasks.";
+          secC.passage = "Nature is full of incredible superlatives and comparisons. The cheetah is faster than any other land animal, reaching speeds of 100 km/h. However, the peregrine falcon is the fastest creature of all when diving for prey at over 300 km/h. Meanwhile, the blue whale is bigger than any dinosaur that ever lived, making it the largest organism on Earth.";
+          secC.items = [
+            { num: 1, text: "Find one comparative sentence in the text comparing two land animals." },
+            { num: 2, text: "Identify two superlative adjectives used in the text to describe world records." },
+            { num: 3, text: "Rewrite this sentence correctly: 'The blue whale is the most big animal in the world.'" }
+          ];
+          secD.promptText = "Write 4 original comparison sentences about two subjects of your choice (e.g. sports, vehicles, or school subjects): write 2 sentences using Comparatives (e.g. 'shorter than', 'more famous than') and 2 sentences using Superlatives (e.g. 'the best', 'the biggest').";
+          answerKey = [
+            "Section A: 1. short -> shorter -> shortest | big -> bigger -> biggest | happy -> happier -> happiest | famous -> more famous -> most famous | good -> better -> best.",
+            "Section A: 2. Comparative compares 2 things using adjective + -er + than / more + adjective + than; Superlative compares 3+ things using the + adjective + -est / the most + adjective.",
+            "Section B: 1. bigger / biggest | 2. easier | 3. best | 4. more comfortable | 5. more famous | 6. (B) the highest | 7. (B) better",
+            "Section C: 1. 'The cheetah is faster than any other land animal' | 2. 'fastest' and 'largest' | 3. Correction: 'The blue whale is the biggest animal in the world.'",
+            "Section D: Award 5 marks for grammatically accurate comparative and superlative sentences applying correct spelling rules."
+          ];
+          break;
+
         case 'theme_space_exploration':
           wordBank = ["orbit", "telescope", "atmosphere", "cosmonaut", "gravity", "lunar", "colonization", "rover", "solar", "propulsion"];
           secA.items = [
@@ -4297,6 +4681,9 @@ Write a 180-220 word reflective review analyzing key insights from today's lesso
             <div>Date: <span class="a4-dotted-blank" style="width: 70px;"></span></div>
             <div>Score: <span class="a4-dotted-blank" style="width: 45px;"> / ${marks.replace(/[^\d]/g, '') || '50'}</span></div>
           </div>
+
+          <!-- Pupil Rule Summary Reference Box -->
+          ${getPupilRuleBoxHTML(profile.category, displayTitle, wordBank)}
 
           <!-- Section A -->
           <div class="a4-section">
